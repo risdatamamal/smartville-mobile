@@ -3,6 +3,7 @@ import 'package:smartville/common/colors.dart';
 import 'package:smartville/common/constant.dart';
 import 'package:smartville/common/text_styles.dart';
 import 'package:smartville/widgets/custom_form_field.dart';
+import './register_page_1.dart';
 
 class LoginPage extends StatefulWidget {
   static const routeName = 'login';
@@ -100,10 +101,16 @@ class _LoginPageState extends State<LoginPage> {
                             const SnackBar(content: Text('Go To Registration')),
                           );
                         },
-                        child: Text(
-                          "Sign Up",
-                          style: primaryText,
-                        ),
+                        child: TextButton(
+                            child: const Text("Sign Up"),
+                            style: TextButton.styleFrom(textStyle: primaryText),
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) => const RegisterPage1(),
+                                ),
+                              );
+                            }),
                       ),
                     ],
                   )
