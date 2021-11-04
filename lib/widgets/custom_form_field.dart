@@ -8,6 +8,8 @@ class CustomFormField extends StatelessWidget {
   final bool typeNumber;
   final bool obsecureText;
   final IconData? prefixIcon;
+  final VoidCallback? onTap;
+  final bool readOnly;
 
   const CustomFormField({
     Key? key,
@@ -16,6 +18,8 @@ class CustomFormField extends StatelessWidget {
     required this.textHint,
     this.typeNumber = false,
     this.obsecureText = false,
+    this.readOnly = false,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -46,6 +50,9 @@ class CustomFormField extends StatelessWidget {
         hintText: textHint,
         prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
       ),
+      onTap: onTap,
+      readOnly: readOnly,
+      controller: textEditingController,
     );
   }
 }

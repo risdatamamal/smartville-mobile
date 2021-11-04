@@ -3,9 +3,10 @@ import 'package:smartville/common/constant.dart';
 import 'package:smartville/common/text_styles.dart';
 import 'package:smartville/widgets/custom_form_field.dart';
 import 'package:smartville/common/colors.dart';
+import 'package:intl/intl.dart';
 
 class RegisterPage1 extends StatefulWidget {
-  static const register_page_1 = 'register_page_1';
+  static const registerPage1 = 'register_page_1';
   const RegisterPage1({Key? key}) : super(key: key);
 
   @override
@@ -13,12 +14,41 @@ class RegisterPage1 extends StatefulWidget {
 }
 
 class _RegisterPage1State extends State<RegisterPage1> {
+  DateTime _selectedDate = DateTime.now();
+
   TextEditingController nikController = TextEditingController();
   TextEditingController namaController = TextEditingController();
   TextEditingController tempatLahirController = TextEditingController();
   TextEditingController tanggalLahirController = TextEditingController();
   TextEditingController alamatController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    nikController.dispose();
+    namaController.dispose();
+    tempatLahirController.dispose();
+    tanggalLahirController.dispose();
+    alamatController.dispose();
+    super.dispose();
+  }
+
+  _selectDate(BuildContext context) async {
+    int yearNow = DateTime.parse(DateTime.now().toString()).year;
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime(1800),
+      lastDate: DateTime((yearNow + 5)),
+    );
+    if (pickedDate != null && pickedDate != _selectedDate) {
+      setState(() {
+        _selectedDate = pickedDate;
+        tanggalLahirController.text =
+            DateFormat('dd/MM/yyyy').format(_selectedDate);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +118,10 @@ class _RegisterPage1State extends State<RegisterPage1> {
                           CustomFormField(
                             textEditingController: tanggalLahirController,
                             textHint: 'Masukan Tanggal Lahir',
+                            readOnly: true,
+                            onTap: () {
+                              _selectDate(context);
+                            },
                           ),
                           const SizedBox(height: 20),
                           Text(
