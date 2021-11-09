@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smartville/common/constant.dart';
 import 'package:smartville/common/text_styles.dart';
 import 'package:smartville/widgets/custom_form_field.dart';
@@ -6,7 +7,7 @@ import 'package:smartville/common/colors.dart';
 import 'package:intl/intl.dart';
 
 class RegisterPage1 extends StatefulWidget {
-  static const registerPage1 = 'register_page_1';
+  static const routeName = 'register_page_1';
   const RegisterPage1({Key? key}) : super(key: key);
 
   @override
@@ -88,6 +89,10 @@ class _RegisterPage1State extends State<RegisterPage1> {
                           CustomFormField(
                             textEditingController: nikController,
                             textHint: 'Masukan NIK',
+                            maxLength: 16,
+                            isStrictLength: true,
+                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                            typeNumber: true,
                           ),
                           const SizedBox(height: 20),
                           Text(

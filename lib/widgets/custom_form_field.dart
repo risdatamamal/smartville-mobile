@@ -10,17 +10,23 @@ class CustomFormField extends StatelessWidget {
   final IconData? prefixIcon;
   final VoidCallback? onTap;
   final bool readOnly;
+  final int? maxLength;
+  final MaxLengthEnforcement? maxLengthEnforcement;
+  final bool isStrictLength;
 
-  const CustomFormField({
-    Key? key,
-    this.prefixIcon,
-    required this.textEditingController,
-    required this.textHint,
-    this.typeNumber = false,
-    this.obsecureText = false,
-    this.readOnly = false,
-    this.onTap,
-  }) : super(key: key);
+  const CustomFormField(
+      {Key? key,
+      this.prefixIcon,
+      required this.textEditingController,
+      required this.textHint,
+      this.typeNumber = false,
+      this.obsecureText = false,
+      this.readOnly = false,
+      this.onTap,
+      this.maxLength,
+      this.maxLengthEnforcement,
+      this.isStrictLength = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +37,12 @@ class CustomFormField extends StatelessWidget {
           typeNumber == true ? [FilteringTextInputFormatter.digitsOnly] : [],
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please fill this field';
+          return 'Harap isi bagian ini';
+        }
+        if (isStrictLength) {
+          if (value.length < maxLength!) {
+            return 'Panjang karakter harus $maxLength digit';
+          }
         }
         return null;
       },
@@ -53,6 +64,8 @@ class CustomFormField extends StatelessWidget {
       onTap: onTap,
       readOnly: readOnly,
       controller: textEditingController,
+      maxLength: maxLength,
+      maxLengthEnforcement: maxLengthEnforcement,
     );
   }
 }

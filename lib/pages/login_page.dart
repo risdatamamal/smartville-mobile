@@ -120,12 +120,8 @@ class _LoginPageState extends State<LoginPage> {
                                       style: TextButton.styleFrom(
                                           textStyle: primaryText),
                                       onPressed: () {
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (_) =>
-                                                const RegisterPage1(),
-                                          ),
-                                        );
+                                        Navigator.pushNamed(
+                                            context, RegisterPage1.routeName);
                                       }),
                                 ),
                               ],
