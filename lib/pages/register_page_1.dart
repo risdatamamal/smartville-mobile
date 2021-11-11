@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:smartville/common/constant.dart';
 import 'package:smartville/common/text_styles.dart';
+import 'package:smartville/pages/register_page_2.dart';
 import 'package:smartville/widgets/custom_form_field.dart';
 import 'package:smartville/common/colors.dart';
 import 'package:intl/intl.dart';
@@ -153,6 +154,9 @@ class _RegisterPage1State extends State<RegisterPage1> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text('Processing Data')),
                             );
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (_) => const RegisterPage2(),
+                            ));
                           }
                         },
                         child: Text(
