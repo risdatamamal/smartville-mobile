@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:smartville/common/colors.dart';
+import 'package:smartville/pages/dashboard_page.dart';
 
 import 'pages/login_page.dart';
 import 'pages/register_page_1.dart';
+import 'pages/notifikasi_berhasil_page.dart';
 
 void main() {
   runApp(const MyApp());
