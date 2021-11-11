@@ -55,6 +55,11 @@ class _RegisterPage1State extends State<RegisterPage1> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          leading: const BackButton(color: primaryColor),
+        ),
         backgroundColor: Colors.white,
         body: Center(
           child: SingleChildScrollView(
@@ -66,13 +71,13 @@ class _RegisterPage1State extends State<RegisterPage1> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 55),
+                    const SizedBox(height: 16),
                     Text(
-                      'Create your account',
+                      'Buat Akun',
                       style: primaryText.copyWith(fontSize: 22),
                     ),
                     Text(
-                      'Sign up to get started!',
+                      'Daftar untuk memulai!',
                       style: greyText,
                     ),
                     const SizedBox(height: 36),
