@@ -6,6 +6,7 @@ import 'package:smartville/widgets/menu_utama.dart';
 import 'package:smartville/widgets/custom_bottom_sheet.dart';
 
 class DashboardPage extends StatefulWidget {
+  static const routeName = 'dashboard_page';
   const DashboardPage({Key? key}) : super(key: key);
 
   @override
@@ -13,6 +14,7 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
+  List<String> list = ['a', 'b'];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -74,7 +76,10 @@ class _DashboardPageState extends State<DashboardPage> {
                     'Ada apa hari ini?',
                     style: blackText,
                   ),
-                  ListPengumuman(),
+                  SizedBox(
+                    height: 112,
+                    child: ListPengumuman(pengumumanList: list),
+                  ),
                   const SizedBox(height: 20),
                   Text(
                     'Ada keperluan apa hari ini?',
@@ -129,6 +134,7 @@ class CustomInnerContent extends StatelessWidget {
         SizedBox(height: 12),
         CustomDraggingHandle(),
         SizedBox(height: 16),
+        CustomFeaturedItem()
       ],
     );
   }
