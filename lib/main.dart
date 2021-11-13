@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smartville/common/colors.dart';
+import 'package:smartville/pages/citizen_data_menu.dart';
 import 'package:smartville/pages/dashboard_page.dart';
 import 'package:smartville/pages/register_page_2.dart';
 import 'package:smartville/pages/register_page_3.dart';
@@ -48,6 +49,9 @@ class MyApp extends StatelessWidget {
                 builder: (_) => RegisterPage3(name: name),
                 settings: settings,
               );
+
+            case CitizenDataMenu.routeName:
+              return MaterialPageRoute(builder: (_) => const CitizenDataMenu());
             case DashboardPage.routeName:
               return MaterialPageRoute(builder: (_) => const DashboardPage());
             default:

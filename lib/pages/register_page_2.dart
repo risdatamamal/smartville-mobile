@@ -13,7 +13,6 @@ class RegisterPage2 extends StatefulWidget {
 
   @override
   State<RegisterPage2> createState() => _RegisterPage2State();
-
 }
 
 class _RegisterPage2State extends State<RegisterPage2> {
