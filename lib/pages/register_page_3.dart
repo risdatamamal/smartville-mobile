@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:smartville/common/constant.dart';
 import 'package:smartville/common/text_styles.dart';
 import 'package:smartville/common/colors.dart';
+import 'package:smartville/widgets/custom_dialog.dart';
 import 'package:smartville/widgets/profile_widget.dart';
 
 class RegisterPage3 extends StatefulWidget {
@@ -84,7 +85,25 @@ class _RegisterPage3State extends State<RegisterPage3> {
                     style: ElevatedButton.styleFrom(
                       primary: primaryColor,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => CustomDialog(
+                          text:
+                              "Apakah Anda yakin data yang dimasukan sudah benar ?",
+                          onClick: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  "Yakin",
+                                ),
+                              ),
+                            );
+                            Navigator.pop(context);
+                          },
+                        ),
+                      );
+                    },
                     child: Text(
                       'Daftar',
                       style: blackText.copyWith(fontSize: 16),
