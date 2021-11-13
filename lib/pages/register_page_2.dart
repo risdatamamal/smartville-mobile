@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:smartville/common/colors.dart';
 import 'package:smartville/common/constant.dart';
 import 'package:smartville/common/text_styles.dart';
-import 'package:smartville/pages/citizen_data_menu.dart';
 import 'package:smartville/pages/register_page_3.dart';
 import 'package:smartville/widgets/custom_form_field.dart';
 
@@ -160,7 +159,7 @@ class _RegisterPage2State extends State<RegisterPage2> {
                               if (_formKey.currentState!.validate()) {
                                 // TODO
                                 Navigator.of(context).pushNamed(
-                                  CitizenDataMenu.routeName,
+                                  RegisterPage3.routeName,
                                   arguments: "Zac Efron",
                                 );
                               }
