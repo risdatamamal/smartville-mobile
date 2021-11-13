@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smartville/common/colors.dart';
 import 'package:smartville/pages/dashboard_page.dart';
+import 'package:smartville/pages/register_page_2.dart';
+import 'package:smartville/pages/register_page_3.dart';
 import 'package:smartville/pages/wrapper_page.dart';
 import 'package:smartville/provider/user_provider.dart';
 
@@ -38,6 +40,14 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => const LoginPage());
             case RegisterPage1.routeName:
               return MaterialPageRoute(builder: (_) => const RegisterPage1());
+            case RegisterPage2.routeName:
+              return MaterialPageRoute(builder: (_) => const RegisterPage2());
+            case RegisterPage3.routeName:
+              final name = settings.arguments as String;
+              return MaterialPageRoute(
+                builder: (_) => RegisterPage3(name: name),
+                settings: settings,
+              );
             case DashboardPage.routeName:
               return MaterialPageRoute(builder: (_) => const DashboardPage());
             default:

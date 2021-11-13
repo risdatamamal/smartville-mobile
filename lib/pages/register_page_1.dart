@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:smartville/common/constant.dart';
 import 'package:smartville/common/text_styles.dart';
+import 'package:smartville/pages/login_page.dart';
 import 'package:smartville/pages/register_page_2.dart';
 import 'package:smartville/widgets/custom_form_field.dart';
 import 'package:smartville/common/colors.dart';
@@ -156,13 +157,13 @@ class _RegisterPage1State extends State<RegisterPage1> {
                         ),
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Processing Data')),
+                            Navigator.of(context).pushNamed(
+                              RegisterPage2.routeName,
                             );
                           }
                         },
                         child: Text(
-                          'Next',
+                          'Selanjutnya',
                           style: blackText.copyWith(fontSize: 16),
                         ),
                       ),
@@ -170,24 +171,25 @@ class _RegisterPage1State extends State<RegisterPage1> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text("I'm already member"),
+                        const Text("Sudah punya akun?"),
                         TextButton(
-                          onPressed: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text('Go To Registration')),
-                            );
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => const RegisterPage2(),
-                            ));
-                          },
-                          child: TextButton(
-                            child: const Text("Sign In"),
-                            style: TextButton.styleFrom(textStyle: primaryText),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
+                          child: Text(
+                            "Masuk",
+                            style: primaryText.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.zero,
+                            minimumSize: const Size(10, 30),
+                            alignment: Alignment.centerLeft,
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(
+                              context,
+                              LoginPage.routeName,
+                            );
+                          },
                         ),
                       ],
                     )

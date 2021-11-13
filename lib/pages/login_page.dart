@@ -30,7 +30,6 @@ class _LoginPageState extends State<LoginPage> {
       email: _emailController.text,
       password: _passwordController.text,
     );
-    print(auth.data?.token);
     if (auth.data?.token == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -76,12 +75,12 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           const SizedBox(height: 20),
                           Text(
-                            'Welcome!',
+                            'Selamat Datang!',
                             style: primaryText.copyWith(fontSize: 28),
                           ),
                           const SizedBox(height: 5),
                           Text(
-                            'Sign in to continue',
+                            'Masuk untuk melanjutkan',
                             style: greyText,
                           ),
                           const SizedBox(height: 45),
@@ -108,12 +107,12 @@ class _LoginPageState extends State<LoginPage> {
                                   onPressed: () {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
-                                        content: Text('Forgot Password'),
+                                        content: Text('Lupa Password'),
                                       ),
                                     );
                                   },
                                   child: Text(
-                                    "Forgot Password?",
+                                    "Lupa Password?",
                                     style: primaryText,
                                   ),
                                 ),
@@ -134,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
                                       }
                                     },
                                     child: Text(
-                                      'Login',
+                                      'Masuk',
                                       style: blackText.copyWith(fontSize: 16),
                                     ),
                                   ),
@@ -142,23 +141,23 @@ class _LoginPageState extends State<LoginPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              const Text("I'm a new user, "),
+                              const Text("Belum punya akun?"),
                               TextButton(
-                                onPressed: () {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text('Go To Registration')),
-                                  );
-                                },
-                                child: TextButton(
-                                  child: const Text("Sign Up"),
-                                  style: TextButton.styleFrom(
-                                      textStyle: primaryText),
-                                  onPressed: () {
-                                    Navigator.pushNamed(
-                                        context, RegisterPage1.routeName);
-                                  },
+                                child: Text(
+                                  "Daftar",
+                                  style: primaryText.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
+                                style: TextButton.styleFrom(
+                                  padding: EdgeInsets.zero,
+                                  minimumSize: const Size(10, 30),
+                                  alignment: Alignment.centerLeft,
+                                ),
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                      context, RegisterPage1.routeName);
+                                },
                               ),
                             ],
                           )
