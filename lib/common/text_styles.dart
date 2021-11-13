@@ -8,9 +8,21 @@ final TextStyle primaryText = GoogleFonts.montserrat(
   color: primaryColor,
 );
 
+final TextStyle secondaryText = GoogleFonts.montserrat(
+  fontSize: 12,
+  fontWeight: FontWeight.w400,
+  color: secondaryColor,
+);
+
 final TextStyle blackText = GoogleFonts.montserrat(
   fontSize: 12,
   fontWeight: FontWeight.w400,
+);
+
+final TextStyle whiteText = GoogleFonts.montserrat(
+  fontSize: 12,
+  fontWeight: FontWeight.w400,
+  color: Colors.white,
 );
 
 final TextStyle greyText = GoogleFonts.montserrat(
