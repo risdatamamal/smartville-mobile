@@ -1,11 +1,12 @@
+import 'package:meta/meta.dart';
 import 'dart:convert';
 
-User userFromJson(String str) => User.fromJson(json.decode(str));
+Register registerFromJson(String str) => Register.fromJson(json.decode(str));
 
-String userToJson(User data) => json.encode(data.toJson());
+String registerToJson(Register data) => json.encode(data.toJson());
 
-class User {
-  User({
+class Register {
+  Register({
     required this.error,
     required this.message,
     required this.data,
@@ -13,23 +14,23 @@ class User {
 
   bool error;
   String message;
-  UserData? data;
+  RegisterData data;
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
+  factory Register.fromJson(Map<String, dynamic> json) => Register(
         error: json["error"],
         message: json["message"],
-        data: json["data"] != "" ? UserData.fromJson(json["data"]) : null,
+        data: RegisterData.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
         "error": error,
         "message": message,
-        "data": data?.toJson(),
+        "data": data.toJson(),
       };
 }
 
-class UserData {
-  UserData({
+class RegisterData {
+  RegisterData({
     this.id,
     this.nik,
     this.nama,
@@ -65,7 +66,7 @@ class UserData {
   String? profilePic;
   String? token;
 
-  factory UserData.fromJson(Map<String, dynamic> json) => UserData(
+  factory RegisterData.fromJson(Map<String, dynamic> json) => RegisterData(
         id: json["Id"],
         nik: json["Nik"],
         nama: json["Nama"],

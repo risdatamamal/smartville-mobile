@@ -95,7 +95,7 @@ class _DashboardPageState extends State<DashboardPage> {
             ),
             DraggableScrollableSheet(
               initialChildSize: 0.09,
-              minChildSize: 0.09,
+              minChildSize: 0.07,
               maxChildSize: 0.7,
               builder:
                   (BuildContext context, ScrollController scrollController) {
@@ -115,16 +115,19 @@ class _DashboardPageState extends State<DashboardPage> {
 class CustomScrollViewContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 12.0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-      margin: const EdgeInsets.all(0),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(24),
-          color: primaryColor,
+    return Container(
+      height: double.infinity,
+      child: Card(
+        elevation: 12.0,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        margin: const EdgeInsets.all(0),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(24),
+            color: primaryColor,
+          ),
+          child: CustomInnerContent(),
         ),
-        child: CustomInnerContent(),
       ),
     );
   }
@@ -160,7 +163,7 @@ class CustomFeaturedItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200,
+      height: 500,
       decoration: BoxDecoration(
         color: Colors.grey[500],
         borderRadius: BorderRadius.circular(8),

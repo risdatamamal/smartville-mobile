@@ -3,17 +3,22 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:smartville/common/constant.dart';
 import 'package:smartville/common/text_styles.dart';
 import 'package:smartville/common/colors.dart';
+import 'package:smartville/provider/user_provider.dart';
 import 'package:smartville/widgets/custom_dialog.dart';
 import 'package:smartville/widgets/profile_widget.dart';
+import 'package:smartville/model/register.dart';
+import 'package:smartville/pages/dashboard_page.dart';
+import 'package:provider/provider.dart';
 
 class RegisterPage3 extends StatefulWidget {
   static const routeName = 'register_page_3';
 
-  final String name;
-  const RegisterPage3({Key? key, required this.name}) : super(key: key);
+  final RegisterData user;
+  const RegisterPage3({Key? key, required this.user}) : super(key: key);
 
   @override
   _RegisterPage3State createState() => _RegisterPage3State();
@@ -21,6 +26,50 @@ class RegisterPage3 extends StatefulWidget {
 
 class _RegisterPage3State extends State<RegisterPage3> {
   File? image;
+  bool _onSend = false;
+
+  Future<void> _register() async {
+    setState(() => _onSend = true);
+    UserProvider provider = context.read<UserProvider>();
+    final user = widget.user;
+    Register register = await provider.register(
+      nik: user.nik ?? "",
+      nama: user.nama ?? "",
+      email: user.email ?? "",
+      password: user.password ?? "",
+      tglLahir: DateFormat("dd/MM/yyyy").format(user.tglLahir!),
+      tempatLahir: user.tempatLahir ?? "",
+      alamat: user.alamat ?? "",
+      dusun: user.dusun ?? "",
+      rt: user.rt.toString(),
+      rw: user.rw.toString(),
+      jenisKelamin: user.jenisKelamin! ? 1 : 0,
+      noHp: user.noHp ?? "",
+    );
+    if (register.data.token == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            register.message,
+          ),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Registrasi Berhasil",
+          ),
+        ),
+      );
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        DashboardPage.routeName,
+        (Route<dynamic> route) => false,
+      );
+    }
+    setState(() => _onSend = false);
+  }
 
   Future pickImage(ImageSource source) async {
     try {
@@ -54,7 +103,7 @@ class _RegisterPage3State extends State<RegisterPage3> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Satu langkah tersisa,\n${widget.name}',
+                    'Satu langkah tersisa,\n${widget.user.nama}',
                     style: primaryText.copyWith(fontSize: 22),
                   ),
                 ),
@@ -81,34 +130,30 @@ class _RegisterPage3State extends State<RegisterPage3> {
                 ),
                 SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: primaryColor,
-                    ),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => CustomDialog(
-                          text:
-                              "Apakah Anda yakin data yang dimasukan sudah benar ?",
-                          onClick: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text(
-                                  "Yakin",
-                                ),
+                  child: _onSend
+                      ? const LinearProgressIndicator()
+                      : ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: primaryColor,
+                          ),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => CustomDialog(
+                                text:
+                                    "Apakah Anda yakin data yang dimasukan sudah benar ?",
+                                onClick: () {
+                                  _register();
+                                  Navigator.pop(context);
+                                },
                               ),
                             );
-                            Navigator.pop(context);
                           },
+                          child: Text(
+                            'Daftar',
+                            style: blackText.copyWith(fontSize: 16),
+                          ),
                         ),
-                      );
-                    },
-                    child: Text(
-                      'Daftar',
-                      style: blackText.copyWith(fontSize: 16),
-                    ),
-                  ),
                 ),
               ],
             ),

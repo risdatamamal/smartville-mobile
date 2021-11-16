@@ -2,17 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:smartville/common/colors.dart';
 import 'package:smartville/common/constant.dart';
 import 'package:smartville/common/text_styles.dart';
+import 'package:smartville/model/register.dart';
 import 'package:smartville/pages/register_page_3.dart';
 import 'package:smartville/widgets/custom_form_field.dart';
 
 class RegisterPage2 extends StatefulWidget {
-  const RegisterPage2({Key? key}) : super(key: key);
-  static const routeName = 'register_page_2'
-      '';
+  final RegisterData user;
+
+  const RegisterPage2({Key? key, required this.user}) : super(key: key);
+  static const routeName = 'register_page_2';
 
   @override
   State<RegisterPage2> createState() => _RegisterPage2State();
 }
+
+enum JenisKelamin { L, P }
 
 class _RegisterPage2State extends State<RegisterPage2> {
   TextEditingController rtController = TextEditingController();
@@ -21,6 +25,8 @@ class _RegisterPage2State extends State<RegisterPage2> {
   TextEditingController pwController = TextEditingController();
   TextEditingController pwConfirmController = TextEditingController();
   bool? checkSyarat = false;
+
+  JenisKelamin? _jenisKelamin = JenisKelamin.L;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -32,6 +38,29 @@ class _RegisterPage2State extends State<RegisterPage2> {
     pwController.dispose();
     pwConfirmController.dispose();
     super.dispose();
+  }
+
+  _sendData() {
+    int rt = int.parse(rtController.text.split('/')[0]);
+    int rw = int.parse(rtController.text.split('/')[1]);
+    bool jenisKelamin = false;
+    if (_jenisKelamin == JenisKelamin.L) {
+      jenisKelamin = true;
+    } else {
+      jenisKelamin = false;
+    }
+    return RegisterData(
+        nik: widget.user.nik,
+        nama: widget.user.nama,
+        tempatLahir: widget.user.tempatLahir,
+        tglLahir: widget.user.tglLahir,
+        alamat: widget.user.alamat,
+        rt: rt,
+        rw: rw,
+        dusun: dusunController.text,
+        email: emailController.text,
+        password: pwController.text,
+        jenisKelamin: jenisKelamin);
   }
 
   @override
@@ -105,6 +134,62 @@ class _RegisterPage2State extends State<RegisterPage2> {
                         ),
                         const SizedBox(height: 20),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Container(
+                                padding: const EdgeInsets.all(5),
+                                margin: const EdgeInsets.only(right: 8),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFDEEDEB),
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Radio<JenisKelamin>(
+                                      value: JenisKelamin.L,
+                                      groupValue: _jenisKelamin,
+                                      onChanged: (JenisKelamin? value) {
+                                        setState(() {
+                                          _jenisKelamin = value;
+                                        });
+                                      },
+                                    ),
+                                    Text('Laki-Laki', style: greyText)
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Container(
+                                padding: const EdgeInsets.all(5),
+                                margin: const EdgeInsets.only(left: 8),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFDEEDEB),
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Radio<JenisKelamin>(
+                                      value: JenisKelamin.P,
+                                      groupValue: _jenisKelamin,
+                                      onChanged: (JenisKelamin? value) {
+                                        setState(() {
+                                          _jenisKelamin = value;
+                                        });
+                                      },
+                                    ),
+                                    Text('Perempuan', style: greyText)
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
                           children: [
                             SizedBox(
                               height: 20,
@@ -157,10 +242,9 @@ class _RegisterPage2State extends State<RegisterPage2> {
                             ),
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                // TODO
                                 Navigator.of(context).pushNamed(
                                   RegisterPage3.routeName,
-                                  arguments: "Zac Efron",
+                                  arguments: _sendData(),
                                 );
                               }
                             },
