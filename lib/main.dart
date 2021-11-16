@@ -8,6 +8,7 @@ import 'package:smartville/pages/register_page_3.dart';
 import 'package:smartville/pages/wrapper_page.dart';
 import 'package:smartville/pages/forgot_password_page.dart';
 import 'package:smartville/provider/user_provider.dart';
+import 'package:smartville/model/register.dart';
 
 import 'pages/login_page.dart';
 import 'pages/register_page_1.dart';
@@ -43,11 +44,16 @@ class MyApp extends StatelessWidget {
             case RegisterPage1.routeName:
               return MaterialPageRoute(builder: (_) => const RegisterPage1());
             case RegisterPage2.routeName:
-              return MaterialPageRoute(builder: (_) => const RegisterPage2());
-            case RegisterPage3.routeName:
-              final name = settings.arguments as String;
+              final user = settings.arguments as RegisterData;
               return MaterialPageRoute(
-                builder: (_) => RegisterPage3(name: name),
+                builder: (_) => RegisterPage2(
+                  user: user,
+                ),
+              );
+            case RegisterPage3.routeName:
+              final user = settings.arguments as RegisterData;
+              return MaterialPageRoute(
+                builder: (_) => RegisterPage3(user: user),
                 settings: settings,
               );
 

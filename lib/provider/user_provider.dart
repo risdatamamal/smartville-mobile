@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../common/constant.dart';
 import '../model/user.dart';
+import '../model/register.dart';
 import '../network/remote_data_source.dart';
 
 class UserProvider with ChangeNotifier {
@@ -33,6 +34,43 @@ class UserProvider with ChangeNotifier {
     }
     notifyListeners();
     return auth;
+  }
+
+  Future<Register> register(
+      {required String nik,
+      required String nama,
+      required String email,
+      required String password,
+      required String tglLahir,
+      required String tempatLahir,
+      required String alamat,
+      required String dusun,
+      required String rt,
+      required String rw,
+      required int jenisKelamin,
+      required String noHp}) async {
+    Register register = await RemoteDataSource.register(
+        nik: nik,
+        nama: nama,
+        email: email,
+        password: password,
+        tglLahir: tglLahir,
+        tempatLahir: tempatLahir,
+        alamat: alamat,
+        dusun: dusun,
+        rt: rt,
+        rw: rw,
+        jenisKelamin: jenisKelamin,
+        noHp: noHp);
+    _token = register.data.token;
+    if (_token != null) {
+      await _preferences.setString(
+        keyToken,
+        _token!,
+      );
+    }
+    notifyListeners();
+    return register;
   }
 
   Future<void> logout() async {

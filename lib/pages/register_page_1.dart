@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:smartville/common/constant.dart';
 import 'package:smartville/common/text_styles.dart';
+import 'package:smartville/model/register.dart';
+import 'package:smartville/model/user.dart';
 import 'package:smartville/pages/login_page.dart';
 import 'package:smartville/pages/register_page_2.dart';
 import 'package:smartville/widgets/custom_form_field.dart';
@@ -24,6 +26,7 @@ class _RegisterPage1State extends State<RegisterPage1> {
   TextEditingController tempatLahirController = TextEditingController();
   TextEditingController tanggalLahirController = TextEditingController();
   TextEditingController alamatController = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -51,6 +54,18 @@ class _RegisterPage1State extends State<RegisterPage1> {
             DateFormat('dd/MM/yyyy').format(_selectedDate);
       });
     }
+  }
+
+  _sendData() {
+    final DateTime tglLahir =
+        DateFormat('dd/MM/yyyy').parse(tanggalLahirController.text);
+    return RegisterData(
+      nik: nikController.text,
+      nama: namaController.text,
+      tempatLahir: tempatLahirController.text,
+      tglLahir: tglLahir,
+      alamat: alamatController.text,
+    );
   }
 
   @override
@@ -158,6 +173,9 @@ class _RegisterPage1State extends State<RegisterPage1> {
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             //action
+                            Navigator.pushNamed(
+                                context, RegisterPage2.routeName,
+                                arguments: _sendData());
                           }
                         },
                         child: Text(
