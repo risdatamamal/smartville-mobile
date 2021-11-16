@@ -13,20 +13,22 @@ class CustomFormField extends StatelessWidget {
   final int? maxLength;
   final MaxLengthEnforcement? maxLengthEnforcement;
   final bool isStrictLength;
+  final bool enable;
 
-  const CustomFormField(
-      {Key? key,
-      this.prefixIcon,
-      required this.textEditingController,
-      required this.textHint,
-      this.typeNumber = false,
-      this.obsecureText = false,
-      this.readOnly = false,
-      this.onTap,
-      this.maxLength,
-      this.maxLengthEnforcement,
-      this.isStrictLength = false})
-      : super(key: key);
+  const CustomFormField({
+    Key? key,
+    this.prefixIcon,
+    required this.textEditingController,
+    required this.textHint,
+    this.typeNumber = false,
+    this.obsecureText = false,
+    this.readOnly = false,
+    this.onTap,
+    this.maxLength,
+    this.maxLengthEnforcement,
+    this.isStrictLength = false,
+    this.enable = true,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +64,7 @@ class CustomFormField extends StatelessWidget {
         prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
       ),
       onTap: onTap,
+      enabled: enable,
       readOnly: readOnly,
       controller: textEditingController,
       maxLength: maxLength,

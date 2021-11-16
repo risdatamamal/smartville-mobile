@@ -1,0 +1,59 @@
+import 'package:flutter/material.dart';
+import 'package:smartville/common/colors.dart';
+import 'package:smartville/common/text_styles.dart';
+
+class CustomDialog extends StatelessWidget {
+  final String text;
+  final VoidCallback onClick;
+  const CustomDialog({
+    Key? key,
+    required this.text,
+    required this.onClick,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      shape: const RoundedRectangleBorder(
+        side: BorderSide(color: secondaryColor, width: 3),
+        borderRadius: BorderRadius.all(Radius.circular(16.0)),
+      ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Text(
+            text,
+            style: secondaryText.copyWith(fontSize: 16),
+          ),
+          const SizedBox(
+            height: 25,
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(primary: secondaryColor),
+              onPressed: onClick,
+              child: Text(
+                'Yakin',
+                style: whiteText.copyWith(fontSize: 14),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(primary: secondaryColor),
+              onPressed: () => Navigator.pop(context),
+              child: Text(
+                'Batal',
+                style: whiteText.copyWith(fontSize: 14),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

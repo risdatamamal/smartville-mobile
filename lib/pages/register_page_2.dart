@@ -1,9 +1,8 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:smartville/common/colors.dart';
 import 'package:smartville/common/constant.dart';
 import 'package:smartville/common/text_styles.dart';
-import 'package:smartville/pages/register_page_1.dart';
+import 'package:smartville/pages/register_page_3.dart';
 import 'package:smartville/widgets/custom_form_field.dart';
 
 class RegisterPage2 extends StatefulWidget {
@@ -39,6 +38,11 @@ class _RegisterPage2State extends State<RegisterPage2> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        leading: const BackButton(color: primaryColor),
+      ),
       body: SingleChildScrollView(
         child: Center(
           child: Padding(
@@ -49,20 +53,6 @@ class _RegisterPage2State extends State<RegisterPage2> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    icon: Icon(Icons.arrow_back),
-                    iconSize: 35,
-                    color: primaryColor,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
                   Text(
                     'Lanjutkan\nMembuat akun',
                     style: primaryText.copyWith(fontSize: 22),
@@ -116,45 +106,50 @@ class _RegisterPage2State extends State<RegisterPage2> {
                         const SizedBox(height: 20),
                         Row(
                           children: [
-                            Checkbox(
-                              value: checkSyarat,
-                              onChanged: (val) {
-                                setState(() {
-                                  checkSyarat = val;
-                                });
-                              },
-                              activeColor: Color(0xFF019B84),
+                            SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: Checkbox(
+                                value: checkSyarat,
+                                onChanged: (val) {
+                                  setState(() {
+                                    checkSyarat = val;
+                                  });
+                                },
+                                activeColor: Color(0xFF019B84),
+                              ),
                             ),
-                            RichText(
-                                text: const TextSpan(
-                                    style: TextStyle(
-                                        color: primaryColor, fontSize: 13),
-                                    children: <TextSpan>[
-                                  TextSpan(
-                                      text:
-                                          'Dengan membuat akun berarti Anda menyetujui\n'),
-                                  TextSpan(
-                                      text: 'syarat ',
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: RichText(
+                                  textAlign: TextAlign.justify,
+                                  text: const TextSpan(
                                       style: TextStyle(
-                                          fontWeight: FontWeight.w700)),
-                                  TextSpan(text: 'dan '),
-                                  TextSpan(
-                                      text: 'ketentuan, ',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w700)),
-                                  TextSpan(text: 'serta '),
-                                  TextSpan(
-                                      text: 'kebijakan privasi',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w700)),
-                                  TextSpan(text: ' kami.'),
-                                ])),
+                                          color: primaryColor, fontSize: 13),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                            text:
+                                                'Dengan membuat akun berarti Anda menyetujui '),
+                                        TextSpan(
+                                            text: 'syarat dan ketentuan',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w700)),
+                                        TextSpan(text: ' serta '),
+                                        TextSpan(
+                                            text: 'kebijakan privasi',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w700)),
+                                        TextSpan(text: ' kami.'),
+                                      ])),
+                            ),
                           ],
                         ),
                         const SizedBox(
-                          height: 4,
+                          height: 10,
                         ),
-                        Container(
+                        SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -162,18 +157,22 @@ class _RegisterPage2State extends State<RegisterPage2> {
                             ),
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text('Processing Data')),
+                                // TODO
+                                Navigator.of(context).pushNamed(
+                                  RegisterPage3.routeName,
+                                  arguments: "Zac Efron",
                                 );
                               }
                             },
                             child: Text(
-                              'Next',
+                              'Selanjutnya',
                               style: blackText.copyWith(fontSize: 16),
                             ),
                           ),
                         ),
+                        const SizedBox(
+                          height: 15,
+                        )
                       ],
                     ),
                   ),
