@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.green)
             .copyWith(secondary: greyColor),
       ),
-      home: const LoginPage(),
+      home: const DashboardPage(),
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
           case LoginPage.routeName:
