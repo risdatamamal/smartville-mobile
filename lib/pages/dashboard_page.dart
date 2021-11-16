@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smartville/common/colors.dart';
 import 'package:smartville/common/text_styles.dart';
+import 'package:smartville/pages/profile_page.dart';
 import 'package:smartville/widgets/list_pengumuman.dart';
 import 'package:smartville/widgets/menu_utama.dart';
 import 'package:smartville/widgets/bottom_sheet_content.dart';
@@ -53,17 +54,21 @@ class _DashboardPageState extends State<DashboardPage> {
                           ),
                         ],
                       ),
-                      Container(
-                        width: 64.0,
-                        height: 64.0,
-                        decoration: BoxDecoration(
-                          image: const DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(
-                                  'https://thispersondoesnotexist.com/image')),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(100.0)),
-                          border: Border.all(color: Colors.blueAccent),
+                      InkWell(
+                        onTap: (){ Navigator.pushNamed(
+                            context, ProfilePage.routeName);},
+                        child: Container(
+                          width: 64.0,
+                          height: 64.0,
+                          decoration: BoxDecoration(
+                            image: const DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(
+                                    'https://thispersondoesnotexist.com/image')),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(100.0)),
+                            border: Border.all(color: Colors.blueAccent),
+                          ),
                         ),
                       ),
                     ],
