@@ -3,7 +3,6 @@ import 'package:smartville/common/colors.dart';
 import 'package:smartville/common/text_styles.dart';
 import 'package:smartville/widgets/custom_dialog.dart';
 
-
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
   static const routeName = 'profilepage';
@@ -22,18 +21,20 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 10,left: 4),
+              padding: EdgeInsets.only(top: 10, left: 4),
               child: Row(
                 children: [
-                 InkWell(
-                   onTap: (){Navigator.of(context).pop();},
-                   child: const Icon(
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Icon(
                       Icons.arrow_back,
                       size: 33,
                       color: Colors.white,
                     ),
-                 ),
-                 const SizedBox(
+                  ),
+                  const SizedBox(
                     width: 4,
                   ),
                   Text(
@@ -43,7 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ],
               ),
             ),
-           const SizedBox(
+            const SizedBox(
               height: 50,
             ),
             Flexible(
@@ -58,15 +59,16 @@ class _ProfilePageState extends State<ProfilePage> {
                       children: [
                         Container(
                           margin: EdgeInsets.only(right: 17, top: 24),
-                          padding: EdgeInsets.all(2),
+                          padding: EdgeInsets.all(1.2),
                           child: Container(
                             decoration: BoxDecoration(
-
                               image: DecorationImage(
-                                image: NetworkImage('https://thispersondoesnotexist.com/image'),
+                                image: NetworkImage(
+                                    'https://thispersondoesnotexist.com/image'),
                                 fit: BoxFit.cover,
                               ),
-                              borderRadius: BorderRadius.all( Radius.circular(50.0)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(50.0)),
                               border: Border.all(
                                 color: Colors.white,
                                 width: 2,
@@ -84,7 +86,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           padding: EdgeInsets.only(top: 15),
                           child: RichText(
                             text: TextSpan(children: [
-                              TextSpan(text: 'Zac Efron\n', style: primaryText.copyWith(fontSize: 20)),
+                              TextSpan(
+                                  text: 'Zac Efron\n',
+                                  style: primaryText.copyWith(fontSize: 20)),
                               TextSpan(
                                   text: 'zacefron@gmail.com',
                                   style: greyText.copyWith(fontSize: 15)),
@@ -93,30 +97,45 @@ class _ProfilePageState extends State<ProfilePage> {
                         )
                       ],
                     ),
-                   const SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
-                    Padding(padding:EdgeInsets.only(left: 8,bottom: 10),child: Text('Informasi',style: greyText.copyWith(fontSize: 15),)),
+                    Padding(
+                        padding: EdgeInsets.only(left: 8, bottom: 10),
+                        child: Text(
+                          'Informasi',
+                          style: greyText.copyWith(fontSize: 15),
+                        )),
                     Container(
                       child: Row(
                         children: [
                           Expanded(
-                            child: Text.rich(TextSpan(
-                                children: [
-                                  TextSpan(text: 'NIK\n',style: orangeText.copyWith(fontSize: 15)),
-                                  TextSpan(text: '32764162564718471',style: blackText),
-                                ]
-                            ),textAlign: TextAlign.center,
+                            child: Text.rich(
+                              TextSpan(children: [
+                                TextSpan(
+                                    text: 'NIK\n',
+                                    style: orangeText.copyWith(fontSize: 15)),
+                                TextSpan(
+                                    text: '32764162564718471',
+                                    style: blackText),
+                              ]),
+                              textAlign: TextAlign.center,
                             ),
                           ),
-                          Container(color: Colors.greenAccent,width: 2,height: 50,),
+                          Container(
+                            color: Colors.greenAccent,
+                            width: 2,
+                            height: 50,
+                          ),
                           Expanded(
-                            child: Text.rich(TextSpan(
-                                children: [
-                                  TextSpan(text: 'No.Telp\n',style: orangeText.copyWith(fontSize: 15)),
-                                  TextSpan(text: '08263517265',style: blackText),
-                                ]
-                            ),textAlign: TextAlign.center,
+                            child: Text.rich(
+                              TextSpan(children: [
+                                TextSpan(
+                                    text: 'No.Telp\n',
+                                    style: orangeText.copyWith(fontSize: 15)),
+                                TextSpan(text: '08263517265', style: blackText),
+                              ]),
+                              textAlign: TextAlign.center,
                             ),
                           ),
                         ],
@@ -126,28 +145,43 @@ class _ProfilePageState extends State<ProfilePage> {
                           border: Border.all(color: Colors.greenAccent),
                           borderRadius: BorderRadius.all(Radius.circular(20))),
                     ),
-                  const  SizedBox(
+                    const SizedBox(
                       height: 70,
                     ),
-
-                    CustomButton(imageUrl: 'assets/icons/personalIcon.png',text: 'Personal Data',style: primaryText.copyWith(fontSize: 15)),
-                   const SizedBox(
+                    InkWell(
+                      onTap: (){print('personal data');},
+                      child: CustomButton(
+                          imageUrl: 'assets/icons/personalIcon.png',
+                          text: 'Personal Data',
+                          style: primaryText.copyWith(fontSize: 15)),
+                    ),
+                    const SizedBox(
                       height: 38,
                     ),
-                    CustomButton(imageUrl: 'assets/icons/notifIcon.png',text: 'Notifikasi',style: primaryText.copyWith(fontSize: 15)),
-                 const   SizedBox(
+                    InkWell(
+                        onTap: () {},
+                        child: CustomButton(
+                            imageUrl: 'assets/icons/notifIcon.png',
+                            text: 'Notifikasi',
+                            style: primaryText.copyWith(fontSize: 15))),
+                    const SizedBox(
                       height: 38,
                     ),
-                    InkWell(onTap: (){ showDialog(
-                      context: context,
-                      builder: (context) => CustomDialog(
-                        text:
-                        "Apakah Anda yakin ingin keluar dari akun ini?",
-                        onClick: () {
-                         
+                    InkWell(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => CustomDialog(
+                              text:
+                                  "Apakah Anda yakin ingin keluar dari akun ini?",
+                              onClick: () {},
+                            ),
+                          );
                         },
-                      ),
-                    );},child: CustomButton(imageUrl: 'assets/icons/logoutIcon.png',text: 'Logout',style: primaryText.copyWith(fontSize: 15))),
+                        child: CustomButton(
+                            imageUrl: 'assets/icons/logoutIcon.png',
+                            text: 'Logout',
+                            style: primaryText.copyWith(fontSize: 15))),
                   ],
                 ),
                 decoration: BoxDecoration(
@@ -163,7 +197,10 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Card CustomButton({required String imageUrl, required String text,required TextStyle style}) {
+  Card CustomButton(
+      {required String imageUrl,
+      required String text,
+      required TextStyle style}) {
     return Card(
       elevation: 10,
       shape: RoundedRectangleBorder(
@@ -173,19 +210,28 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-           const SizedBox(width: 50,),
+            const SizedBox(
+              width: 50,
+            ),
             Expanded(
               child: Container(
-                child: Image.asset(imageUrl,scale: 5,),
-
+                child: Image.asset(
+                  imageUrl,
+                  scale: 5,
+                ),
               ),
             ),
             Expanded(
               child: Container(
-                child: Text(text,style: style,),
+                child: Text(
+                  text,
+                  style: style,
+                ),
               ),
             ),
-           const SizedBox(width: 50,)
+            const SizedBox(
+              width: 50,
+            )
           ],
         ),
         height: 50,
