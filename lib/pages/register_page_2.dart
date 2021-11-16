@@ -133,6 +133,8 @@ class _RegisterPage2State extends State<RegisterPage2> {
                           textHint: 'Masukkan Password',
                         ),
                         const SizedBox(height: 20),
+                        customText(text: 'Jenis Kelamin'),
+                        const SizedBox(height: 4),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
