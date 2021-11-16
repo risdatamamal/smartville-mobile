@@ -6,6 +6,7 @@ import 'package:smartville/pages/dashboard_page.dart';
 import 'package:smartville/pages/register_page_2.dart';
 import 'package:smartville/pages/register_page_3.dart';
 import 'package:smartville/pages/wrapper_page.dart';
+import 'package:smartville/pages/forgot_password_page.dart';
 import 'package:smartville/provider/user_provider.dart';
 
 import 'pages/login_page.dart';
@@ -54,6 +55,9 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => const CitizenDataMenu());
             case DashboardPage.routeName:
               return MaterialPageRoute(builder: (_) => const DashboardPage());
+            case ForgotPasswordPage.routeName:
+              return MaterialPageRoute(
+                  builder: (_) => const ForgotPasswordPage());
             default:
               return MaterialPageRoute(
                 builder: (_) {

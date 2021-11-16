@@ -157,9 +157,7 @@ class _RegisterPage1State extends State<RegisterPage1> {
                         ),
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            Navigator.of(context).pushNamed(
-                              RegisterPage2.routeName,
-                            );
+                            //action
                           }
                         },
                         child: Text(
@@ -185,10 +183,7 @@ class _RegisterPage1State extends State<RegisterPage1> {
                             alignment: Alignment.centerLeft,
                           ),
                           onPressed: () {
-                            Navigator.pushNamed(
-                              context,
-                              LoginPage.routeName,
-                            );
+                            Navigator.pop(context);
                           },
                         ),
                       ],

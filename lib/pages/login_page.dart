@@ -5,6 +5,7 @@ import 'package:smartville/common/constant.dart';
 import 'package:smartville/common/text_styles.dart';
 import 'package:smartville/model/user.dart';
 import 'package:smartville/pages/dashboard_page.dart';
+import 'package:smartville/pages/forgot_password_page.dart';
 import 'package:smartville/provider/user_provider.dart';
 import 'package:smartville/widgets/custom_form_field.dart';
 import './register_page_1.dart';
@@ -105,11 +106,8 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 TextButton(
                                   onPressed: () {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text('Lupa Password'),
-                                      ),
-                                    );
+                                    Navigator.pushNamed(
+                                        context, ForgotPasswordPage.routeName);
                                   },
                                   child: Text(
                                     "Lupa Password?",

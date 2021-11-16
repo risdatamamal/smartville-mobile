@@ -3,7 +3,7 @@ import 'package:smartville/common/colors.dart';
 import 'package:smartville/common/text_styles.dart';
 import 'package:smartville/widgets/list_pengumuman.dart';
 import 'package:smartville/widgets/menu_utama.dart';
-import 'package:smartville/widgets/custom_bottom_sheet.dart';
+import 'package:smartville/widgets/bottom_sheet_content.dart';
 
 class DashboardPage extends StatefulWidget {
   static const routeName = 'dashboard_page';
@@ -76,8 +76,11 @@ class _DashboardPageState extends State<DashboardPage> {
                     'Ada apa hari ini?',
                     style: blackText,
                   ),
+                  const SizedBox(
+                    height: 8,
+                  ),
                   SizedBox(
-                    height: 112,
+                    height: 120,
                     child: ListPengumuman(pengumumanList: list),
                   ),
                   const SizedBox(height: 20),
@@ -91,14 +94,14 @@ class _DashboardPageState extends State<DashboardPage> {
               ),
             ),
             DraggableScrollableSheet(
-              initialChildSize: 0.30,
-              minChildSize: 0.15,
-              maxChildSize: 0.9,
+              initialChildSize: 0.09,
+              minChildSize: 0.09,
+              maxChildSize: 0.7,
               builder:
                   (BuildContext context, ScrollController scrollController) {
                 return SingleChildScrollView(
                   controller: scrollController,
-                  child: CustomScrollViewContent(),
+                  child: BottomSheetContent(),
                 );
               },
             ),
@@ -119,6 +122,7 @@ class CustomScrollViewContent extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(24),
+          color: primaryColor,
         ),
         child: CustomInnerContent(),
       ),
