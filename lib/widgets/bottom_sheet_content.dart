@@ -9,7 +9,7 @@ class BottomSheetContent extends StatelessWidget {
       height: 600,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(24),topRight:Radius.circular(24)),
         color: primaryColor,
       ),
       child: Column(
