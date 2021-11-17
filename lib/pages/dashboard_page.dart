@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smartville/common/colors.dart';
 import 'package:smartville/common/text_styles.dart';
+import 'package:smartville/pages/profile_page.dart';
 import 'package:smartville/widgets/list_pengumuman.dart';
 import 'package:smartville/widgets/menu_utama.dart';
 import 'package:smartville/widgets/bottom_sheet_content.dart';
@@ -53,22 +54,33 @@ class _DashboardPageState extends State<DashboardPage> {
                           ),
                         ],
                       ),
-                      const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Align(
-                          alignment: Alignment.topCenter,
-                          child: CircleAvatar(
-                            radius: 44,
-                            backgroundColor: Color(0xFF153E69),
-                            child: CircleAvatar(
-                              radius: 42,
-                              backgroundColor: Colors.white,
-                              child: CircleAvatar(
-                                radius: 40,
-                                backgroundImage: NetworkImage(
-                                    'https://cdn.pixabay.com/photo/2018/01/15/07/52/woman-3083390_1280.jpg'),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, ProfilePage.routeName);
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.only(right: 17, top: 24),
+                          padding: const EdgeInsets.all(1.2),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              image: const DecorationImage(
+                                image: NetworkImage(
+                                    'https://thispersondoesnotexist.com/image'),
+                                fit: BoxFit.cover,
+                              ),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(50.0)),
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 2,
                               ),
                             ),
+                          ),
+                          height: 64,
+                          width: 64,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: secondaryColor,
                           ),
                         ),
                       ),

@@ -30,3 +30,9 @@ final TextStyle greyText = GoogleFonts.montserrat(
   fontWeight: FontWeight.w400,
   color: greyColor,
 );
+
+final TextStyle orangeText = GoogleFonts.montserrat(
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: redColor
+);
