@@ -53,17 +53,23 @@ class _DashboardPageState extends State<DashboardPage> {
                           ),
                         ],
                       ),
-                      Container(
-                        width: 64.0,
-                        height: 64.0,
-                        decoration: BoxDecoration(
-                          image: const DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(
-                                  'https://thispersondoesnotexist.com/image')),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(100.0)),
-                          border: Border.all(color: Colors.blueAccent),
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Align(
+                          alignment: Alignment.topCenter,
+                          child: CircleAvatar(
+                            radius: 44,
+                            backgroundColor: Color(0xFF153E69),
+                            child: CircleAvatar(
+                              radius: 42,
+                              backgroundColor: Colors.white,
+                              child: CircleAvatar(
+                                radius: 40,
+                                backgroundImage: NetworkImage(
+                                    'https://cdn.pixabay.com/photo/2018/01/15/07/52/woman-3083390_1280.jpg'),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ],
