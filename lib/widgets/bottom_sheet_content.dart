@@ -8,8 +8,9 @@ class BottomSheetContent extends StatelessWidget {
     return Container(
       height: 600,
       padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(24),topRight:Radius.circular(24)),
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(24), topRight: Radius.circular(24)),
         color: primaryColor,
       ),
       child: Column(
