@@ -106,8 +106,10 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 TextButton(
                                   onPressed: () {
-                                    Navigator.pushNamed(
-                                        context, ForgotPasswordPage.routeName);
+                                    if (!_onSend) {
+                                      Navigator.pushNamed(context,
+                                          ForgotPasswordPage.routeName);
+                                    }
                                   },
                                   child: Text(
                                     "Lupa Password?",
@@ -153,8 +155,10 @@ class _LoginPageState extends State<LoginPage> {
                                   alignment: Alignment.centerLeft,
                                 ),
                                 onPressed: () {
-                                  Navigator.pushNamed(
-                                      context, RegisterPage1.routeName);
+                                  if (!_onSend) {
+                                    Navigator.pushNamed(
+                                        context, RegisterPage1.routeName);
+                                  }
                                 },
                               ),
                             ],
