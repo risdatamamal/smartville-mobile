@@ -54,27 +54,20 @@ class UserProvider with ChangeNotifier {
     File? profilePic,
   }) async {
     Register register = await RemoteDataSource.register(
-        nik: nik,
-        nama: nama,
-        email: email,
-        password: password,
-        tglLahir: tglLahir,
-        tempatLahir: tempatLahir,
-        alamat: alamat,
-        dusun: dusun,
-        rt: rt,
-        rw: rw,
-        jenisKelamin: jenisKelamin,
-        noHp: noHp,
-        imageProfile: profilePic
-        );
-    _token = register.data.token;
-    if (_token != null) {
-      await _preferences.setString(
-        keyToken,
-        _token!,
-      );
-    }
+      nik: nik,
+      nama: nama,
+      email: email,
+      password: password,
+      tglLahir: tglLahir,
+      tempatLahir: tempatLahir,
+      alamat: alamat,
+      dusun: dusun,
+      rt: rt,
+      rw: rw,
+      jenisKelamin: jenisKelamin,
+      noHp: noHp,
+      imageProfile: profilePic,
+    );
     notifyListeners();
     return register;
   }
