@@ -28,29 +28,47 @@ class CustomDialog extends StatelessWidget {
           const SizedBox(
             height: 25,
           ),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(primary: secondaryColor),
-              onPressed: onClick,
-              child: Text(
-                'Yakin',
-                style: whiteText.copyWith(fontSize: 14),
-                textAlign: TextAlign.center,
+          Row(
+            children: [
+              Expanded(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: secondaryColor,
+                    shape: const RoundedRectangleBorder(
+                      side: BorderSide(color: secondaryColor, width: 3),
+                      borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                    ),
+                  ),
+                  onPressed: onClick,
+                  child: Text(
+                    'Yakin',
+                    style: whiteText.copyWith(fontSize: 14),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               ),
-            ),
-          ),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(primary: secondaryColor),
-              onPressed: () => Navigator.pop(context),
-              child: Text(
-                'Batal',
-                style: whiteText.copyWith(fontSize: 14),
-                textAlign: TextAlign.center,
+              const SizedBox(
+                width: 20,
               ),
-            ),
+              Expanded(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    primary: Colors.white,
+                    shape: const RoundedRectangleBorder(
+                      side: BorderSide(color: secondaryColor, width: 2),
+                      borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                    ),
+                  ),
+                  onPressed: () => Navigator.pop(context),
+                  child: Text(
+                    'Batal',
+                    style: secondaryText.copyWith(fontSize: 14),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),

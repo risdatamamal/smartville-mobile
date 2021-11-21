@@ -3,7 +3,7 @@ import 'package:provider/src/provider.dart';
 import 'package:smartville/common/colors.dart';
 import 'package:smartville/common/constant.dart';
 import 'package:smartville/common/text_styles.dart';
-import 'package:smartville/model/user.dart';
+import 'package:smartville/model/user_response.dart';
 import 'package:smartville/pages/dashboard_page.dart';
 import 'package:smartville/pages/forgot_password_page.dart';
 import 'package:smartville/provider/user_provider.dart';

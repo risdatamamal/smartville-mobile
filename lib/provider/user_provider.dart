@@ -1,9 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../common/constant.dart';
-import '../model/user.dart';
-import '../model/register.dart';
+import '../model/user_response.dart';
+import '../model/register_response.dart';
 import '../network/remote_data_source.dart';
 
 class UserProvider with ChangeNotifier {
@@ -36,19 +38,21 @@ class UserProvider with ChangeNotifier {
     return auth;
   }
 
-  Future<Register> register(
-      {required String nik,
-      required String nama,
-      required String email,
-      required String password,
-      required String tglLahir,
-      required String tempatLahir,
-      required String alamat,
-      required String dusun,
-      required String rt,
-      required String rw,
-      required int jenisKelamin,
-      required String noHp}) async {
+  Future<Register> register({
+    required String nik,
+    required String nama,
+    required String email,
+    required String password,
+    required String tglLahir,
+    required String tempatLahir,
+    required String alamat,
+    required String dusun,
+    required String rt,
+    required String rw,
+    required int jenisKelamin,
+    required String noHp,
+    File? profilePic,
+  }) async {
     Register register = await RemoteDataSource.register(
         nik: nik,
         nama: nama,
@@ -61,7 +65,9 @@ class UserProvider with ChangeNotifier {
         rt: rt,
         rw: rw,
         jenisKelamin: jenisKelamin,
-        noHp: noHp);
+        noHp: noHp,
+        imageProfile: profilePic
+        );
     _token = register.data.token;
     if (_token != null) {
       await _preferences.setString(
