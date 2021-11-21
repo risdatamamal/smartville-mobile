@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:smartville/common/colors.dart';
 import 'package:smartville/pages/citizen_data_menu.dart';
 import 'package:smartville/pages/dashboard_page.dart';
+import 'package:smartville/pages/edit_user_profile.dart';
 import 'package:smartville/pages/profile_page.dart';
 import 'package:smartville/pages/register_page_2.dart';
 import 'package:smartville/pages/register_page_3.dart';
@@ -68,6 +69,9 @@ class MyApp extends StatelessWidget {
                   builder: (_) => const ForgotPasswordPage());
             case ProfilePage.routeName:
               return MaterialPageRoute(builder: (_) => const ProfilePage());
+
+            case EditUserProfile.routeName:
+              return MaterialPageRoute(builder: (_) => const EditUserProfile());
             default:
               return MaterialPageRoute(
                 builder: (_) {
