@@ -9,8 +9,9 @@ import 'package:smartville/pages/register_page_3.dart';
 import 'package:smartville/pages/wrapper_page.dart';
 import 'package:smartville/pages/forgot_password_page.dart';
 import 'package:smartville/provider/user_provider.dart';
-import 'package:smartville/model/register.dart';
+import 'package:smartville/model/register_response.dart';
 
+import 'model/register_data.dart';
 import 'pages/login_page.dart';
 import 'pages/register_page_1.dart';
 import 'pages/notifikasi_berhasil_page.dart';

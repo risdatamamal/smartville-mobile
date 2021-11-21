@@ -54,16 +54,16 @@ class CustomDialog extends StatelessWidget {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.zero,
-                    primary: secondaryColor,
+                    primary: Colors.white,
                     shape: const RoundedRectangleBorder(
-                      side: BorderSide(color: secondaryColor, width: 3),
+                      side: BorderSide(color: secondaryColor, width: 2),
                       borderRadius: BorderRadius.all(Radius.circular(25.0)),
                     ),
                   ),
                   onPressed: () => Navigator.pop(context),
                   child: Text(
                     'Batal',
-                    style: whiteText.copyWith(fontSize: 14),
+                    style: secondaryText.copyWith(fontSize: 14),
                     textAlign: TextAlign.center,
                   ),
                 ),

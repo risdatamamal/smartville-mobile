@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 Register registerFromJson(String str) => Register.fromJson(json.decode(str));
@@ -14,12 +13,12 @@ class Register {
 
   bool error;
   String message;
-  RegisterData data;
+  Data data;
 
   factory Register.fromJson(Map<String, dynamic> json) => Register(
         error: json["error"],
         message: json["message"],
-        data: RegisterData.fromJson(json["data"]),
+        data: Data.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -29,44 +28,44 @@ class Register {
       };
 }
 
-class RegisterData {
-  RegisterData({
-    this.id,
-    this.nik,
-    this.nama,
-    this.email,
-    this.password,
-    this.tglLahir,
-    this.tempatLahir,
-    this.alamat,
-    this.dusun,
-    this.rt,
-    this.rw,
-    this.jenisKelamin,
-    this.noHp,
-    this.role,
-    this.profilePic,
-    this.token,
+class Data {
+  Data({
+    required this.id,
+    required this.nik,
+    required this.nama,
+    required this.email,
+    required this.password,
+    required this.tglLahir,
+    required this.tempatLahir,
+    required this.alamat,
+    required this.dusun,
+    required this.rt,
+    required this.rw,
+    required this.jenisKelamin,
+    required this.noHp,
+    required this.role,
+    required this.profilePic,
+    required this.token,
   });
 
-  int? id;
-  String? nik;
-  String? nama;
-  String? email;
-  String? password;
-  DateTime? tglLahir;
-  String? tempatLahir;
-  String? alamat;
-  String? dusun;
-  int? rt;
-  int? rw;
-  bool? jenisKelamin;
-  String? noHp;
-  String? role;
-  String? profilePic;
-  String? token;
+  int id;
+  String nik;
+  String nama;
+  String email;
+  String password;
+  DateTime tglLahir;
+  String tempatLahir;
+  String alamat;
+  String dusun;
+  int rt;
+  int rw;
+  bool jenisKelamin;
+  String noHp;
+  String role;
+  String profilePic;
+  String token;
 
-  factory RegisterData.fromJson(Map<String, dynamic> json) => RegisterData(
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json["Id"],
         nik: json["Nik"],
         nama: json["Nama"],
@@ -91,7 +90,7 @@ class RegisterData {
         "Nama": nama,
         "Email": email,
         "Password": password,
-        "Tgl_lahir": tglLahir?.toIso8601String(),
+        "Tgl_lahir": tglLahir.toIso8601String(),
         "Tempat_lahir": tempatLahir,
         "Alamat": alamat,
         "Dusun": dusun,

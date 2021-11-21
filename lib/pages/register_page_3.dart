@@ -7,10 +7,12 @@ import 'package:intl/intl.dart';
 import 'package:smartville/common/constant.dart';
 import 'package:smartville/common/text_styles.dart';
 import 'package:smartville/common/colors.dart';
+import 'package:smartville/model/register_data.dart';
+import 'package:smartville/pages/login_page.dart';
 import 'package:smartville/provider/user_provider.dart';
 import 'package:smartville/widgets/custom_dialog.dart';
 import 'package:smartville/widgets/profile_widget.dart';
-import 'package:smartville/model/register.dart';
+import 'package:smartville/model/register_response.dart';
 import 'package:smartville/pages/dashboard_page.dart';
 import 'package:provider/provider.dart';
 
@@ -33,19 +35,19 @@ class _RegisterPage3State extends State<RegisterPage3> {
     UserProvider provider = context.read<UserProvider>();
     final user = widget.user;
     Register register = await provider.register(
-      nik: user.nik ?? "",
-      nama: user.nama ?? "",
-      email: user.email ?? "",
-      password: user.password ?? "",
-      tglLahir: DateFormat("dd/MM/yyyy").format(user.tglLahir!),
-      tempatLahir: user.tempatLahir ?? "",
-      alamat: user.alamat ?? "",
-      dusun: user.dusun ?? "",
-      rt: user.rt.toString(),
-      rw: user.rw.toString(),
-      jenisKelamin: user.jenisKelamin! ? 1 : 0,
-      noHp: user.noHp ?? "",
-    );
+        nik: user.nik ?? "",
+        nama: user.nama ?? "",
+        email: user.email ?? "",
+        password: user.password ?? "",
+        tglLahir: DateFormat("dd/MM/yyyy").format(user.tglLahir!),
+        tempatLahir: user.tempatLahir ?? "",
+        alamat: user.alamat ?? "",
+        dusun: user.dusun ?? "",
+        rt: user.rt.toString(),
+        rw: user.rw.toString(),
+        jenisKelamin: user.jenisKelamin! ? 1 : 0,
+        noHp: user.noHp ?? "",
+        profilePic: image);
     if (register.data.token == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -58,13 +60,13 @@ class _RegisterPage3State extends State<RegisterPage3> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
-            "Registrasi Berhasil",
+            "Registrasi Berhasil, Masuk untuk melanjutkan",
           ),
         ),
       );
       Navigator.pushNamedAndRemoveUntil(
         context,
-        DashboardPage.routeName,
+        LoginPage.routeName,
         (Route<dynamic> route) => false,
       );
     }
