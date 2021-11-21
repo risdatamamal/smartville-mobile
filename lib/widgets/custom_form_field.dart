@@ -14,6 +14,7 @@ class CustomFormField extends StatelessWidget {
   final MaxLengthEnforcement? maxLengthEnforcement;
   final bool isStrictLength;
   final bool enable;
+  final bool typeMultiline;
 
   const CustomFormField({
     Key? key,
@@ -28,13 +29,18 @@ class CustomFormField extends StatelessWidget {
     this.maxLengthEnforcement,
     this.isStrictLength = false,
     this.enable = true,
+    this.typeMultiline = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       obscureText: obsecureText,
-      keyboardType: typeNumber ? TextInputType.number : TextInputType.text,
+      keyboardType: typeNumber
+          ? TextInputType.number
+          : typeMultiline
+              ? TextInputType.multiline
+              : TextInputType.text,
       inputFormatters:
           typeNumber == true ? [FilteringTextInputFormatter.digitsOnly] : [],
       validator: (value) {
@@ -69,6 +75,8 @@ class CustomFormField extends StatelessWidget {
       controller: textEditingController,
       maxLength: maxLength,
       maxLengthEnforcement: maxLengthEnforcement,
+      minLines: typeMultiline ? 3 : 1,
+      maxLines: typeMultiline ? 4 : 1,
     );
   }
 }
