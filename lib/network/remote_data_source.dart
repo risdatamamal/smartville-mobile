@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../common/constant.dart';
 import '../model/user_response.dart';
+import '../model/news_response.dart';
 import '../model/register_response.dart';
 
 class RemoteDataSource {
@@ -71,5 +72,10 @@ class RemoteDataSource {
       data: formData,
     );
     return registerFromJson(response.data ?? "");
+  }
+
+  static Future<List<Datum>> newsList() async {
+    Response<String> response = await _dio.get<String>('/news');
+    return newsFromJson(response.data ?? "").data as List<Datum>;
   }
 }

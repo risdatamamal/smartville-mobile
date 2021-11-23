@@ -10,13 +10,19 @@ import '../network/remote_data_source.dart';
 
 class UserProvider with ChangeNotifier {
   String? _token;
+  String? _imageProfile;
+  String? _userName;
   late final SharedPreferences _preferences;
 
   String? get token => _token;
+  String? get imageProfile => _imageProfile;
+  String? get userName => _userName;
 
   Future<void> init() async {
     _preferences = await SharedPreferences.getInstance();
     _token = _preferences.getString(keyToken);
+    _imageProfile = _preferences.getString(keyImageProfile);
+    _userName = _preferences.getString(keyUserName);
   }
 
   Future<User> login({
@@ -28,10 +34,20 @@ class UserProvider with ChangeNotifier {
       password: password,
     );
     _token = auth.data?.token;
+    _imageProfile = auth.data?.profilePic;
+    _userName = auth.data?.nama;
     if (_token != null) {
       await _preferences.setString(
         keyToken,
         _token!,
+      );
+      await _preferences.setString(
+        keyImageProfile,
+        _imageProfile!,
+      );
+      await _preferences.setString(
+        keyUserName,
+        _userName!,
       );
     }
     notifyListeners();
@@ -68,6 +84,23 @@ class UserProvider with ChangeNotifier {
       noHp: noHp,
       imageProfile: profilePic,
     );
+    _token = register.data.token;
+    _imageProfile = register.data.profilePic;
+    _userName = register.data.nama;
+    if (_token != null) {
+      await _preferences.setString(
+        keyToken,
+        _token!,
+      );
+      await _preferences.setString(
+        keyImageProfile,
+        _imageProfile!,
+      );
+      await _preferences.setString(
+        keyUserName,
+        _userName!,
+      );
+    }
     notifyListeners();
     return register;
   }

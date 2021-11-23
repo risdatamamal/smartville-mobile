@@ -22,16 +22,8 @@ class MenuUtama extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Container(
-                  margin: const EdgeInsets.only(right: 14),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 20,
-                  ),
-                  width: 4,
-                  height: 35,
-                  color: const Color(0xFFC4C4C4),
-                ),
+                Image.asset('assets/icons/dokumen.png'),
+                const SizedBox(width: 8),
                 TextButton(
                   child: Text(
                     'Permohonan Surat Pengantar',
@@ -69,16 +61,8 @@ class MenuUtama extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Container(
-                  margin: const EdgeInsets.only(right: 14),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 20,
-                  ),
-                  width: 4,
-                  height: 35,
-                  color: const Color(0xFFC4C4C4),
-                ),
+                Image.asset('assets/icons/warga.png'),
+                const SizedBox(width: 8),
                 TextButton(
                   child: Text(
                     'Pendataan Warga Desa',
@@ -116,16 +100,8 @@ class MenuUtama extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Container(
-                  margin: const EdgeInsets.only(right: 14),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 20,
-                  ),
-                  width: 4,
-                  height: 35,
-                  color: const Color(0xFFC4C4C4),
-                ),
+                Image.asset('assets/icons/permohonan.png'),
+                const SizedBox(width: 8),
                 TextButton(
                   child: Text(
                     'Permohonan Bantuan Desa',
@@ -163,16 +139,8 @@ class MenuUtama extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Container(
-                  margin: const EdgeInsets.only(right: 14),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 20,
-                  ),
-                  width: 4,
-                  height: 35,
-                  color: const Color(0xFFC4C4C4),
-                ),
+                Image.asset('assets/icons/pelaporan.png'),
+                const SizedBox(width: 8),
                 TextButton(
                   child: Text(
                     'Pelaporan ',
