@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
 import 'package:smartville/common/colors.dart';
 import 'package:smartville/common/text_styles.dart';
+import 'package:smartville/model/news_response.dart';
 import 'package:smartville/pages/profile_page.dart';
+import 'package:smartville/provider/news_provider.dart';
 import 'package:smartville/widgets/list_pengumuman.dart';
 import 'package:smartville/widgets/menu_utama.dart';
 import 'package:smartville/widgets/bottom_sheet_content.dart';
@@ -15,7 +18,24 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-  List<String> list = ['a', 'b'];
+  List<Datum> newsList = [];
+  bool isLoading = false;
+  Future<void> _initNewsList() async {
+    setState(() => isLoading = true);
+    NewsProvider provider = context.read<NewsProvider>();
+    List<Datum> _newsList = await provider.listNews();
+    if (_newsList.isNotEmpty) {
+      newsList.addAll(_newsList);
+    }
+    setState(() => isLoading = false);
+  }
+
+  @override
+  void initState() {
+    _initNewsList();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -97,10 +117,12 @@ class _DashboardPageState extends State<DashboardPage> {
                   const SizedBox(
                     height: 8,
                   ),
-                  SizedBox(
-                    height: 120,
-                    child: ListPengumuman(pengumumanList: list),
-                  ),
+                  isLoading
+                      ? const CircularProgressIndicator()
+                      : SizedBox(
+                          height: 120,
+                          child: ListPengumuman(pengumumanList: newsList),
+                        ),
                   const SizedBox(height: 20),
                   Text(
                     'Ada keperluan apa hari ini?',
