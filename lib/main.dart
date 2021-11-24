@@ -10,6 +10,7 @@ import 'package:smartville/pages/register_page_3.dart';
 import 'package:smartville/pages/wrapper_page.dart';
 import 'package:smartville/pages/forgot_password_page.dart';
 import 'package:smartville/provider/user_provider.dart';
+import 'package:smartville/provider/news_provider.dart';
 import 'package:smartville/model/register_response.dart';
 
 import 'model/register_data.dart';
@@ -30,6 +31,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => UserProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => NewsProvider(),
         ),
       ],
       child: MaterialApp(

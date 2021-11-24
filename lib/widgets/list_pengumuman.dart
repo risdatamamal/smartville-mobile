@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:smartville/common/text_styles.dart';
+import 'package:smartville/model/news_response.dart';
 
 class ListPengumuman extends StatefulWidget {
   const ListPengumuman({Key? key, required this.pengumumanList})
       : super(key: key);
 
-  final List<String> pengumumanList;
+  final List<Datum> pengumumanList;
   @override
   _ListPengumumanState createState() => _ListPengumumanState();
 }
@@ -31,7 +32,7 @@ class _ListPengumumanState extends State<ListPengumuman> {
                   Rect.fromLTRB(0, 0, rectangle.width, rectangle.height)),
               blendMode: BlendMode.darken,
               child: Image.network(
-                'https://thispersondoesnotexist.com/image',
+                widget.pengumumanList[index].fotoBerita ?? "",
                 fit: BoxFit.cover,
                 width: double.infinity,
                 height: double.infinity,
@@ -44,12 +45,12 @@ class _ListPengumumanState extends State<ListPengumuman> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Bantuan Covid',
+                    widget.pengumumanList[index].judulBerita ?? "",
                     style: primaryText.copyWith(
                         fontWeight: FontWeight.w700, color: Colors.white),
                   ),
                   Text(
-                    'awdasd',
+                    widget.pengumumanList[index].deskripsiBerita ?? "",
                     style: primaryText.copyWith(color: Colors.white),
                   ),
                 ],

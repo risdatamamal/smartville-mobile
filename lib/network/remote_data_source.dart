@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
 import '../common/constant.dart';
 import '../model/user_response.dart';
+import '../model/news_response.dart';
 import '../model/register_response.dart';
 
 class RemoteDataSource {
@@ -11,6 +13,7 @@ class RemoteDataSource {
     BaseOptions(
       baseUrl: baseUrl,
       responseType: ResponseType.plain,
+      contentType: 'multipart/form-data',
       validateStatus: (int? code) {
         return true;
       },
@@ -60,7 +63,8 @@ class RemoteDataSource {
       'rw': rw,
       'jenis_kelamin': jenisKelamin,
       'no_hp': noHp,
-      if (imageProfile != null) 'profile_pic': imageProfile,
+      if (imageProfile != null)
+        'profile_pic': await MultipartFile.fromFile(imageProfile.path),
     });
 
     Response<String> response = await _dio.post<String>(
@@ -68,5 +72,10 @@ class RemoteDataSource {
       data: formData,
     );
     return registerFromJson(response.data ?? "");
+  }
+
+  static Future<List<Datum>> newsList() async {
+    Response<String> response = await _dio.get<String>('/news');
+    return newsFromJson(response.data ?? "").data as List<Datum>;
   }
 }
