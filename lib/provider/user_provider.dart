@@ -12,17 +12,28 @@ class UserProvider with ChangeNotifier {
   String? _token;
   String? _imageProfile;
   String? _userName;
+  String? _userEmail;
+  String? _userTelp;
+  String? _userNik;
+
   late final SharedPreferences _preferences;
 
   String? get token => _token;
   String? get imageProfile => _imageProfile;
   String? get userName => _userName;
+  String? get userEmail => _userEmail;
+  String? get userTelp => _userTelp;
+  String? get userNik => _userNik;
+
 
   Future<void> init() async {
     _preferences = await SharedPreferences.getInstance();
     _token = _preferences.getString(keyToken);
     _imageProfile = _preferences.getString(keyImageProfile);
     _userName = _preferences.getString(keyUserName);
+    _userEmail = _preferences.getString(keyUserEmail);
+    _userTelp = _preferences.getString(keyUserTelp);
+    _userNik = _preferences.getString(keyUserNik);
   }
 
   Future<User> login({
@@ -36,6 +47,9 @@ class UserProvider with ChangeNotifier {
     _token = auth.data?.token;
     _imageProfile = auth.data?.profilePic;
     _userName = auth.data?.nama;
+    _userEmail = auth.data?.email;
+    _userNik = auth.data?.nik;
+    _userTelp = auth.data?.noHp;
     if (_token != null) {
       await _preferences.setString(
         keyToken,
@@ -48,6 +62,18 @@ class UserProvider with ChangeNotifier {
       await _preferences.setString(
         keyUserName,
         _userName!,
+      );
+      await _preferences.setString(
+        keyUserEmail,
+        _userEmail!,
+      );
+      await _preferences.setString(
+        keyUserTelp,
+        _userTelp!,
+      );
+      await _preferences.setString(
+        keyUserNik,
+        _userNik!,
       );
     }
     notifyListeners();
@@ -106,8 +132,21 @@ class UserProvider with ChangeNotifier {
   }
 
   Future<void> logout() async {
+
     _token = null;
+    _userName = null;
+    _imageProfile = null;
+    _userNik = null;
+    _userTelp = null;
+    _userName = null;
+
     await _preferences.remove(keyToken);
+    await _preferences.remove(keyUserName);
+    await _preferences.remove(keyImageProfile);
+    await _preferences.remove(keyUserNik);
+    await _preferences.remove(keyUserTelp);
+    await _preferences.remove(keyUserName);
     notifyListeners();
   }
+
 }
