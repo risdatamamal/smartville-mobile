@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
 import 'package:smartville/common/colors.dart';
 import 'package:smartville/common/text_styles.dart';
+import 'package:smartville/pages/edit_user_profile.dart';
+import 'package:smartville/provider/user_provider.dart';
 import 'package:smartville/widgets/custom_dialog.dart';
+
+import 'login_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -12,6 +17,38 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+
+  String _imageProfile = "";
+  String _userName = "";
+  String _userEmail = "";
+  String _userTelp = "";
+  String _userNik = "";
+
+  Future<void> _userData() async {
+    UserProvider provider = context.read<UserProvider>();
+    String imageProfile = provider.imageProfile ?? "";
+    String userName = provider.userName ?? "";
+    String userEmail = provider.userEmail ?? "";
+    String userTelp = provider.userTelp ?? "";
+    String userNik = provider.userNik ?? "";
+
+
+    setState(() {
+      _imageProfile = imageProfile;
+      _userName = userName;
+      _userEmail = userEmail;
+      _userTelp = userTelp;
+      _userNik = userNik;
+    });
+  }
+
+  @override
+  void initState() {
+    _userData();
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -64,7 +101,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                 image: NetworkImage(
-                                    'https://thispersondoesnotexist.com/image'),
+                                    _imageProfile),
                                 fit: BoxFit.cover,
                               ),
                               borderRadius:
@@ -79,7 +116,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           width: 64,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: primaryColor,
+                            color: secondaryColor,
                           ),
                         ),
                         Padding(
@@ -87,10 +124,10 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: RichText(
                             text: TextSpan(children: [
                               TextSpan(
-                                  text: 'Zac Efron\n',
+                                  text: '$_userName\n',
                                   style: primaryText.copyWith(fontSize: 20)),
                               TextSpan(
-                                  text: 'zacefron@gmail.com',
+                                  text: _userEmail,
                                   style: greyText.copyWith(fontSize: 15)),
                             ]),
                           ),
@@ -116,7 +153,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     text: 'NIK\n',
                                     style: orangeText.copyWith(fontSize: 15)),
                                 TextSpan(
-                                    text: '32764162564718471',
+                                    text: _userNik,
                                     style: blackText),
                               ]),
                               textAlign: TextAlign.center,
@@ -133,7 +170,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 TextSpan(
                                     text: 'No.Telp\n',
                                     style: orangeText.copyWith(fontSize: 15)),
-                                TextSpan(text: '08263517265', style: blackText),
+                                TextSpan(text: _userTelp, style: blackText),
                               ]),
                               textAlign: TextAlign.center,
                             ),
@@ -149,7 +186,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       height: 70,
                     ),
                     InkWell(
-                      onTap: (){print('personal data');},
+                      onTap: (){Navigator.pushNamed(context, EditUserProfile.routeName);},
                       child: CustomButton(
                           imageUrl: 'assets/icons/personalIcon.png',
                           text: 'Personal Data',
@@ -174,7 +211,11 @@ class _ProfilePageState extends State<ProfilePage> {
                             builder: (context) => CustomDialog(
                               text:
                                   "Apakah Anda yakin ingin keluar dari akun ini?",
-                              onClick: () {},
+                              onClick: () {
+                                UserProvider provider = context.read<UserProvider>();
+                                provider.logout();
+                                Navigator.pushNamedAndRemoveUntil(context, LoginPage.routeName, (route) => false);
+                              },
                             ),
                           );
                         },
