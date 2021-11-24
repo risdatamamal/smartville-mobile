@@ -6,13 +6,12 @@ import 'package:smartville/common/text_styles.dart';
 import 'package:smartville/model/user_response.dart';
 import 'package:smartville/pages/dashboard_page.dart';
 import 'package:smartville/pages/forgot_password_page.dart';
-import 'package:smartville/pages/request_support.dart';
 import 'package:smartville/provider/user_provider.dart';
 import 'package:smartville/widgets/custom_form_field.dart';
+import './register_page_1.dart';
 
 class LoginPage extends StatefulWidget {
   static const routeName = 'login';
-
   const LoginPage({Key? key}) : super(key: key);
 
   @override
@@ -158,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                                 onPressed: () {
                                   if (!_onSend) {
                                     Navigator.pushNamed(
-                                        context, RequestSupport.routeName);
+                                        context, RegisterPage1.routeName);
                                   }
                                 },
                               ),
