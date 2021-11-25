@@ -107,7 +107,12 @@ class UserProvider with ChangeNotifier {
 
   Future<void> logout() async {
     _token = null;
+    _userName = null;
+    _imageProfile = null;
+
     await _preferences.remove(keyToken);
+    await _preferences.remove(keyUserName);
+    await _preferences.remove(keyImageProfile);
     notifyListeners();
   }
 }

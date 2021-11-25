@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smartville/common/text_styles.dart';
+import 'package:smartville/pages/pelaporan_warga_page.dart';
+import 'package:smartville/pages/permohonan_surat_pengantar_page.dart';
 
 class MenuUtama extends StatelessWidget {
   const MenuUtama({Key? key}) : super(key: key);
@@ -36,7 +38,10 @@ class MenuUtama extends StatelessWidget {
                     padding: EdgeInsets.zero,
                     alignment: Alignment.centerLeft,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(
+                        context, PermohohonanSuratPengantarPage.routeName);
+                  },
                 )
               ],
             ),
@@ -153,7 +158,9 @@ class MenuUtama extends StatelessWidget {
                     padding: EdgeInsets.zero,
                     alignment: Alignment.centerLeft,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, PelaporanWargaPage.routeName);
+                  },
                 )
               ],
             ),

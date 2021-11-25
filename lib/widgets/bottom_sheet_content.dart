@@ -27,8 +27,8 @@ class BottomSheetContent extends StatelessWidget {
                 topLeft: Radius.circular(10),
                 topRight: Radius.circular(10),
               ),
-              child: Image.network(
-                'https://thispersondoesnotexist.com/image',
+              child: Image.asset(
+                'assets/desa.png',
                 width: double.infinity,
                 height: 155,
                 fit: BoxFit.cover,

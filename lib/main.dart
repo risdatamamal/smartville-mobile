@@ -3,14 +3,18 @@ import 'package:provider/provider.dart';
 import 'package:smartville/common/colors.dart';
 import 'package:smartville/pages/citizen_data_menu.dart';
 import 'package:smartville/pages/dashboard_page.dart';
+import 'package:smartville/pages/pelaporan_warga_page.dart';
+import 'package:smartville/pages/permohonan_surat_pengantar_page.dart';
 import 'package:smartville/pages/profile_page.dart';
 import 'package:smartville/pages/register_page_2.dart';
 import 'package:smartville/pages/register_page_3.dart';
 import 'package:smartville/pages/wrapper_page.dart';
 import 'package:smartville/pages/forgot_password_page.dart';
+import 'package:smartville/provider/permohonan_surat_provider.dart';
 import 'package:smartville/provider/user_provider.dart';
 import 'package:smartville/provider/news_provider.dart';
 import 'package:smartville/model/register_response.dart';
+import 'package:smartville/model/notification_message.dart';
 
 import 'model/register_data.dart';
 import 'pages/login_page.dart';
@@ -33,6 +37,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => NewsProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => PermohohonanSuratProvider(),
         ),
       ],
       child: MaterialApp(
@@ -62,7 +69,25 @@ class MyApp extends StatelessWidget {
                 builder: (_) => RegisterPage3(user: user),
                 settings: settings,
               );
-
+            case PermohohonanSuratPengantarPage.routeName:
+              return MaterialPageRoute(
+                builder: (_) => const PermohohonanSuratPengantarPage(),
+                settings: settings,
+              );
+            case PelaporanWargaPage.routeName:
+              return MaterialPageRoute(
+                builder: (_) => const PelaporanWargaPage(),
+                settings: settings,
+              );
+            case NotifikasiBerhasilPage.routeName:
+              final notificationMessage =
+                  settings.arguments as NotificationMessage;
+              return MaterialPageRoute(
+                builder: (_) => NotifikasiBerhasilPage(
+                  notificationMessage: notificationMessage,
+                ),
+                settings: settings,
+              );
             case CitizenDataMenu.routeName:
               return MaterialPageRoute(builder: (_) => const CitizenDataMenu());
             case DashboardPage.routeName:
