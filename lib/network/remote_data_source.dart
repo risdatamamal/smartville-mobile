@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:smartville/model/pelaporan_response.dart';
+import 'package:smartville/model/permohonan_surat_response.dart';
 
 import '../common/constant.dart';
 import '../model/user_response.dart';
@@ -77,5 +79,17 @@ class RemoteDataSource {
   static Future<List<Datum>> newsList() async {
     Response<String> response = await _dio.get<String>('/news');
     return newsFromJson(response.data ?? "").data as List<Datum>;
+  }
+
+  static Future<PermohonanSurat> permohonanSurat(String token) async {
+    _dio.options.headers["authorization"] = "token $token";
+    Response<String> response = await _dio.get('/introductionmail');
+    return permohonanSuratFromJson(response.data ?? "");
+  }
+
+  static Future<Pelaporan> pelaporan(String token) async {
+    _dio.options.headers["authorization"] = "token $token";
+    Response<String> response = await _dio.get('/report');
+    return pelaporanFromJson(response.data ?? "");
   }
 }

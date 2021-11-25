@@ -20,8 +20,6 @@ class RegisterPage1 extends StatefulWidget {
 }
 
 class _RegisterPage1State extends State<RegisterPage1> {
-  DateTime _selectedDate = DateTime.now();
-
   TextEditingController nikController = TextEditingController();
   TextEditingController namaController = TextEditingController();
   TextEditingController tempatLahirController = TextEditingController();
@@ -40,8 +38,10 @@ class _RegisterPage1State extends State<RegisterPage1> {
     super.dispose();
   }
 
-  _selectDate(BuildContext context) async {
+  _selectDate(BuildContext context, TextEditingController controller) async {
     int yearNow = DateTime.parse(DateTime.now().toString()).year;
+    DateTime _selectedDate = DateTime.now();
+
     final DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: _selectedDate,
@@ -51,8 +51,7 @@ class _RegisterPage1State extends State<RegisterPage1> {
     if (pickedDate != null && pickedDate != _selectedDate) {
       setState(() {
         _selectedDate = pickedDate;
-        tanggalLahirController.text =
-            DateFormat('dd/MM/yyyy').format(_selectedDate);
+        controller.text = DateFormat('dd/MM/yyyy').format(_selectedDate);
       });
     }
   }
@@ -148,7 +147,7 @@ class _RegisterPage1State extends State<RegisterPage1> {
                             textHint: 'Masukan Tanggal Lahir',
                             readOnly: true,
                             onTap: () {
-                              _selectDate(context);
+                              _selectDate(context, tanggalLahirController);
                             },
                           ),
                           const SizedBox(height: 20),

@@ -25,7 +25,6 @@ class UserProvider with ChangeNotifier {
   String? get userTelp => _userTelp;
   String? get userNik => _userNik;
 
-
   Future<void> init() async {
     _preferences = await SharedPreferences.getInstance();
     _token = _preferences.getString(keyToken);
@@ -113,6 +112,9 @@ class UserProvider with ChangeNotifier {
     _token = register.data.token;
     _imageProfile = register.data.profilePic;
     _userName = register.data.nama;
+    _userEmail = register.data.email;
+    _userNik = register.data.nik;
+    _userTelp = register.data.noHp;
     if (_token != null) {
       await _preferences.setString(
         keyToken,
@@ -126,27 +128,36 @@ class UserProvider with ChangeNotifier {
         keyUserName,
         _userName!,
       );
+      await _preferences.setString(
+        keyUserEmail,
+        _userEmail!,
+      );
+      await _preferences.setString(
+        keyUserNik,
+        _userNik!,
+      );
+      await _preferences.setString(
+        keyUserTelp,
+        _userTelp!,
+      );
     }
     notifyListeners();
     return register;
   }
 
   Future<void> logout() async {
-
     _token = null;
     _userName = null;
     _imageProfile = null;
     _userNik = null;
     _userTelp = null;
-    _userName = null;
 
     await _preferences.remove(keyToken);
     await _preferences.remove(keyUserName);
     await _preferences.remove(keyImageProfile);
     await _preferences.remove(keyUserNik);
     await _preferences.remove(keyUserTelp);
-    await _preferences.remove(keyUserName);
+
     notifyListeners();
   }
-
 }

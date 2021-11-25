@@ -1,15 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:smartville/common/colors.dart';
 import 'package:smartville/common/text_styles.dart';
+import 'package:smartville/model/notification_message.dart';
+import 'package:smartville/pages/dashboard_page.dart';
 
 class NotifikasiBerhasilPage extends StatefulWidget {
-  const NotifikasiBerhasilPage({Key? key}) : super(key: key);
-
+  const NotifikasiBerhasilPage({
+    Key? key,
+    this.notificationMessage,
+  }) : super(key: key);
+  static const routeName = 'notifikasi_berhasil_page';
+  final NotificationMessage? notificationMessage;
   @override
   _NotifikasiBerhasilPageState createState() => _NotifikasiBerhasilPageState();
 }
 
 class _NotifikasiBerhasilPageState extends State<NotifikasiBerhasilPage> {
+  _navigateTo(String page) {
+    if (page.contains("dashboard")) {
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        DashboardPage.routeName,
+        (Route<dynamic> route) => false,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -44,18 +60,16 @@ class _NotifikasiBerhasilPageState extends State<NotifikasiBerhasilPage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Image.asset('assets/celebration.png'),
+                    Image.asset(widget.notificationMessage?.imageAssets ?? ""),
                     const SizedBox(height: 8),
                     Text(
-                      'Email Verifikasi Terkirim!',
+                      widget.notificationMessage?.title ?? "",
                       style: greyText.copyWith(
                           fontSize: 20, fontWeight: FontWeight.w700),
                     ),
                     const SizedBox(height: 8),
-                    Text(
-                        'Email verifikasi telah dikirim. Silahkan cek email Anda untuk melanjutkan pendaftaran. ',
-                        textAlign: TextAlign.center,
-                        style: greyText),
+                    Text(widget.notificationMessage?.message ?? "",
+                        textAlign: TextAlign.center, style: greyText),
                     const SizedBox(height: 40),
                     Container(
                       width: double.infinity,
@@ -63,10 +77,13 @@ class _NotifikasiBerhasilPageState extends State<NotifikasiBerhasilPage> {
                         style: ElevatedButton.styleFrom(
                           primary: primaryColor,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          _navigateTo(
+                              widget.notificationMessage?.navigateTo ?? "");
+                        },
                         child: Text(
-                          'Aksi',
-                          style: blackText.copyWith(fontSize: 16),
+                          widget.notificationMessage?.textButton ?? "",
+                          style: blackText.copyWith(fontSize: 11),
                         ),
                       ),
                     ),
