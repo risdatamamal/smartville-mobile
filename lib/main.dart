@@ -3,29 +3,22 @@ import 'package:provider/provider.dart';
 import 'package:smartville/common/colors.dart';
 import 'package:smartville/pages/citizen_data_menu.dart';
 import 'package:smartville/pages/dashboard_page.dart';
-<<<<<<< HEAD
 import 'package:smartville/pages/pelaporan_warga_page.dart';
 import 'package:smartville/pages/permohonan_surat_pengantar_page.dart';
-=======
 import 'package:smartville/pages/edit_user_profile.dart';
 import 'package:smartville/pages/forgot_password_page.dart';
->>>>>>> 0e36b1974a6cb113ad2decf365f2665f830c37a4
+
 import 'package:smartville/pages/profile_page.dart';
 import 'package:smartville/pages/register_page_2.dart';
 import 'package:smartville/pages/register_page_3.dart';
 import 'package:smartville/pages/request_support.dart';
 import 'package:smartville/pages/wrapper_page.dart';
-<<<<<<< HEAD
-import 'package:smartville/pages/forgot_password_page.dart';
+import 'package:smartville/pages/notifikasi_berhasil_page.dart';
 import 'package:smartville/provider/permohonan_surat_provider.dart';
 import 'package:smartville/provider/user_provider.dart';
 import 'package:smartville/provider/news_provider.dart';
 import 'package:smartville/model/register_response.dart';
 import 'package:smartville/model/notification_message.dart';
-=======
-import 'package:smartville/provider/news_provider.dart';
-import 'package:smartville/provider/user_provider.dart';
->>>>>>> 0e36b1974a6cb113ad2decf365f2665f830c37a4
 
 import 'model/register_data.dart';
 import 'pages/login_page.dart';
