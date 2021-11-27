@@ -8,6 +8,7 @@ import 'package:smartville/model/permohonan_surat_response.dart';
 import 'package:smartville/pages/notifikasi_berhasil_page.dart';
 import 'package:smartville/provider/permohonan_surat_provider.dart';
 import 'package:smartville/provider/user_provider.dart';
+import 'package:smartville/widgets/custom_dialog.dart';
 import 'package:smartville/widgets/custom_form_field.dart';
 import 'package:smartville/widgets/custom_select_option.dart';
 
@@ -183,12 +184,23 @@ class _PermohohonanSuratPengantarState
                                       ),
                                       onPressed: () {
                                         if (_formKey.currentState!.validate()) {
-                                          _submitPermohonanSurat(
-                                              nikController.text,
-                                              namaController.text,
-                                              noHpController.text,
-                                              alamatController.text,
-                                              suratPermohonanController.text);
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) => CustomDialog(
+                                              text:
+                                                  "Apakah Anda yakin data yang dimasukan sudah benar ?",
+                                              onClick: () {
+                                                _submitPermohonanSurat(
+                                                    nikController.text,
+                                                    namaController.text,
+                                                    noHpController.text,
+                                                    alamatController.text,
+                                                    suratPermohonanController
+                                                        .text);
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                          );
                                         }
                                       },
                                       child: Text(

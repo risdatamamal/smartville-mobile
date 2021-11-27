@@ -85,7 +85,9 @@ class MenuUtama extends StatelessWidget {
               ],
             ),
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, PelaporanWargaPage.routeName);
+          },
           style: TextButton.styleFrom(
             padding: EdgeInsets.zero,
             alignment: Alignment.centerLeft,

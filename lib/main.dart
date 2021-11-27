@@ -14,6 +14,7 @@ import 'package:smartville/pages/register_page_3.dart';
 import 'package:smartville/pages/request_support.dart';
 import 'package:smartville/pages/wrapper_page.dart';
 import 'package:smartville/pages/notifikasi_berhasil_page.dart';
+import 'package:smartville/provider/pelaporan_warga_provider.dart';
 import 'package:smartville/provider/permohonan_surat_provider.dart';
 import 'package:smartville/provider/user_provider.dart';
 import 'package:smartville/provider/news_provider.dart';
@@ -43,6 +44,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => PermohohonanSuratProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => PelaporanWargaProvider(),
         ),
       ],
       child: MaterialApp(
