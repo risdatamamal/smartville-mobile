@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:smartville/common/text_styles.dart';
+import 'package:smartville/pages/citizen_data_menu.dart';
 import 'package:smartville/pages/pelaporan_warga_page.dart';
+import 'package:smartville/pages/pendataan_kelahiran_page.dart';
 import 'package:smartville/pages/permohonan_surat_pengantar_page.dart';
 
 class MenuUtama extends StatelessWidget {
@@ -80,7 +82,7 @@ class MenuUtama extends StatelessWidget {
                     padding: EdgeInsets.zero,
                     alignment: Alignment.centerLeft,
                   ),
-                  onPressed: () {},
+                  onPressed: () { Navigator.pushNamed(context, CitizenDataMenu.routeName);},
                 )
               ],
             ),
