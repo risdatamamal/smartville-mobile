@@ -24,7 +24,9 @@ class _ProfilePageState extends State<ProfilePage> {
   String _userTelp = "";
   String _userNik = "";
 
+
   Future<void> _userData() async {
+
     UserProvider provider = context.read<UserProvider>();
     String imageProfile = provider.imageProfile ?? "";
     String userName = provider.userName ?? "";
@@ -34,6 +36,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
 
     setState(() {
+
       _imageProfile = imageProfile;
       _userName = userName;
       _userEmail = userEmail;
@@ -225,7 +228,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             style: primaryText.copyWith(fontSize: 15))),
                   ],
                 ),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(30),

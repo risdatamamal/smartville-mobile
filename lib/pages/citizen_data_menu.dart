@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smartville/common/colors.dart';
 import 'package:smartville/common/text_styles.dart';
+import 'package:smartville/pages/pendataan_domisili_page.dart';
+import 'package:smartville/pages/pendataan_kelahiran_page.dart';
+import 'package:smartville/pages/pendataan_kematian_page.dart';
 
 class CitizenDataMenu extends StatefulWidget {
   const CitizenDataMenu({Key? key}) : super(key: key);
@@ -39,9 +42,10 @@ class _CitizenDataMenuState extends State<CitizenDataMenu> {
               borderRadius: BorderRadius.circular(20),
               color: Color.fromRGBO(121, 175, 167, 1),
               shadowColor: Color.fromRGBO(0, 0, 0, 0.25),
-              child: const InkWell(
+              child:  InkWell(
+                onTap: (){Navigator.pushNamed(context, PendataanKelahiranPage.routeName);},
                 splashColor: Colors.greenAccent,
-                child: Padding(
+                child: const Padding(
                   padding: EdgeInsets.all(16),
                   child: Text(
                     "Pendataan Kelahiran",
@@ -59,9 +63,10 @@ class _CitizenDataMenuState extends State<CitizenDataMenu> {
               borderRadius: BorderRadius.circular(20),
               color: Color.fromRGBO(121, 175, 167, 1),
               shadowColor: Color.fromRGBO(0, 0, 0, 0.25),
-              child: const InkWell(
+              child:  InkWell(
+                onTap: (){Navigator.pushNamed(context, PendataanKematianPage.routeName);},
                 splashColor: Colors.greenAccent,
-                child: Padding(
+                child: const Padding(
                   padding: EdgeInsets.all(16),
                   child: Text(
                     "Pendataan Kematian",
@@ -78,9 +83,10 @@ class _CitizenDataMenuState extends State<CitizenDataMenu> {
               borderRadius: BorderRadius.circular(20),
               color: Color.fromRGBO(121, 175, 167, 1),
               shadowColor: Color.fromRGBO(0, 0, 0, 0.25),
-              child: const InkWell(
+              child:  InkWell(
+                onTap: (){Navigator.pushNamed(context, PendataanDomisiliPage.routeName);},
                 splashColor: Colors.greenAccent,
-                child: Padding(
+                child: const Padding(
                   padding: EdgeInsets.all(16),
                   child: Text(
                     "Pendataan Domisili",

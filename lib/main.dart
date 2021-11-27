@@ -4,6 +4,9 @@ import 'package:smartville/common/colors.dart';
 import 'package:smartville/pages/citizen_data_menu.dart';
 import 'package:smartville/pages/dashboard_page.dart';
 import 'package:smartville/pages/pelaporan_warga_page.dart';
+import 'package:smartville/pages/pendataan_domisili_page.dart';
+import 'package:smartville/pages/pendataan_kelahiran_page.dart';
+import 'package:smartville/pages/pendataan_kematian_page.dart';
 import 'package:smartville/pages/permohonan_surat_pengantar_page.dart';
 import 'package:smartville/pages/edit_user_profile.dart';
 import 'package:smartville/pages/forgot_password_page.dart';
@@ -84,6 +87,21 @@ class MyApp extends StatelessWidget {
             case PelaporanWargaPage.routeName:
               return MaterialPageRoute(
                 builder: (_) => const PelaporanWargaPage(),
+                settings: settings,
+              );
+            case PendataanKelahiranPage.routeName:
+              return MaterialPageRoute(
+                builder: (_) => const PendataanKelahiranPage(),
+                settings: settings,
+              );
+            case PendataanKematianPage.routeName:
+              return MaterialPageRoute(
+                builder: (_) => const PendataanKematianPage(),
+                settings: settings,
+              );
+            case PendataanDomisiliPage.routeName:
+              return MaterialPageRoute(
+                builder: (_) => const PendataanDomisiliPage(),
                 settings: settings,
               );
             case NotifikasiBerhasilPage.routeName:
