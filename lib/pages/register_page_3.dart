@@ -39,7 +39,7 @@ class _RegisterPage3State extends State<RegisterPage3> {
         nama: user.nama ?? "",
         email: user.email ?? "",
         password: user.password ?? "",
-        tglLahir: DateFormat("dd/MM/yyyy").format(user.tglLahir!),
+        tglLahir: DateFormat("yyyyMMdd").format(user.tglLahir!),
         tempatLahir: user.tempatLahir ?? "",
         alamat: user.alamat ?? "",
         dusun: user.dusun ?? "",
