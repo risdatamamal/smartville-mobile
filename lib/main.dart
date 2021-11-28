@@ -18,10 +18,10 @@ import 'package:smartville/provider/pelaporan_warga_provider.dart';
 import 'package:smartville/provider/permohonan_surat_provider.dart';
 import 'package:smartville/provider/user_provider.dart';
 import 'package:smartville/provider/news_provider.dart';
-import 'package:smartville/model/register_response.dart';
 import 'package:smartville/model/notification_message.dart';
 
 import 'model/register_data.dart';
+import 'pages/history_page.dart';
 import 'pages/login_page.dart';
 import 'pages/register_page_1.dart';
 
@@ -110,6 +110,10 @@ class MyApp extends StatelessWidget {
 
             case RequestSupport.routeName:
               return MaterialPageRoute(builder: (_) => const RequestSupport());
+
+            case HistoryPage.routeName:
+              return MaterialPageRoute(builder: (_) => const HistoryPage());
+
             default:
               return MaterialPageRoute(
                 builder: (_) {
