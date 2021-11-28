@@ -1,7 +1,8 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
+import 'package:smartville/model/forgot_password_response.dart';
+import 'package:smartville/model/otp_response.dart';
 import 'package:smartville/model/pelaporan_response.dart';
 import 'package:smartville/model/permohonan_surat_response.dart';
 
@@ -150,5 +151,32 @@ class RemoteDataSource {
     });
     Response<String> response = await _dio.post('/report', data: formData);
     return pelaporanFromJson(response.data ?? "");
+  }
+
+  static Future<OtpResponse> sendOtp({required String email}) async {
+    var formData = FormData.fromMap({
+      'to': email,
+      'subject': 'Konfirmasi Reset Password',
+    });
+    Response<String> response = await _dio.post<String>(
+      '/user/email-verif',
+      data: formData,
+    );
+    return otpResponseFromJson(response.data ?? "");
+  }
+
+  static Future<ForgotPasswordResponse> forgotPassword({
+    required String email,
+    required String newPassword,
+  }) async {
+    var formData = FormData.fromMap({
+      'email': email,
+      'new_password': newPassword,
+    });
+    Response<String> response = await _dio.put<String>(
+      '/user/forgot-password',
+      data: formData,
+    );
+    return forgotPasswordResponseFromJson(response.data ?? "");
   }
 }
