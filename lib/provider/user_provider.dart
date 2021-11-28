@@ -160,4 +160,44 @@ class UserProvider with ChangeNotifier {
 
     notifyListeners();
   }
+
+  Future<Register> editProfile({
+    required String nama,
+    required String alamat,
+    required String noHp,
+    required String email,
+    File? profilePic,
+  }) async {
+    Register register = await RemoteDataSource.editProfile(
+      nama: nama,
+      email: email,
+      alamat: alamat,
+      noHp: noHp,
+      imageProfile: profilePic,
+    );
+    _imageProfile = register.data.profilePic;
+    _userName = register.data.nama;
+    _userEmail = register.data.email;
+    _userTelp = register.data.noHp;
+    if (_token != null) {
+      await _preferences.setString(
+        keyImageProfile,
+        _imageProfile!,
+      );
+      await _preferences.setString(
+        keyUserName,
+        _userName!,
+      );
+      await _preferences.setString(
+        keyUserEmail,
+        _userEmail!,
+      );
+      await _preferences.setString(
+        keyUserTelp,
+        _userTelp!,
+      );
+    }
+    notifyListeners();
+    return register;
+  }
 }

@@ -76,20 +76,76 @@ class RemoteDataSource {
     return registerFromJson(response.data ?? "");
   }
 
+  static Future<Register> editProfile({
+    required String nama,
+    required String email,
+    required String alamat,
+    required String noHp,
+    File? imageProfile,
+  }) async {
+    var formData = FormData.fromMap({
+      'nama': nama,
+      'email': email,
+      'alamat': alamat,
+      'no_hp': noHp,
+      if (imageProfile != null)
+        'profile_pic': await MultipartFile.fromFile(imageProfile.path),
+    });
+
+    Response<String> response = await _dio.post<String>(
+      '/user/edit',
+      data: formData,
+    );
+    return registerFromJson(response.data ?? "");
+  }
+
   static Future<List<Datum>> newsList() async {
     Response<String> response = await _dio.get<String>('/news');
     return newsFromJson(response.data ?? "").data as List<Datum>;
   }
 
-  static Future<PermohonanSurat> permohonanSurat(String token) async {
-    _dio.options.headers["authorization"] = "token $token";
-    Response<String> response = await _dio.get('/introductionmail');
+  static Future<PermohonanSurat> permohonanSurat(
+      String token,
+      String nikPemohon,
+      String namaPemohon,
+      String noHp,
+      String alamatPemohon,
+      String jenisSurat) async {
+    _dio.options.headers["authorization"] = "Bearer $token";
+    var formData = FormData.fromMap({
+      'nik_pemohon': nikPemohon,
+      'nama_pemohon': namaPemohon,
+      'no_hp': noHp,
+      'alamat_pemohon': alamatPemohon,
+      'jenis_surat': jenisSurat,
+    });
+    Response<String> response =
+        await _dio.post('/introductionmail', data: formData);
+    print(response.data ?? "");
     return permohonanSuratFromJson(response.data ?? "");
   }
 
-  static Future<Pelaporan> pelaporan(String token) async {
-    _dio.options.headers["authorization"] = "token $token";
-    Response<String> response = await _dio.get('/report');
+  static Future<Pelaporan> pelaporan(
+      String token,
+      String namaPelapor,
+      String deskripsi,
+      String tglLaporan,
+      String jenisLaporan,
+      String noHp,
+      String alamat,
+      File? dokumentasiKejadian) async {
+    _dio.options.headers["authorization"] = "Bearer $token";
+    var formData = FormData.fromMap({
+      'nama_pelapor': namaPelapor,
+      'deskripsi': deskripsi,
+      'tgl_laporan': tglLaporan,
+      'jenis_laporan': jenisLaporan,
+      'no_hp': noHp,
+      'alamat': alamat,
+      if (dokumentasiKejadian != null)
+        'foto_kejadian': await MultipartFile.fromFile(dokumentasiKejadian.path)
+    });
+    Response<String> response = await _dio.post('/report', data: formData);
     return pelaporanFromJson(response.data ?? "");
   }
 }
