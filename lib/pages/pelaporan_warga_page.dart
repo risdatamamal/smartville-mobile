@@ -139,8 +139,8 @@ class _PelaporanWargaPageState extends State<PelaporanWargaPage> {
               child: Container(
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40.0),
-                    topRight: Radius.circular(40.0),
+                    topLeft: Radius.circular(30.0),
+                    topRight: Radius.circular(30),
                   ),
                   color: Colors.white,
                 ),

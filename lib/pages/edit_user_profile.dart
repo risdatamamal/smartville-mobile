@@ -60,6 +60,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
     UserProvider provider = context.read<UserProvider>();
 
     Register register = await provider.editProfile(
+        token: provider.token!,
         nama: nama,
         email: email,
         alamat: alamat,
@@ -91,7 +92,8 @@ class _EditUserProfileState extends State<EditUserProfile> {
     UserProvider provider = context.read<UserProvider>();
     nikController = TextEditingController(text: provider.userNik);
     nameController = TextEditingController(text: provider.userName);
-    addressController = TextEditingController(text: provider.userName);
+    emailController = TextEditingController(text: provider.userEmail);
+    addressController = TextEditingController(text: provider.userAlamat);
     phoneController = TextEditingController(text: provider.userTelp);
     jenisKelamin = JenisKelamin.P;
     imageProfile = provider.imageProfile ?? "";
@@ -178,6 +180,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
               ),
               const SizedBox(height: 6),
               CustomFormField(
+                typeNumber: true,
                 textEditingController: phoneController,
                 textHint: 'Masukkan No. Telepon',
               ),
@@ -188,7 +191,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
               ),
               const SizedBox(height: 6),
               CustomFormField(
-                textEditingController: phoneController,
+                textEditingController: emailController,
                 textHint: 'Masukkan Email',
               ),
               const SizedBox(height: 20),
@@ -273,6 +276,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                                       addressController.text,
                                       phoneController.text,
                                       emailController.text);
+                                  Navigator.pop(context);
                                 },
                               ),
                             );

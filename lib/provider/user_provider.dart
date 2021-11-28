@@ -15,6 +15,7 @@ class UserProvider with ChangeNotifier {
   String? _userEmail;
   String? _userTelp;
   String? _userNik;
+  String? _userAlamat;
 
   late final SharedPreferences _preferences;
 
@@ -24,6 +25,7 @@ class UserProvider with ChangeNotifier {
   String? get userEmail => _userEmail;
   String? get userTelp => _userTelp;
   String? get userNik => _userNik;
+  String? get userAlamat => _userAlamat;
 
   Future<void> init() async {
     _preferences = await SharedPreferences.getInstance();
@@ -33,6 +35,7 @@ class UserProvider with ChangeNotifier {
     _userEmail = _preferences.getString(keyUserEmail);
     _userTelp = _preferences.getString(keyUserTelp);
     _userNik = _preferences.getString(keyUserNik);
+    _userAlamat = _preferences.getString(keyUserAlamat);
   }
 
   Future<User> login({
@@ -49,6 +52,7 @@ class UserProvider with ChangeNotifier {
     _userEmail = auth.data?.email;
     _userNik = auth.data?.nik;
     _userTelp = auth.data?.noHp;
+    _userAlamat = auth.data?.alamat;
     if (_token != null) {
       await _preferences.setString(
         keyToken,
@@ -73,6 +77,10 @@ class UserProvider with ChangeNotifier {
       await _preferences.setString(
         keyUserNik,
         _userNik!,
+      );
+      await _preferences.setString(
+        keyUserAlamat,
+        _userAlamat!,
       );
     }
     notifyListeners();
@@ -115,6 +123,7 @@ class UserProvider with ChangeNotifier {
     _userEmail = register.data.email;
     _userNik = register.data.nik;
     _userTelp = register.data.noHp;
+    _userAlamat = register.data.alamat;
     if (_token != null) {
       await _preferences.setString(
         keyToken,
@@ -140,6 +149,10 @@ class UserProvider with ChangeNotifier {
         keyUserTelp,
         _userTelp!,
       );
+      await _preferences.setString(
+        keyUserAlamat,
+        _userAlamat!,
+      );
     }
     notifyListeners();
     return register;
@@ -157,11 +170,13 @@ class UserProvider with ChangeNotifier {
     await _preferences.remove(keyImageProfile);
     await _preferences.remove(keyUserNik);
     await _preferences.remove(keyUserTelp);
+    await _preferences.remove(keyUserAlamat);
 
     notifyListeners();
   }
 
   Future<Register> editProfile({
+    required String token,
     required String nama,
     required String alamat,
     required String noHp,
@@ -169,6 +184,7 @@ class UserProvider with ChangeNotifier {
     File? profilePic,
   }) async {
     Register register = await RemoteDataSource.editProfile(
+      token: token,
       nama: nama,
       email: email,
       alamat: alamat,
@@ -178,12 +194,15 @@ class UserProvider with ChangeNotifier {
     _imageProfile = register.data.profilePic;
     _userName = register.data.nama;
     _userEmail = register.data.email;
+    _userAlamat = register.data.alamat;
     _userTelp = register.data.noHp;
     if (_token != null) {
-      await _preferences.setString(
-        keyImageProfile,
-        _imageProfile!,
-      );
+      if (profilePic != null) {
+        await _preferences.setString(
+          keyImageProfile,
+          _imageProfile!,
+        );
+      }
       await _preferences.setString(
         keyUserName,
         _userName!,
@@ -195,6 +214,10 @@ class UserProvider with ChangeNotifier {
       await _preferences.setString(
         keyUserTelp,
         _userTelp!,
+      );
+      await _preferences.setString(
+        keyUserAlamat,
+        _userAlamat!,
       );
     }
     notifyListeners();
