@@ -142,7 +142,9 @@ class _DashboardPageState extends State<DashboardPage> {
                   style: blackText,
                 ),
                 const SizedBox(height: 8),
-                const MenuUtama(),
+                const SingleChildScrollView(
+                  child: MenuUtama(),
+                ),
               ],
             ),
           ),
