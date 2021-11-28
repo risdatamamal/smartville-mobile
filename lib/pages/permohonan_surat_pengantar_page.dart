@@ -84,7 +84,10 @@ class _PermohohonanSuratPengantarState
     return Scaffold(
       backgroundColor: const Color(0xFF70C7BA),
       appBar: AppBar(
-        title: Text('Permohonan Surat Pengantar', style: whiteText),
+        title: Text(
+          'Permohonan Surat Pengantar',
+          style: whiteText.copyWith(fontSize: 14),
+        ),
         backgroundColor: const Color(0xFF70C7BA),
         elevation: 0.0,
         leading: const BackButton(color: Colors.white),
@@ -95,8 +98,11 @@ class _PermohohonanSuratPengantarState
             const SizedBox(height: 50),
             Flexible(
               child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(40.0),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30.0),
+                    topRight: Radius.circular(30),
+                  ),
                   color: Colors.white,
                 ),
                 height: double.infinity,

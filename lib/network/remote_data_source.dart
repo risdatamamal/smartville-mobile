@@ -34,6 +34,7 @@ class RemoteDataSource {
       '/login',
       data: formData,
     );
+    print(response);
     return userFromJson(response.data ?? "");
   }
 
@@ -77,6 +78,7 @@ class RemoteDataSource {
   }
 
   static Future<Register> editProfile({
+    required String token,
     required String nama,
     required String email,
     required String alamat,
@@ -91,11 +93,12 @@ class RemoteDataSource {
       if (imageProfile != null)
         'profile_pic': await MultipartFile.fromFile(imageProfile.path),
     });
-
-    Response<String> response = await _dio.post<String>(
+    _dio.options.headers["authorization"] = "Bearer $token";
+    Response<String> response = await _dio.put<String>(
       '/user/edit',
       data: formData,
     );
+    print(response);
     return registerFromJson(response.data ?? "");
   }
 
