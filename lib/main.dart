@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smartville/common/colors.dart';
+import 'package:smartville/pages/change_password_forgot_page.dart';
 import 'package:smartville/pages/citizen_data_menu.dart';
 import 'package:smartville/pages/dashboard_page.dart';
+import 'package:smartville/pages/otp_page.dart';
 import 'package:smartville/pages/pelaporan_warga_page.dart';
 import 'package:smartville/pages/permohonan_surat_pengantar_page.dart';
 import 'package:smartville/pages/edit_user_profile.dart';
@@ -14,6 +16,7 @@ import 'package:smartville/pages/register_page_3.dart';
 import 'package:smartville/pages/request_support.dart';
 import 'package:smartville/pages/wrapper_page.dart';
 import 'package:smartville/pages/notifikasi_berhasil_page.dart';
+import 'package:smartville/provider/forgot_password_provider.dart';
 import 'package:smartville/provider/pelaporan_warga_provider.dart';
 import 'package:smartville/provider/permohonan_surat_provider.dart';
 import 'package:smartville/provider/user_provider.dart';
@@ -47,6 +50,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => PelaporanWargaProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ForgotPasswordProvider(),
         ),
       ],
       child: MaterialApp(
@@ -113,6 +119,20 @@ class MyApp extends StatelessWidget {
 
             case HistoryPage.routeName:
               return MaterialPageRoute(builder: (_) => const HistoryPage());
+
+            case OtpPage.routeName:
+              final emailConfirmation = settings.arguments as String;
+              return MaterialPageRoute(
+                builder: (_) => OtpPage(
+                  emailConfirmation: emailConfirmation,
+                ),
+              );
+
+            case ChangePasswordForgotPage.routeName:
+              final email = settings.arguments as String;
+              return MaterialPageRoute(
+                builder: (_) => ChangePasswordForgotPage(email: email),
+              );
 
             default:
               return MaterialPageRoute(

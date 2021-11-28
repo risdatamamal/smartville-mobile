@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:smartville/common/colors.dart';
 import 'package:smartville/common/constant.dart';
 import 'package:smartville/common/text_styles.dart';
+import 'package:smartville/model/otp_response.dart';
+import 'package:smartville/pages/otp_page.dart';
+import 'package:smartville/provider/forgot_password_provider.dart';
 import 'package:smartville/widgets/custom_form_field.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
@@ -24,6 +28,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
+    ForgotPasswordProvider forgotPasswordProvider =
+        Provider.of<ForgotPasswordProvider>(context);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -65,21 +71,51 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     ),
                   ),
                   const SizedBox(height: 45),
-                  Container(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: primaryColor,
-                      ),
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {}
-                      },
-                      child: Text(
-                        'Kirim link',
-                        style: blackText.copyWith(fontSize: 16),
-                      ),
-                    ),
-                  ),
+                  _onSend
+                      ? const LinearProgressIndicator()
+                      : SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: primaryColor,
+                            ),
+                            onPressed: () async {
+                              setState(() {
+                                _onSend = true;
+                              });
+                              if (_formKey.currentState!.validate()) {
+                                OtpResponse otp =
+                                    await forgotPasswordProvider.sendOtp(
+                                  email: _emailController.text,
+                                );
+
+                                if (otp.error) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        otp.message,
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  await forgotPasswordProvider
+                                      .saveOtp(otp.data!.otp);
+                                  Navigator.of(context).pushNamed(
+                                    OtpPage.routeName,
+                                    arguments: otp.data!.email,
+                                  );
+                                }
+                              }
+                              setState(() {
+                                _onSend = false;
+                              });
+                            },
+                            child: Text(
+                              'Kirim link',
+                              style: blackText.copyWith(fontSize: 16),
+                            ),
+                          ),
+                        ),
                   Row(
                     children: [
                       Text(
@@ -100,9 +136,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           alignment: Alignment.centerLeft,
                         ),
                         onPressed: () {
-                          Navigator.pop(
-                            context,
-                          );
+                          Navigator.pop(context);
                         },
                       ),
                     ],
