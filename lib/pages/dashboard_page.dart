@@ -100,7 +100,9 @@ class _DashboardPageState extends State<DashboardPage> {
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                 image: _imageProfile == ""
-                                    ? const AssetImage('') as ImageProvider
+                                    ? const AssetImage(
+                                            'assets/default_profile.png')
+                                        as ImageProvider
                                     : NetworkImage(_imageProfile),
                                 fit: BoxFit.cover,
                               ),
@@ -146,7 +148,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   ),
                   const SizedBox(height: 8),
                   const MenuUtama(),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 90),
                 ],
               ),
             ),
