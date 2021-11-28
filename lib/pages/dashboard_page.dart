@@ -58,97 +58,100 @@ class _DashboardPageState extends State<DashboardPage> {
         children: [
           Container(
             padding: const EdgeInsets.only(top: 30, left: 30, right: 30),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //Profile
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Halo,',
-                          style: greyText,
-                          textAlign: TextAlign.start,
-                        ),
-                        TextButton(
-                          child: Text(
-                            _userName,
-                            style: primaryText.copyWith(fontSize: 18),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //Profile
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Halo,',
+                            style: greyText,
+                            textAlign: TextAlign.start,
                           ),
-                          style: TextButton.styleFrom(
-                            padding: EdgeInsets.zero,
-                            alignment: Alignment.centerLeft,
+                          TextButton(
+                            child: Text(
+                              _userName,
+                              style: primaryText.copyWith(fontSize: 18),
+                            ),
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets.zero,
+                              alignment: Alignment.centerLeft,
+                            ),
+                            onPressed: () {},
                           ),
-                          onPressed: () {},
-                        ),
-                      ],
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, ProfilePage.routeName);
-                      },
-                      child: Container(
-                        margin: const EdgeInsets.only(right: 17, top: 24),
-                        padding: const EdgeInsets.all(1.2),
+                        ],
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, ProfilePage.routeName);
+                        },
                         child: Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: NetworkImage(_imageProfile),
-                              fit: BoxFit.cover,
-                            ),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(50.0)),
-                            border: Border.all(
-                              color: Colors.white,
-                              width: 2,
+                          margin: const EdgeInsets.only(right: 17, top: 24),
+                          padding: const EdgeInsets.all(1.2),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: _imageProfile == ""
+                                    ? const AssetImage('') as ImageProvider
+                                    : NetworkImage(_imageProfile),
+                                fit: BoxFit.cover,
+                              ),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(50.0)),
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 2,
+                              ),
                             ),
                           ),
-                        ),
-                        height: 64,
-                        width: 64,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: secondaryColor,
+                          height: 64,
+                          width: 64,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: secondaryColor,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                //Ada apa hari ini?
-                const SizedBox(
-                  height: 18,
-                ),
-                Text(
-                  'Ada apa hari ini?',
-                  style: blackText,
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                isLoading
-                    ? const CircularProgressIndicator()
-                    : SizedBox(
-                        height: 120,
-                        child: ListPengumuman(pengumumanList: newsList),
-                      ),
-                const SizedBox(height: 20),
-                Text(
-                  'Ada keperluan apa hari ini?',
-                  style: blackText,
-                ),
-                const SizedBox(height: 8),
-                const SingleChildScrollView(
-                  child: MenuUtama(),
-                ),
-              ],
+                    ],
+                  ),
+                  //Ada apa hari ini?
+                  const SizedBox(
+                    height: 18,
+                  ),
+                  Text(
+                    'Ada apa hari ini?',
+                    style: blackText,
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  isLoading
+                      ? const CircularProgressIndicator()
+                      : SizedBox(
+                          height: 120,
+                          child: ListPengumuman(pengumumanList: newsList),
+                        ),
+                  const SizedBox(height: 20),
+                  Text(
+                    'Ada keperluan apa hari ini?',
+                    style: blackText,
+                  ),
+                  const SizedBox(height: 8),
+                  const MenuUtama(),
+                  const SizedBox(height: 20),
+                ],
+              ),
             ),
           ),
-          Positioned.fill(
+          Positioned(
             child: Align(
               alignment: Alignment.bottomCenter,
               child: InkWell(

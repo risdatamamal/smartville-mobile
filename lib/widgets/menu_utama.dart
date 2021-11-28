@@ -82,7 +82,9 @@ class MenuUtama extends StatelessWidget {
                     padding: EdgeInsets.zero,
                     alignment: Alignment.centerLeft,
                   ),
-                  onPressed: () { Navigator.pushNamed(context, CitizenDataMenu.routeName);},
+                  onPressed: () {
+                    Navigator.pushNamed(context, CitizenDataMenu.routeName);
+                  },
                 )
               ],
             ),
