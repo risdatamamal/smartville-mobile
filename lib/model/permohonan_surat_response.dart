@@ -20,15 +20,13 @@ class PermohonanSurat {
 
   bool? error;
   String? message;
-  DataPermohonanSurat? data;
+  Data? data;
 
   factory PermohonanSurat.fromJson(Map<String, dynamic> json) =>
       PermohonanSurat(
         error: json["error"],
         message: json["message"],
-        data: json["data"] != ""
-            ? DataPermohonanSurat.fromJson(json["data"][0])
-            : null,
+        data: Data.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -38,8 +36,8 @@ class PermohonanSurat {
       };
 }
 
-class DataPermohonanSurat {
-  DataPermohonanSurat({
+class Data {
+  Data({
     required this.id,
     required this.userNik,
     required this.nikPemohon,
@@ -57,8 +55,7 @@ class DataPermohonanSurat {
   String noHp;
   String jenisSurat;
 
-  factory DataPermohonanSurat.fromJson(Map<String, dynamic> json) =>
-      DataPermohonanSurat(
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json["Id"],
         userNik: json["UserNik"],
         nikPemohon: json["Nik_pemohon"],
