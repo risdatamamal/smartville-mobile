@@ -1,14 +1,15 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:smartville/model/pelaporan_response.dart';
 import 'package:smartville/model/permohonan_surat_response.dart';
+import 'package:smartville/model/request_support_response.dart';
+import 'package:smartville/pages/request_support_page.dart';
 
 import '../common/constant.dart';
-import '../model/user_response.dart';
 import '../model/news_response.dart';
 import '../model/register_response.dart';
+import '../model/user_response.dart';
 
 class RemoteDataSource {
   static final Dio _dio = Dio(
@@ -85,6 +86,12 @@ class RemoteDataSource {
     _dio.options.headers["authorization"] = "token $token";
     Response<String> response = await _dio.get('/introductionmail');
     return permohonanSuratFromJson(response.data ?? "");
+  }
+
+  static Future<RequestSupport> requestSupport(String token) async {
+    _dio.options.headers["authorization"] = "token $token";
+    Response<String> response = await _dio.get('/financialhelp');
+    return requestSupportFromJson(response.data ?? "");
   }
 
   static Future<Pelaporan> pelaporan(String token) async {

@@ -14,11 +14,12 @@ import 'package:smartville/pages/forgot_password_page.dart';
 import 'package:smartville/pages/profile_page.dart';
 import 'package:smartville/pages/register_page_2.dart';
 import 'package:smartville/pages/register_page_3.dart';
-import 'package:smartville/pages/request_support.dart';
+import 'package:smartville/pages/request_support_page.dart';
 import 'package:smartville/pages/wrapper_page.dart';
 import 'package:smartville/pages/notifikasi_berhasil_page.dart';
 import 'package:smartville/provider/pelaporan_warga_provider.dart';
 import 'package:smartville/provider/permohonan_surat_provider.dart';
+import 'package:smartville/provider/request_support_provider.dart';
 import 'package:smartville/provider/user_provider.dart';
 import 'package:smartville/provider/news_provider.dart';
 import 'package:smartville/model/register_response.dart';
@@ -50,6 +51,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => PelaporanWargaProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => RequestSupportProvider(),
         ),
       ],
       child: MaterialApp(
@@ -126,8 +130,8 @@ class MyApp extends StatelessWidget {
             case EditUserProfile.routeName:
               return MaterialPageRoute(builder: (_) => const EditUserProfile());
 
-            case RequestSupport.routeName:
-              return MaterialPageRoute(builder: (_) => const RequestSupport());
+            case RequestSupportPage.routeName:
+              return MaterialPageRoute(builder: (_) => const RequestSupportPage());
             default:
               return MaterialPageRoute(
                 builder: (_) {
