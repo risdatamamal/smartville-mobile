@@ -19,9 +19,7 @@ class RequestSupport {
   factory RequestSupport.fromJson(Map<String, dynamic> json) => RequestSupport(
         error: json["error"],
         message: json["message"],
-        data: json["data"] != ""
-            ? DataRequestSupport.fromJson(json["data"][0])
-            : null,
+        data: DataRequestSupport.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -32,6 +30,7 @@ class RequestSupport {
 }
 
 class DataRequestSupport {
+  int id;
   String nama_bantuan;
   String jenis_bantuan;
   int jumlah_dana;
@@ -40,6 +39,7 @@ class DataRequestSupport {
   int sisa_dana_bantuan;
 
   DataRequestSupport({
+    required this.id,
     required this.nama_bantuan,
     required this.jenis_bantuan,
     required this.jumlah_dana,
@@ -50,6 +50,7 @@ class DataRequestSupport {
 
   factory DataRequestSupport.fromJson(Map<String, dynamic> json) =>
       DataRequestSupport(
+        id: json['Id'],
         nama_bantuan: json["nama_bantuan"],
         jenis_bantuan: json["jenis_bantuan"],
         jumlah_dana: json["jumlah_dana"],
@@ -59,6 +60,7 @@ class DataRequestSupport {
       );
 
   Map<String, dynamic> toJson() => {
+        'Id': id,
         "nama_bantuan": nama_bantuan,
         "jenis_bantuan": jenis_bantuan,
         "jumlah_dana": jumlah_dana,

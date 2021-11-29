@@ -76,16 +76,16 @@ class RemoteDataSource {
     return registerFromJson(response.data ?? "");
   }
 
-  static Future<RequestSupport> requestSupport({
-    required String token,
-    required String nama_bantuan,
-    required String jenis_bantuan,
-    required int jumlah_dana,
-    required int alokasi_dana,
-    required int dana_terealisasi,
-    required int sisa_dana_bantuan,
-  }) async {
-    _dio.options.headers["authorization"] = "token $token";
+  static Future<RequestSupport> requestSupport(
+    String token,
+    String nama_bantuan,
+    String jenis_bantuan,
+    int jumlah_dana,
+    int alokasi_dana,
+    int dana_terealisasi,
+    int sisa_dana_bantuan,
+  ) async {
+    _dio.options.headers["authorization"] = "Bearer $token";
     var formData = FormData.fromMap({
       'nama_bantuan': nama_bantuan,
       'jenis_bantuan': jenis_bantuan,
@@ -99,6 +99,9 @@ class RemoteDataSource {
       '/financialhelp',
       data: formData,
     );
+
+    print(response.data);
+
     return requestSupportFromJson(response.data ?? "");
   }
 
