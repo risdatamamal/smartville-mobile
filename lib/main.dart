@@ -21,6 +21,7 @@ import 'package:smartville/pages/wrapper_page.dart';
 import 'package:smartville/pages/notifikasi_berhasil_page.dart';
 import 'package:smartville/provider/forgot_password_provider.dart';
 import 'package:smartville/provider/pelaporan_warga_provider.dart';
+import 'package:smartville/provider/pendataan_domisili_provider.dart';
 import 'package:smartville/provider/pendataan_kelahiran_provider.dart';
 import 'package:smartville/provider/permohonan_surat_provider.dart';
 import 'package:smartville/provider/user_provider.dart';
@@ -58,7 +59,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => ForgotPasswordProvider(),
         ),
-        ChangeNotifierProvider(create: (_) => PendataanKelahiranProvider())
+        ChangeNotifierProvider(
+          create: (_) => PendataanKelahiranProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => PendataanDomisiliProvider(),
+        ),
       ],
       child: MaterialApp(
         title: 'SmartVille',
