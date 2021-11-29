@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:smartville/model/forgot_password_response.dart';
 import 'package:smartville/model/otp_response.dart';
 import 'package:smartville/model/pelaporan_response.dart';
+import 'package:smartville/model/pendataan_kelahiran_response.dart';
 import 'package:smartville/model/permohonan_surat_response.dart';
 
 import '../common/constant.dart';
@@ -152,6 +153,33 @@ class RemoteDataSource {
     Response<String> response = await _dio.post('/report', data: formData);
     return pelaporanFromJson(response.data ?? "");
   }
+
+
+  static Future<PendataanKelahiran> pendataanKelahiran(
+      String token,
+      String namaBayi,
+      bool jenisKelamin,
+      String namaAyah,
+      String namaIbu,
+      int anakKe,
+      String tanggalKelahiran,
+      String alamatKelahiran,
+      ) async{
+    _dio.options.headers["authorization"] = "Bearer $token";
+    var formData = FormData.fromMap({
+      'nama_bayi' : namaBayi,
+      'jenis_kelamin' : jenisKelamin,
+      'nama_ayah' : namaAyah,
+      'nama_ibu' : namaIbu,
+      'anak_ke' : anakKe,
+      'tgl_lahir' : tanggalKelahiran,
+      'alamat_kelahiran' : alamatKelahiran,
+      'waktu_lahir' : "00:00:00"
+    });
+    Response<String> response = await _dio.post('/birth-regis',data: formData);
+    return pendataanKelahiranFromJson(response.data ?? "");
+  }
+
 
   static Future<OtpResponse> sendOtp({required String email}) async {
     var formData = FormData.fromMap({
