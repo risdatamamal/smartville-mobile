@@ -228,12 +228,17 @@ class _RequestSupportState extends State<RequestSupportPage> {
                                           "Apakah Anda yakin data yang dimasukan sudah benar ?",
                                       onClick: () {
                                         _submitFinancialHelp(
-                                            namaBantuanController.text,
-                                            jenisBantuanController.text,
-                                            jumlahDanaController.text,
-                                            alokasiDanaController.text,
-                                            danaTerealisasiController.text,
-                                            sisadanaController.text);
+                                            namaBantuanController.text
+                                                .toString(),
+                                            jenisBantuanController.text
+                                                .toString(),
+                                            jumlahDanaController.text
+                                                .toString(),
+                                            alokasiDanaController.text
+                                                .toString(),
+                                            danaTerealisasiController.text
+                                                .toString(),
+                                            sisadanaController.text.toString());
                                         Navigator.pop(context);
                                       },
                                     ),

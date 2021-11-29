@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:smartville/model/pelaporan_response.dart';
 import 'package:smartville/model/permohonan_surat_response.dart';
 import 'package:smartville/model/request_support_response.dart';
-import 'package:smartville/pages/request_support_page.dart';
 
 import '../common/constant.dart';
 import '../model/news_response.dart';
@@ -77,6 +76,32 @@ class RemoteDataSource {
     return registerFromJson(response.data ?? "");
   }
 
+  static Future<RequestSupport> requestSupport({
+    required String token,
+    required String nama_bantuan,
+    required String jenis_bantuan,
+    required int jumlah_dana,
+    required int alokasi_dana,
+    required int dana_terealisasi,
+    required int sisa_dana_bantuan,
+  }) async {
+    _dio.options.headers["authorization"] = "token $token";
+    var formData = FormData.fromMap({
+      'nama_bantuan': nama_bantuan,
+      'jenis_bantuan': jenis_bantuan,
+      'jumlah_dana': jumlah_dana,
+      'alokasi_dana': alokasi_dana,
+      'dana_terealisasi': dana_terealisasi,
+      'sisa_dana_bantuan': sisa_dana_bantuan
+    });
+
+    Response<String> response = await _dio.post<String>(
+      '/financialhelp',
+      data: formData,
+    );
+    return requestSupportFromJson(response.data ?? "");
+  }
+
   static Future<List<Datum>> newsList() async {
     Response<String> response = await _dio.get<String>('/news');
     return newsFromJson(response.data ?? "").data as List<Datum>;
@@ -86,12 +111,6 @@ class RemoteDataSource {
     _dio.options.headers["authorization"] = "token $token";
     Response<String> response = await _dio.get('/introductionmail');
     return permohonanSuratFromJson(response.data ?? "");
-  }
-
-  static Future<RequestSupport> requestSupport(String token) async {
-    _dio.options.headers["authorization"] = "token $token";
-    Response<String> response = await _dio.get('/financialhelp');
-    return requestSupportFromJson(response.data ?? "");
   }
 
   static Future<Pelaporan> pelaporan(String token) async {
