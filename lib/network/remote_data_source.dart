@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:smartville/model/forgot_password_response.dart';
 import 'package:smartville/model/otp_response.dart';
 import 'package:smartville/model/pelaporan_response.dart';
+import 'package:smartville/model/pendataan_domisili_response.dart';
 import 'package:smartville/model/pendataan_kelahiran_response.dart';
 import 'package:smartville/model/permohonan_surat_response.dart';
 
@@ -178,6 +179,27 @@ class RemoteDataSource {
     });
     Response<String> response = await _dio.post('/birth-regis',data: formData);
     return pendataanKelahiranFromJson(response.data ?? "");
+  }
+
+  static Future<PendataanDomisili> pendataanDomisili(
+      String token,
+      String nikPemohon,
+      String namaPemohon,
+      String tglLahir,
+      String asalDomisili,
+      String tujuanDomisili,
+      ) async{
+    _dio.options.headers["authorization"] = "Bearer $token";
+    var formData = FormData.fromMap({
+      "nik_pemohon": nikPemohon,
+      "nama_pemohon": namaPemohon,
+      "tgl_lahir": tglLahir,
+      "asal_domisili": asalDomisili,
+      "tujuan_domisili": tujuanDomisili,
+
+    });
+    Response<String> response = await _dio.post('/domicile-regis',data: formData);
+    return pendataanDomisiliFromJson(response.data ?? "");
   }
 
 
