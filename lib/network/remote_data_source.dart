@@ -100,8 +100,6 @@ class RemoteDataSource {
       data: formData,
     );
 
-    print(response.data);
-
     return requestSupportFromJson(response.data ?? "");
   }
 

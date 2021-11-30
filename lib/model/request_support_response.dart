@@ -17,9 +17,9 @@ class RequestSupport {
   DataRequestSupport? data;
 
   factory RequestSupport.fromJson(Map<String, dynamic> json) => RequestSupport(
-        error: json["error"],
-        message: json["message"],
-        data: DataRequestSupport.fromJson(json["data"]),
+        error: json['error'],
+        message: json['message'],
+        data: DataRequestSupport.fromJson(json['data']),
       );
 
   Map<String, dynamic> toJson() => {
