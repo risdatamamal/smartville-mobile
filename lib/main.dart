@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smartville/common/colors.dart';
+import 'package:smartville/pages/change_new_password.dart';
 import 'package:smartville/pages/change_password_forgot_page.dart';
 import 'package:smartville/pages/citizen_data_menu.dart';
 import 'package:smartville/pages/dashboard_page.dart';
@@ -145,7 +146,10 @@ class MyApp extends StatelessWidget {
                   emailConfirmation: emailConfirmation,
                 ),
               );
-
+            case ChangeNewPasswordPage.routeName:
+              return MaterialPageRoute(
+                builder: (_) => const ChangeNewPasswordPage(),
+              );
             case ChangePasswordForgotPage.routeName:
               final email = settings.arguments as String;
               return MaterialPageRoute(

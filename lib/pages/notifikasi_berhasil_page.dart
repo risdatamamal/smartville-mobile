@@ -3,6 +3,7 @@ import 'package:smartville/common/colors.dart';
 import 'package:smartville/common/text_styles.dart';
 import 'package:smartville/model/notification_message.dart';
 import 'package:smartville/pages/dashboard_page.dart';
+import 'package:smartville/pages/login_page.dart';
 
 class NotifikasiBerhasilPage extends StatefulWidget {
   const NotifikasiBerhasilPage({
@@ -21,6 +22,12 @@ class _NotifikasiBerhasilPageState extends State<NotifikasiBerhasilPage> {
       Navigator.pushNamedAndRemoveUntil(
         context,
         DashboardPage.routeName,
+        (Route<dynamic> route) => false,
+      );
+    } else if (page.contains("login")) {
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        LoginPage.routeName,
         (Route<dynamic> route) => false,
       );
     }

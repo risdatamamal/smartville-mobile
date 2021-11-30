@@ -8,6 +8,7 @@ import 'package:provider/src/provider.dart';
 import 'package:smartville/common/colors.dart';
 import 'package:smartville/common/text_styles.dart';
 import 'package:smartville/model/register_response.dart';
+import 'package:smartville/pages/change_new_password.dart';
 import 'package:smartville/pages/login_page.dart';
 import 'package:smartville/provider/user_provider.dart';
 import 'package:smartville/widgets/custom_dialog.dart';
@@ -141,6 +142,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
         Form(
           key: _formKey,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'NIK',
@@ -287,6 +289,20 @@ class _EditUserProfileState extends State<EditUserProfile> {
                           style: blackText.copyWith(fontSize: 16),
                         ),
                       ),
+              ),
+              TextButton(
+                child: Text(
+                  'Ganti Password?',
+                  style: primaryText.copyWith(
+                      fontSize: 12, color: const Color(0xFFF38263)),
+                ),
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  alignment: Alignment.centerLeft,
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, ChangeNewPasswordPage.routeName);
+                },
               ),
             ],
           ),

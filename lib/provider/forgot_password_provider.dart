@@ -6,7 +6,6 @@ import 'package:smartville/model/otp_response.dart';
 import 'package:smartville/network/remote_data_source.dart';
 
 class ForgotPasswordProvider with ChangeNotifier {
-
   Future<OtpResponse> sendOtp({required String email}) async {
     OtpResponse otp = await RemoteDataSource.sendOtp(email: email);
     notifyListeners();
@@ -18,7 +17,7 @@ class ForgotPasswordProvider with ChangeNotifier {
     await _preferences.setString(keyOTP, otp);
   }
 
-  Future<String> getOtp()async {
+  Future<String> getOtp() async {
     SharedPreferences _preferences = await SharedPreferences.getInstance();
     String? otp = _preferences.getString(keyOTP) ?? "";
     return otp;
@@ -32,6 +31,17 @@ class ForgotPasswordProvider with ChangeNotifier {
         await RemoteDataSource.forgotPassword(
       email: email,
       newPassword: password,
+    );
+
+    return forgotPasswordResponse;
+  }
+
+  Future<ForgotPasswordResponse> changeNewPassword({
+    required String newPassword,
+  }) async {
+    ForgotPasswordResponse forgotPasswordResponse =
+        await RemoteDataSource.newPassword(
+      newPassword: newPassword,
     );
 
     return forgotPasswordResponse;

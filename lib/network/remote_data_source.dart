@@ -179,4 +179,17 @@ class RemoteDataSource {
     );
     return forgotPasswordResponseFromJson(response.data ?? "");
   }
+
+  static Future<ForgotPasswordResponse> newPassword({
+    required String newPassword,
+  }) async {
+    var formData = FormData.fromMap({
+      'new_password': newPassword,
+    });
+    Response<String> response = await _dio.put<String>(
+      '/user/forgot-password',
+      data: formData,
+    );
+    return forgotPasswordResponseFromJson(response.data ?? "");
+  }
 }
