@@ -4,6 +4,9 @@ import 'package:dio/dio.dart';
 import 'package:smartville/model/forgot_password_response.dart';
 import 'package:smartville/model/otp_response.dart';
 import 'package:smartville/model/pelaporan_response.dart';
+import 'package:smartville/model/pendataan_domisili_response.dart';
+import 'package:smartville/model/pendataan_kelahiran_response.dart';
+import 'package:smartville/model/pendataan_kematian_response.dart';
 import 'package:smartville/model/permohonan_surat_response.dart';
 
 import '../common/constant.dart';
@@ -152,6 +155,76 @@ class RemoteDataSource {
     Response<String> response = await _dio.post('/report', data: formData);
     return pelaporanFromJson(response.data ?? "");
   }
+
+
+  static Future<PendataanKelahiran> pendataanKelahiran(
+      String token,
+      String namaBayi,
+      bool jenisKelamin,
+      String namaAyah,
+      String namaIbu,
+      int anakKe,
+      String tanggalKelahiran,
+      String alamatKelahiran,
+      ) async{
+    _dio.options.headers["authorization"] = "Bearer $token";
+    var formData = FormData.fromMap({
+      'nama_bayi' : namaBayi,
+      'jenis_kelamin' : jenisKelamin,
+      'nama_ayah' : namaAyah,
+      'nama_ibu' : namaIbu,
+      'anak_ke' : anakKe,
+      'tgl_lahir' : tanggalKelahiran,
+      'alamat_kelahiran' : alamatKelahiran,
+      'waktu_lahir' : "00:00:00"
+    });
+    Response<String> response = await _dio.post('/birth-regis',data: formData);
+    return pendataanKelahiranFromJson(response.data ?? "");
+  }
+
+  static Future<PendataanKematian> pendataanKematian(
+      String token,
+      String nik,
+      String nama,
+      bool jenisKelamin,
+      int usia,
+      String tglWafat,
+      String alamat,
+      ) async {
+  _dio.options.headers["authorization"] = "Bearer $token";
+  var formData = FormData.fromMap({
+    'nik' : nik,
+    'nama' : nama,
+    'jenis_kelamin' : jenisKelamin,
+    'usia' : usia,
+    'tgl_wafat' : tglWafat,
+    'alamat' : alamat,
+  });
+  Response<String> response = await _dio.post('/deathdata',data: formData);
+  return pendataanKematianFromJson(response.data ?? "");
+}
+
+  static Future<PendataanDomisili> pendataanDomisili(
+      String token,
+      String nikPemohon,
+      String namaPemohon,
+      String tglLahir,
+      String asalDomisili,
+      String tujuanDomisili,
+      ) async{
+    _dio.options.headers["authorization"] = "Bearer $token";
+    var formData = FormData.fromMap({
+      "nik_pemohon": nikPemohon,
+      "nama_pemohon": namaPemohon,
+      "tgl_lahir": tglLahir,
+      "asal_domisili": asalDomisili,
+      "tujuan_domisili": tujuanDomisili,
+
+    });
+    Response<String> response = await _dio.post('/domicile-regis',data: formData);
+    return pendataanDomisiliFromJson(response.data ?? "");
+  }
+
 
   static Future<OtpResponse> sendOtp({required String email}) async {
     var formData = FormData.fromMap({

@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/src/provider.dart';
 import 'package:smartville/common/colors.dart';
 import 'package:smartville/common/text_styles.dart';
+import 'package:smartville/model/notification_message.dart';
+import 'package:smartville/model/pendataan_domisili_response.dart';
+import 'package:smartville/provider/pendataan_domisili_provider.dart';
+import 'package:smartville/provider/user_provider.dart';
+import 'package:smartville/widgets/custom_dialog.dart';
 import 'package:smartville/widgets/custom_form_field.dart';
+
+import 'notifikasi_berhasil_page.dart';
 
 class PendataanDomisiliPage extends StatefulWidget {
   const PendataanDomisiliPage({Key? key}) : super(key: key);
@@ -14,13 +22,14 @@ class PendataanDomisiliPage extends StatefulWidget {
 }
 
 class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
-  TextEditingController nikController = TextEditingController();
-  TextEditingController namaController = TextEditingController();
+  TextEditingController nikPemohonController = TextEditingController();
+  TextEditingController namaPemohonController = TextEditingController();
   TextEditingController tglLahirController = TextEditingController();
   TextEditingController asalDomisiliController = TextEditingController();
   TextEditingController tujuanDomisiliController = TextEditingController();
-
+  final _formKey = GlobalKey<FormState>();
   String? tanggalFormatted;
+  bool _onSend = false;
 
   _selectDate(BuildContext context, TextEditingController controller) async {
     int yearNow = DateTime.parse(DateTime.now().toString()).year;
@@ -42,7 +51,52 @@ class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
     }
   }
 
-  final _formKey = GlobalKey<FormState>();
+  Future<void> _submitPendataanDomisili(String nikPemohon, String namaPemohon,
+      String tglLahir, String asalDomisili, String tujuanDomisili) async {
+    setState(() => _onSend = true);
+    UserProvider userProvider = context.read<UserProvider>();
+    PendataanDomisiliProvider pendataanDomisiliProvider =
+        context.read<PendataanDomisiliProvider>();
+    String token = userProvider.token ?? "";
+    PendataanDomisili pendataanDomisili =
+        await pendataanDomisiliProvider.submitPendataanDomisili(
+            token: token,
+            nikPemohon: nikPemohon,
+            namaPemohon: namaPemohon,
+            tglLahir: tglLahir,
+            asalDomisili: asalDomisili,
+            tujuanDomisili: tujuanDomisili);
+
+    if (pendataanDomisili.error == false) {
+      NotificationMessage notificationMessage = NotificationMessage(
+        imageAssets: 'assets/celebration.png',
+        title: "Permohonan Terkirim!",
+        message:
+            "Permohonan telah dikirim. Silahkan tunggu notifikasi dari admin.",
+        textButton: "Kembali ke halaman dashboard",
+        navigateTo: "dashboard",
+      );
+      Navigator.pushNamed(context, NotifikasiBerhasilPage.routeName,
+          arguments: notificationMessage);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            pendataanDomisili.message ?? "",
+          ),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            pendataanDomisili.message ?? "",
+          ),
+        ),
+      );
+    }
+    setState(() => _onSend = false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,6 +106,14 @@ class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
         backgroundColor: const Color(0xFF70C7BA),
         elevation: 0.0,
         leading: const BackButton(color: Colors.white),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.popUntil(
+                    context, (Route<dynamic> route) => route.isFirst);
+              },
+              icon: Image.asset('assets/icons/home.png'))
+        ],
       ),
       body: Column(
         children: [
@@ -86,8 +148,11 @@ class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
                             height: 4,
                           ),
                           CustomFormField(
-                            textEditingController: nikController,
-                            textHint: 'Masukkan NIK',maxLength: 16, typeNumber: true,),
+                            textEditingController: nikPemohonController,
+                            textHint: 'Masukkan NIK',
+                            maxLength: 16,
+                            typeNumber: true,
+                          ),
                           const SizedBox(height: 20),
                           Text(
                             'Nama',
@@ -97,8 +162,8 @@ class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
                             height: 4,
                           ),
                           CustomFormField(
-                            textEditingController: namaController,
-                            textHint: 'Masukkan Nama' ),
+                              textEditingController: namaPemohonController,
+                              textHint: 'Masukkan Nama'),
                           const SizedBox(height: 20),
                           Text(
                             'Tanggal Lahir',
@@ -122,8 +187,9 @@ class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
                             height: 4,
                           ),
                           CustomFormField(
-                              textEditingController: asalDomisiliController,
-                              textHint: 'Masukkan Asal Domisili',typeMultiline: true,
+                            textEditingController: asalDomisiliController,
+                            textHint: 'Masukkan Asal Domisili',
+                            typeMultiline: true,
                           ),
                           const SizedBox(height: 20),
                           Text(
@@ -135,21 +201,46 @@ class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
                           ),
                           CustomFormField(
                             textEditingController: tujuanDomisiliController,
-                            textHint: 'Masukkan Tujuan Domisili',typeMultiline: true,
+                            textHint: 'Masukkan Tujuan Domisili',
+                            typeMultiline: true,
                           ),
                           const SizedBox(height: 20),
-                          SizedBox(width: double.infinity,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                primary: primaryColor,
-                              ),
-                              onPressed: (){},
-                              child: Text('Submit',  style: blackText.copyWith(fontSize: 16)),
-                            ),),
-
+                          SizedBox(
+                            width: double.infinity,
+                            child: _onSend
+                                ? const LinearProgressIndicator()
+                                : ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: primaryColor,
+                                    ),
+                                    onPressed: () {
+                                      if (_formKey.currentState!.validate()) {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) => CustomDialog(
+                                            text:
+                                                "Apakah Anda yakin data yang dimasukan sudah benar ?",
+                                            onClick: () {
+                                              _submitPendataanDomisili(
+                                                  nikPemohonController.text,
+                                                  namaPemohonController.text,
+                                                  tanggalFormatted!,
+                                                  asalDomisiliController.text,
+                                                  tujuanDomisiliController
+                                                      .text);
+                                              Navigator.pop(context);
+                                            },
+                                          ),
+                                        );
+                                      }
+                                    },
+                                    child: Text('Submit',
+                                        style:
+                                            blackText.copyWith(fontSize: 16)),
+                                  ),
+                          ),
                         ],
-                      )
-                      ,
+                      ),
                     ),
                   ),
                 ),
