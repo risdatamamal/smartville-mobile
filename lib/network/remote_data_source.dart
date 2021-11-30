@@ -6,6 +6,7 @@ import 'package:smartville/model/otp_response.dart';
 import 'package:smartville/model/pelaporan_response.dart';
 import 'package:smartville/model/pendataan_domisili_response.dart';
 import 'package:smartville/model/pendataan_kelahiran_response.dart';
+import 'package:smartville/model/pendataan_kematian_response.dart';
 import 'package:smartville/model/permohonan_surat_response.dart';
 
 import '../common/constant.dart';
@@ -180,6 +181,28 @@ class RemoteDataSource {
     Response<String> response = await _dio.post('/birth-regis',data: formData);
     return pendataanKelahiranFromJson(response.data ?? "");
   }
+
+  static Future<PendataanKematian> pendataanKematian(
+      String token,
+      String nik,
+      String nama,
+      bool jenisKelamin,
+      int usia,
+      String tglWafat,
+      String alamat,
+      ) async {
+  _dio.options.headers["authorization"] = "Bearer $token";
+  var formData = FormData.fromMap({
+    'nik' : nik,
+    'nama' : nama,
+    'jenis_kelamin' : jenisKelamin,
+    'usia' : usia,
+    'tgl_wafat' : tglWafat,
+    'alamat' : alamat,
+  });
+  Response<String> response = await _dio.post('/deathdata',data: formData);
+  return pendataanKematianFromJson(response.data ?? "");
+}
 
   static Future<PendataanDomisili> pendataanDomisili(
       String token,

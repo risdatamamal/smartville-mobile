@@ -121,6 +121,14 @@ class _PendataanKelahiranPageState extends State<PendataanKelahiranPage> {
           backgroundColor: const Color(0xFF70C7BA),
           elevation: 0.0,
           leading: const BackButton(color: Colors.white),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.popUntil(
+                      context, (Route<dynamic> route) => route.isFirst);
+                },
+                icon: Image.asset('assets/icons/home.png'))
+          ],
         ),
         body: Column(
           children: [
@@ -248,7 +256,7 @@ class _PendataanKelahiranPageState extends State<PendataanKelahiranPage> {
                                 textHint: 'Anak Ke-'),
                             const SizedBox(height: 20),
                             Text(
-                              'Tanggal Laporan',
+                              'Tanggal Kelahiran',
                               style: greyText,
                             ),
                             const SizedBox(height: 4),

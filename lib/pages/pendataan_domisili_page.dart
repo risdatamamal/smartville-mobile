@@ -106,6 +106,14 @@ class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
         backgroundColor: const Color(0xFF70C7BA),
         elevation: 0.0,
         leading: const BackButton(color: Colors.white),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.popUntil(
+                    context, (Route<dynamic> route) => route.isFirst);
+              },
+              icon: Image.asset('assets/icons/home.png'))
+        ],
       ),
       body: Column(
         children: [
