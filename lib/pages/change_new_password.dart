@@ -49,6 +49,7 @@ class _ChangeNewPasswordState extends State<ChangeNewPasswordPage> {
     } else {
       ForgotPasswordResponse res =
           await changePasswordProvider.changeNewPassword(
+        oldPassword: oldPwController.text,
         newPassword: newPwController.text,
       );
 
