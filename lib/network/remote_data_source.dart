@@ -156,62 +156,61 @@ class RemoteDataSource {
     return pelaporanFromJson(response.data ?? "");
   }
 
-
   static Future<PendataanKelahiran> pendataanKelahiran(
-      String token,
-      String namaBayi,
-      bool jenisKelamin,
-      String namaAyah,
-      String namaIbu,
-      int anakKe,
-      String tanggalKelahiran,
-      String alamatKelahiran,
-      ) async{
+    String token,
+    String namaBayi,
+    bool jenisKelamin,
+    String namaAyah,
+    String namaIbu,
+    int anakKe,
+    String tanggalKelahiran,
+    String alamatKelahiran,
+  ) async {
     _dio.options.headers["authorization"] = "Bearer $token";
     var formData = FormData.fromMap({
-      'nama_bayi' : namaBayi,
-      'jenis_kelamin' : jenisKelamin,
-      'nama_ayah' : namaAyah,
-      'nama_ibu' : namaIbu,
-      'anak_ke' : anakKe,
-      'tgl_lahir' : tanggalKelahiran,
-      'alamat_kelahiran' : alamatKelahiran,
-      'waktu_lahir' : "00:00:00"
+      'nama_bayi': namaBayi,
+      'jenis_kelamin': jenisKelamin,
+      'nama_ayah': namaAyah,
+      'nama_ibu': namaIbu,
+      'anak_ke': anakKe,
+      'tgl_lahir': tanggalKelahiran,
+      'alamat_kelahiran': alamatKelahiran,
+      'waktu_lahir': "00:00:00"
     });
-    Response<String> response = await _dio.post('/birth-regis',data: formData);
+    Response<String> response = await _dio.post('/birth-regis', data: formData);
     return pendataanKelahiranFromJson(response.data ?? "");
   }
 
   static Future<PendataanKematian> pendataanKematian(
-      String token,
-      String nik,
-      String nama,
-      bool jenisKelamin,
-      int usia,
-      String tglWafat,
-      String alamat,
-      ) async {
-  _dio.options.headers["authorization"] = "Bearer $token";
-  var formData = FormData.fromMap({
-    'nik' : nik,
-    'nama' : nama,
-    'jenis_kelamin' : jenisKelamin,
-    'usia' : usia,
-    'tgl_wafat' : tglWafat,
-    'alamat' : alamat,
-  });
-  Response<String> response = await _dio.post('/deathdata',data: formData);
-  return pendataanKematianFromJson(response.data ?? "");
-}
+    String token,
+    String nik,
+    String nama,
+    bool jenisKelamin,
+    int usia,
+    String tglWafat,
+    String alamat,
+  ) async {
+    _dio.options.headers["authorization"] = "Bearer $token";
+    var formData = FormData.fromMap({
+      'nik': nik,
+      'nama': nama,
+      'jenis_kelamin': jenisKelamin,
+      'usia': usia,
+      'tgl_wafat': tglWafat,
+      'alamat': alamat,
+    });
+    Response<String> response = await _dio.post('/deathdata', data: formData);
+    return pendataanKematianFromJson(response.data ?? "");
+  }
 
   static Future<PendataanDomisili> pendataanDomisili(
-      String token,
-      String nikPemohon,
-      String namaPemohon,
-      String tglLahir,
-      String asalDomisili,
-      String tujuanDomisili,
-      ) async{
+    String token,
+    String nikPemohon,
+    String namaPemohon,
+    String tglLahir,
+    String asalDomisili,
+    String tujuanDomisili,
+  ) async {
     _dio.options.headers["authorization"] = "Bearer $token";
     var formData = FormData.fromMap({
       "nik_pemohon": nikPemohon,
@@ -219,12 +218,11 @@ class RemoteDataSource {
       "tgl_lahir": tglLahir,
       "asal_domisili": asalDomisili,
       "tujuan_domisili": tujuanDomisili,
-
     });
-    Response<String> response = await _dio.post('/domicile-regis',data: formData);
+    Response<String> response =
+        await _dio.post('/domicile-regis', data: formData);
     return pendataanDomisiliFromJson(response.data ?? "");
   }
-
 
   static Future<OtpResponse> sendOtp({required String email}) async {
     var formData = FormData.fromMap({
@@ -254,9 +252,11 @@ class RemoteDataSource {
   }
 
   static Future<ForgotPasswordResponse> newPassword({
+    required String oldPassword,
     required String newPassword,
   }) async {
     var formData = FormData.fromMap({
+      'old_password': newPassword,
       'new_password': newPassword,
     });
     Response<String> response = await _dio.put<String>(
