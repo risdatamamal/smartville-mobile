@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,6 +17,7 @@ class UserProvider with ChangeNotifier {
   String? _userTelp;
   String? _userNik;
   String? _userAlamat;
+  String? _tokenFCM;
 
   late final SharedPreferences _preferences;
 
@@ -26,6 +28,7 @@ class UserProvider with ChangeNotifier {
   String? get userTelp => _userTelp;
   String? get userNik => _userNik;
   String? get userAlamat => _userAlamat;
+  String? get tokenFCM => _tokenFCM;
 
   Future<void> init() async {
     _preferences = await SharedPreferences.getInstance();
@@ -36,6 +39,7 @@ class UserProvider with ChangeNotifier {
     _userTelp = _preferences.getString(keyUserTelp);
     _userNik = _preferences.getString(keyUserNik);
     _userAlamat = _preferences.getString(keyUserAlamat);
+    _tokenFCM = _preferences.getString(keyTokenFCM);
   }
 
   Future<User> login({
@@ -53,6 +57,7 @@ class UserProvider with ChangeNotifier {
     _userNik = auth.data?.nik;
     _userTelp = auth.data?.noHp;
     _userAlamat = auth.data?.alamat;
+    _tokenFCM = await FirebaseMessaging.instance.getToken();
     if (_token != null) {
       await _preferences.setString(
         keyToken,
@@ -81,6 +86,10 @@ class UserProvider with ChangeNotifier {
       await _preferences.setString(
         keyUserAlamat,
         _userAlamat!,
+      );
+      await _preferences.setString(
+        keyTokenFCM,
+        _tokenFCM!,
       );
     }
     notifyListeners();

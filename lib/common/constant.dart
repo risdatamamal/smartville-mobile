@@ -8,3 +8,4 @@ const String keyUserNik = 'key_user_nik';
 const String keyUserTelp = 'key_user_telp';
 const String keyUserAlamat = 'key_user_alamat';
 const String keyOTP = 'key_otp';
+const String keyTokenFCM = 'key_token_fcm';
