@@ -24,6 +24,7 @@ import 'package:smartville/pages/request_support.dart';
 import 'package:smartville/pages/wrapper_page.dart';
 import 'package:smartville/pages/notifikasi_berhasil_page.dart';
 import 'package:smartville/provider/forgot_password_provider.dart';
+import 'package:smartville/provider/history_provider.dart';
 import 'package:smartville/provider/pelaporan_warga_provider.dart';
 import 'package:smartville/provider/pendataan_domisili_provider.dart';
 import 'package:smartville/provider/pendataan_kelahiran_provider.dart';
@@ -47,7 +48,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  
+
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
@@ -92,6 +93,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => PendataanKematianProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => HistoryProvider(),
         ),
       ],
       child: MaterialApp(
