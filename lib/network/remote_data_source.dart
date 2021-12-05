@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:smartville/model/forgot_password_response.dart';
+import 'package:smartville/model/history_response.dart';
 import 'package:smartville/model/otp_response.dart';
 import 'package:smartville/model/pelaporan_response.dart';
 import 'package:smartville/model/pendataan_domisili_response.dart';
@@ -264,5 +265,12 @@ class RemoteDataSource {
       data: formData,
     );
     return forgotPasswordResponseFromJson(response.data ?? "");
+  }
+
+  static Future<ListHistory> getHistory(String token) async {
+    _dio.options.headers["authorization"] = "Bearer $token";
+
+    Response<String> response = await _dio.get<String>('/history');
+    return historyFromJson(response.data ?? "");
   }
 }
