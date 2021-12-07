@@ -1,4 +1,6 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/src/provider.dart';
 import 'package:smartville/common/colors.dart';
 import 'package:smartville/common/text_styles.dart';
@@ -6,6 +8,7 @@ import 'package:smartville/model/news_response.dart';
 import 'package:smartville/pages/profile_page.dart';
 import 'package:smartville/provider/news_provider.dart';
 import 'package:smartville/provider/user_provider.dart';
+import 'package:smartville/utils/firebase_messaging.dart';
 import 'package:smartville/widgets/list_pengumuman.dart';
 import 'package:smartville/widgets/menu_utama.dart';
 import 'package:smartville/widgets/bottom_sheet_content.dart';
@@ -50,6 +53,52 @@ class _DashboardPageState extends State<DashboardPage>
     _userData();
     _initNewsList();
     super.initState();
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+
+      if (notification != null && android != null) {
+        flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              channel.id,
+              channel.name,
+              channelDescription: channel.description,
+              color: Colors.blue,
+              playSound: true,
+              icon: '@mipmap/ic_launcher',
+            ),
+          ),
+        );
+      }
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+
+      if (notification != null && android != null) {
+        showDialog(
+          context: context,
+          builder: (_) {
+            return AlertDialog(
+              title: Text(notification.title ?? "Notifikasi baru"),
+              content: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(notification.body ?? "Anda memiliki notifikasi baru")
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      }
+    });
   }
 
   @override

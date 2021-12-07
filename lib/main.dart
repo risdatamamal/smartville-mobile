@@ -1,4 +1,7 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:smartville/common/colors.dart';
 import 'package:smartville/pages/change_new_password.dart';
@@ -17,10 +20,11 @@ import 'package:smartville/pages/forgot_password_page.dart';
 import 'package:smartville/pages/profile_page.dart';
 import 'package:smartville/pages/register_page_2.dart';
 import 'package:smartville/pages/register_page_3.dart';
-import 'package:smartville/pages/request_support.dart';
+import 'package:smartville/pages/request_support_page.dart';
 import 'package:smartville/pages/wrapper_page.dart';
 import 'package:smartville/pages/notifikasi_berhasil_page.dart';
 import 'package:smartville/provider/forgot_password_provider.dart';
+import 'package:smartville/provider/history_provider.dart';
 import 'package:smartville/provider/pelaporan_warga_provider.dart';
 import 'package:smartville/provider/pendataan_domisili_provider.dart';
 import 'package:smartville/provider/pendataan_kelahiran_provider.dart';
@@ -34,8 +38,28 @@ import 'model/register_data.dart';
 import 'pages/history_page.dart';
 import 'pages/login_page.dart';
 import 'pages/register_page_1.dart';
+import 'utils/firebase_messaging.dart';
 
-void main() {
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+}
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
+
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
+
   runApp(const MyApp());
 }
 
@@ -69,6 +93,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => PendataanKematianProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => HistoryProvider(),
         ),
       ],
       child: MaterialApp(
@@ -145,8 +172,9 @@ class MyApp extends StatelessWidget {
             case EditUserProfile.routeName:
               return MaterialPageRoute(builder: (_) => const EditUserProfile());
 
-            case RequestSupport.routeName:
-              return MaterialPageRoute(builder: (_) => const RequestSupport());
+            case RequestSupportPage.routeName:
+              return MaterialPageRoute(
+                  builder: (_) => const RequestSupportPage());
 
             case HistoryPage.routeName:
               return MaterialPageRoute(builder: (_) => const HistoryPage());

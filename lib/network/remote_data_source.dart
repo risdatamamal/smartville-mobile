@@ -2,12 +2,14 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:smartville/model/forgot_password_response.dart';
+import 'package:smartville/model/history_response.dart';
 import 'package:smartville/model/otp_response.dart';
 import 'package:smartville/model/pelaporan_response.dart';
 import 'package:smartville/model/pendataan_domisili_response.dart';
 import 'package:smartville/model/pendataan_kelahiran_response.dart';
 import 'package:smartville/model/pendataan_kematian_response.dart';
 import 'package:smartville/model/permohonan_surat_response.dart';
+import 'package:smartville/model/request_support_response.dart';
 
 import '../common/constant.dart';
 import '../model/user_response.dart';
@@ -264,5 +266,40 @@ class RemoteDataSource {
       data: formData,
     );
     return forgotPasswordResponseFromJson(response.data ?? "");
+  }
+
+  static Future<ListHistory> getHistory(String token) async {
+    _dio.options.headers["authorization"] = "Bearer $token";
+
+    Response<String> response = await _dio.get<String>('/history');
+    return historyFromJson(response.data ?? "");
+  }
+
+
+  static Future<RequestSupport> requestSupport(
+      String token,
+      String nama_bantuan,
+      String jenis_bantuan,
+      int jumlah_dana,
+      int alokasi_dana,
+      int dana_terealisasi,
+      int sisa_dana_bantuan,
+      ) async {
+    _dio.options.headers["authorization"] = "Bearer $token";
+    var formData = FormData.fromMap({
+      'nama_bantuan': nama_bantuan,
+      'jenis_bantuan': jenis_bantuan,
+      'jumlah_dana': jumlah_dana,
+      'alokasi_dana': alokasi_dana,
+      'dana_terealisasi': dana_terealisasi,
+      'sisa_dana_bantuan': sisa_dana_bantuan
+    });
+
+    Response<String> response = await _dio.post<String>(
+      '/financialhelp',
+      data: formData,
+    );
+
+    return requestSupportFromJson(response.data ?? "");
   }
 }

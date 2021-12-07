@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
 import 'package:smartville/common/colors.dart';
 import 'package:smartville/common/text_styles.dart';
+import 'package:smartville/pages/history_page.dart';
 import 'package:smartville/provider/user_provider.dart';
 import 'package:smartville/widgets/custom_dialog.dart';
 import 'package:smartville/widgets/custom_scaffold.dart';
@@ -55,7 +56,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      textAppbar: 'Edit Profil',
+      textAppbar: 'Profil Saya',
       children: [
         Row(
           children: [
@@ -164,7 +165,9 @@ class _ProfilePageState extends State<ProfilePage> {
           height: 15,
         ),
         InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed(HistoryPage.routeName);
+            },
             child: CustomButton(
                 scale: 4,
                 imageUrl: 'assets/icons/riwayat.png',
@@ -194,7 +197,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 text: 'Logout',
                 style: primaryText.copyWith(fontSize: 12))),
         const SizedBox(
-          height: 15,
+          height: 25,
         ),
       ],
     );
