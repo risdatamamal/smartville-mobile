@@ -102,6 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                                   textHint: 'Password',
                                   obsecureText: true,
                                   prefixIcon: Icons.lock_outline,
+                                  suffixIcon: Icons.visibility,
                                   enable: !_onSend,
                                 ),
                                 TextButton(

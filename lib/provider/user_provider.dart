@@ -16,6 +16,7 @@ class UserProvider with ChangeNotifier {
   String? _userTelp;
   String? _userNik;
   String? _userAlamat;
+  bool? _userJenisKelamin;
 
   late final SharedPreferences _preferences;
 
@@ -26,6 +27,7 @@ class UserProvider with ChangeNotifier {
   String? get userTelp => _userTelp;
   String? get userNik => _userNik;
   String? get userAlamat => _userAlamat;
+  bool? get userJenisKelamin => _userJenisKelamin;
 
   Future<void> init() async {
     _preferences = await SharedPreferences.getInstance();
@@ -36,6 +38,7 @@ class UserProvider with ChangeNotifier {
     _userTelp = _preferences.getString(keyUserTelp);
     _userNik = _preferences.getString(keyUserNik);
     _userAlamat = _preferences.getString(keyUserAlamat);
+    _userJenisKelamin = _preferences.getBool(keyUserJenisKelamin);
   }
 
   Future<User> login({
@@ -53,6 +56,7 @@ class UserProvider with ChangeNotifier {
     _userNik = auth.data?.nik;
     _userTelp = auth.data?.noHp;
     _userAlamat = auth.data?.alamat;
+    _userJenisKelamin = auth.data?.jenisKelamin;
     if (_token != null) {
       await _preferences.setString(
         keyToken,
@@ -81,6 +85,10 @@ class UserProvider with ChangeNotifier {
       await _preferences.setString(
         keyUserAlamat,
         _userAlamat!,
+      );
+      await _preferences.setBool(
+        keyUserJenisKelamin,
+        _userJenisKelamin!,
       );
     }
     notifyListeners();
@@ -124,6 +132,7 @@ class UserProvider with ChangeNotifier {
     _userNik = register.data.nik;
     _userTelp = register.data.noHp;
     _userAlamat = register.data.alamat;
+    _userJenisKelamin = register.data.jenisKelamin;
     if (_token != null) {
       await _preferences.setString(
         keyToken,
@@ -153,6 +162,10 @@ class UserProvider with ChangeNotifier {
         keyUserAlamat,
         _userAlamat!,
       );
+      await _preferences.setBool(
+        keyUserJenisKelamin,
+        _userJenisKelamin!,
+      );
     }
     notifyListeners();
     return register;
@@ -171,6 +184,7 @@ class UserProvider with ChangeNotifier {
     await _preferences.remove(keyUserNik);
     await _preferences.remove(keyUserTelp);
     await _preferences.remove(keyUserAlamat);
+    await _preferences.remove(keyUserJenisKelamin);
 
     notifyListeners();
   }
@@ -191,7 +205,9 @@ class UserProvider with ChangeNotifier {
       noHp: noHp,
       imageProfile: profilePic,
     );
-    _imageProfile = register.data.profilePic;
+    if (profilePic != null) {
+      _imageProfile = register.data.profilePic;
+    }
     _userName = register.data.nama;
     _userEmail = register.data.email;
     _userAlamat = register.data.alamat;

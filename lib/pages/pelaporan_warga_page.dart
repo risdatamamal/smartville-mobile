@@ -126,7 +126,7 @@ class _PelaporanWargaPageState extends State<PelaporanWargaPage> {
     return Scaffold(
       backgroundColor: const Color(0xFF70C7BA),
       appBar: AppBar(
-        title: Text('Permohonan Surat Pengantar', style: whiteText),
+        title: Text('Pelaporan Warga', style: whiteText),
         backgroundColor: const Color(0xFF70C7BA),
         elevation: 0.0,
         leading: const BackButton(color: Colors.white),

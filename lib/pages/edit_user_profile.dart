@@ -87,6 +87,8 @@ class _EditUserProfileState extends State<EditUserProfile> {
     setState(() => _onSend = false);
   }
 
+  getUserDataPref() {}
+
   @override
   void initState() {
     super.initState();
@@ -96,7 +98,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
     emailController = TextEditingController(text: provider.userEmail);
     addressController = TextEditingController(text: provider.userAlamat);
     phoneController = TextEditingController(text: provider.userTelp);
-    jenisKelamin = JenisKelamin.P;
+    jenisKelamin = provider.userJenisKelamin! ? JenisKelamin.P : JenisKelamin.L;
     imageProfile = provider.imageProfile ?? "";
     tempImage = imageProfile;
   }
@@ -219,6 +221,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                           Radio<JenisKelamin>(
                             value: JenisKelamin.L,
                             groupValue: jenisKelamin,
+                            toggleable: false,
                             onChanged: (JenisKelamin? value) {
                               setState(() {
                                 jenisKelamin = value!;
@@ -244,6 +247,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                           Radio<JenisKelamin>(
                             value: JenisKelamin.P,
                             groupValue: jenisKelamin,
+                            toggleable: false,
                             onChanged: (JenisKelamin? value) {
                               setState(() {
                                 jenisKelamin = value!;

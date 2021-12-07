@@ -18,7 +18,8 @@ class DashboardPage extends StatefulWidget {
   _DashboardPageState createState() => _DashboardPageState();
 }
 
-class _DashboardPageState extends State<DashboardPage> {
+class _DashboardPageState extends State<DashboardPage>
+    with WidgetsBindingObserver {
   List<Datum> newsList = [];
   bool isLoading = false;
   String _imageProfile = "";
@@ -52,6 +53,13 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _userData();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
@@ -78,7 +86,7 @@ class _DashboardPageState extends State<DashboardPage> {
                           ),
                           TextButton(
                             child: Text(
-                              _userName,
+                              _userName.split(" ")[0],
                               style: primaryText.copyWith(fontSize: 18),
                             ),
                             style: TextButton.styleFrom(
@@ -177,13 +185,11 @@ class _DashboardPageState extends State<DashboardPage> {
                   ),
                   onTap: () {
                     showModalBottomSheet(
-                        context: context,
-                        builder: (context) => BottomSheetContent(),
-                        shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(24),
-                          topRight: Radius.circular(24),
-                        )));
+                      context: context,
+                      builder: (context) => BottomSheetContent(),
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                    );
                   }),
             ),
           )
