@@ -20,7 +20,7 @@ import 'package:smartville/pages/forgot_password_page.dart';
 import 'package:smartville/pages/profile_page.dart';
 import 'package:smartville/pages/register_page_2.dart';
 import 'package:smartville/pages/register_page_3.dart';
-import 'package:smartville/pages/request_support.dart';
+import 'package:smartville/pages/request_support_page.dart';
 import 'package:smartville/pages/wrapper_page.dart';
 import 'package:smartville/pages/notifikasi_berhasil_page.dart';
 import 'package:smartville/provider/forgot_password_provider.dart';
@@ -172,8 +172,9 @@ class MyApp extends StatelessWidget {
             case EditUserProfile.routeName:
               return MaterialPageRoute(builder: (_) => const EditUserProfile());
 
-            case RequestSupport.routeName:
-              return MaterialPageRoute(builder: (_) => const RequestSupport());
+            case RequestSupportPage.routeName:
+              return MaterialPageRoute(
+                  builder: (_) => const RequestSupportPage());
 
             case HistoryPage.routeName:
               return MaterialPageRoute(builder: (_) => const HistoryPage());
