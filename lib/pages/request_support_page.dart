@@ -1,18 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
 import 'package:smartville/common/colors.dart';
 import 'package:smartville/common/text_styles.dart';
+import 'package:smartville/model/notification_message.dart';
+import 'package:smartville/model/request_support_response.dart';
+import 'package:smartville/provider/request_support_provider.dart';
+import 'package:smartville/provider/user_provider.dart';
+import 'package:smartville/widgets/custom_dialog.dart';
 import 'package:smartville/widgets/custom_form_field.dart';
 
-class RequestSupport extends StatefulWidget {
-  const RequestSupport({Key? key}) : super(key: key);
+import 'notifikasi_berhasil_page.dart';
+
+class RequestSupportPage extends StatefulWidget {
+  const RequestSupportPage({Key? key}) : super(key: key);
   static const routeName = 'requestsupport';
 
   @override
-  State<RequestSupport> createState() => _RequestSupportState();
+  State<RequestSupportPage> createState() => _RequestSupportState();
 }
 
-class _RequestSupportState extends State<RequestSupport> {
+class _RequestSupportState extends State<RequestSupportPage> {
   TextEditingController namaBantuanController = TextEditingController();
   TextEditingController jenisBantuanController = TextEditingController();
   TextEditingController jumlahDanaController = TextEditingController();
@@ -21,7 +29,69 @@ class _RequestSupportState extends State<RequestSupport> {
   TextEditingController sisadanaController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
-  final bool _onSend = false;
+  bool _onSend = false;
+
+  Future<void> _submitFinancialHelp(
+      String nama_bantuan,
+      String jenis_bantuan,
+      String jumlah_dana,
+      String alokasi_dana,
+      String dana_terealisasi,
+      String sisa_dana_bantuan) async {
+    setState(() => _onSend = true);
+
+    var jumlahDanaParse = int.parse(jumlah_dana);
+    assert(jumlahDanaParse is int);
+    var alokasiDanaParse = int.parse(alokasi_dana);
+    assert(alokasiDanaParse is int);
+    var danaTerealisasiParse = int.parse(dana_terealisasi);
+    assert(danaTerealisasiParse is int);
+    var sisaDanaBantuanParse = int.parse(sisa_dana_bantuan);
+    assert(sisaDanaBantuanParse is int);
+
+    UserProvider userProvider = context.read<UserProvider>();
+    RequestSupportProvider requestSupportProvider =
+        context.read<RequestSupportProvider>();
+    String token = userProvider.token ?? "";
+    RequestSupport requestSupport =
+        await requestSupportProvider.submitRequestSupport(
+            token: token,
+            nama_bantuan: nama_bantuan,
+            jenis_bantuan: jenis_bantuan,
+            jumlah_dana: jumlahDanaParse,
+            alokasi_dana: alokasiDanaParse,
+            dana_terealisasi: danaTerealisasiParse,
+            sisa_dana_bantuan: sisaDanaBantuanParse);
+
+    if (requestSupport.error == false) {
+      NotificationMessage notificationMessage = NotificationMessage(
+        imageAssets: 'assets/celebration.png',
+        title: "Permohonan Terkirim!",
+        message:
+            "Permohonan telah dikirim. Silahkan tunggu notifikasi dari admin.",
+        textButton: "Kembali ke halaman dashboard",
+        navigateTo: "dashboard",
+      );
+      Navigator.pushNamed(context, NotifikasiBerhasilPage.routeName,
+          arguments: notificationMessage);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            requestSupport.message ?? "",
+          ),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            requestSupport.message ?? "",
+          ),
+        ),
+      );
+    }
+    setState(() => _onSend = false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +183,7 @@ class _RequestSupportState extends State<RequestSupport> {
                           CustomFormField(
                             textEditingController: alokasiDanaController,
                             textHint: 'Masukkan Alokasi Dana',
-                            typeMultiline: true,
+                            typeNumber: true,
                           ),
                           const SizedBox(height: 20),
                           Text(
@@ -141,8 +211,7 @@ class _RequestSupportState extends State<RequestSupport> {
                       ),
                     ),
                     const SizedBox(height: 30),
-
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       child: _onSend
                           ? const LinearProgressIndicator()
@@ -152,7 +221,28 @@ class _RequestSupportState extends State<RequestSupport> {
                               ),
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
-                                  //validation
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => CustomDialog(
+                                      text:
+                                          "Apakah Anda yakin data yang dimasukan sudah benar ?",
+                                      onClick: () {
+                                        _submitFinancialHelp(
+                                            namaBantuanController.text
+                                                .toString(),
+                                            jenisBantuanController.text
+                                                .toString(),
+                                            jumlahDanaController.text
+                                                .toString(),
+                                            alokasiDanaController.text
+                                                .toString(),
+                                            danaTerealisasiController.text
+                                                .toString(),
+                                            sisadanaController.text.toString());
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  );
                                 }
                               },
                               child: Text(
