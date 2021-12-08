@@ -133,6 +133,7 @@ class _RequestSupportState extends State<RequestSupportPage> {
                 padding: EdgeInsets.symmetric(horizontal: 24),
                 width: width,
                 child: SingleChildScrollView(
+
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
