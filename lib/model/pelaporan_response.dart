@@ -19,7 +19,8 @@ class Pelaporan {
   factory Pelaporan.fromJson(Map<String, dynamic> json) => Pelaporan(
         error: json["error"],
         message: json["message"],
-        data: DataPelaporan.fromJson(json["data"]),
+        data:
+            json["data"] != null ? DataPelaporan.fromJson(json["data"]) : null,
       );
 
   Map<String, dynamic> toJson() => {

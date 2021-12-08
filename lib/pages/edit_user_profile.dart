@@ -98,7 +98,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
     emailController = TextEditingController(text: provider.userEmail);
     addressController = TextEditingController(text: provider.userAlamat);
     phoneController = TextEditingController(text: provider.userTelp);
-    jenisKelamin = provider.userJenisKelamin! ? JenisKelamin.P : JenisKelamin.L;
+    jenisKelamin = provider.userJenisKelamin! ? JenisKelamin.L : JenisKelamin.P;
     imageProfile = provider.imageProfile ?? "";
     tempImage = imageProfile;
   }
@@ -187,6 +187,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                 typeNumber: true,
                 textEditingController: phoneController,
                 textHint: 'Masukkan No. Telepon',
+                maxLength: 12,
               ),
               const SizedBox(height: 20),
               Text(

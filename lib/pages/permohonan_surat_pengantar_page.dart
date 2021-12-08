@@ -32,6 +32,21 @@ class _PermohohonanSuratPengantarState
   final _formKey = GlobalKey<FormState>();
   bool _onSend = false;
 
+  Future<void> _autoFillForm() async {
+    UserProvider provider = context.read<UserProvider>();
+    String userName = provider.userName ?? "";
+    String userTelp = provider.userTelp ?? "";
+    String userNik = provider.userNik ?? "";
+    String userAlamat = provider.userAlamat ?? "";
+
+    setState(() {
+      nikController.text = userNik;
+      namaController.text = userName;
+      noHpController.text = userTelp;
+      alamatController.text = userAlamat;
+    });
+  }
+
   Future<void> _submitPermohonanSurat(String nikPemohon, String namaPemohon,
       String alamatPemohon, String noHp, String jenisSurat) async {
     setState(() => _onSend = true);
@@ -40,14 +55,17 @@ class _PermohohonanSuratPengantarState
     PermohohonanSuratProvider permohonanSuratProvider =
         context.read<PermohohonanSuratProvider>();
     String token = userProvider.token ?? "";
+    String registrationToken = userProvider.tokenFCM ?? "";
     PermohonanSurat permohonanSurat =
         await permohonanSuratProvider.submitSuratPermohonan(
-            token: token,
-            nikPemohon: nikPemohon,
-            namaPemohon: namaPemohon,
-            alamatPemohon: alamatPemohon,
-            noHp: noHp,
-            jenisSurat: jenisSurat);
+      token: token,
+      nikPemohon: nikPemohon,
+      namaPemohon: namaPemohon,
+      alamatPemohon: alamatPemohon,
+      noHp: noHp,
+      jenisSurat: jenisSurat,
+      registrationToken: registrationToken,
+    );
 
     if (permohonanSurat.error == false) {
       NotificationMessage notificationMessage = NotificationMessage(
@@ -60,13 +78,6 @@ class _PermohohonanSuratPengantarState
       );
       Navigator.pushNamed(context, NotifikasiBerhasilPage.routeName,
           arguments: notificationMessage);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            permohonanSurat.message ?? "",
-          ),
-        ),
-      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -118,6 +129,13 @@ class _PermohohonanSuratPengantarState
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Center(
+                              child: TextButton(
+                                child: const Text(
+                                    'Gunakan data saya untuk mengisi form'),
+                                onPressed: () => {_autoFillForm()},
+                              ),
+                            ),
                             Text(
                               'NIK',
                               style: greyText,
@@ -159,7 +177,8 @@ class _PermohohonanSuratPengantarState
                             CustomFormField(
                               typeNumber: true,
                               textEditingController: noHpController,
-                              textHint: '',
+                              textHint: 'Masukan No Hp',
+                              maxLength: 12,
                             ),
                             const SizedBox(height: 20),
                             Text(

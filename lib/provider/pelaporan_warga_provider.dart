@@ -15,6 +15,7 @@ class PelaporanWargaProvider with ChangeNotifier {
     required String noHp,
     required String alamatLaporan,
     required File dokumentasiKejadian,
+    required String registrationToken,
   }) async {
     Pelaporan pelaporan = await RemoteDataSource.pelaporan(
         token,
@@ -24,7 +25,8 @@ class PelaporanWargaProvider with ChangeNotifier {
         tanggalLaporan,
         noHp,
         alamatLaporan,
-        dokumentasiKejadian);
+        dokumentasiKejadian,
+        registrationToken);
     notifyListeners();
     return pelaporan;
   }
