@@ -102,12 +102,14 @@ class _ChangeNewPasswordState extends State<ChangeNewPasswordPage> {
                           obsecureText: true,
                           textEditingController: oldPwController,
                           textHint: 'Masukan password lama',
+                          suffixIcon: Icons.visibility,
                         ),
                         const SizedBox(height: 20),
                         CustomFormField(
                           obsecureText: true,
                           textEditingController: newPwController,
                           textHint: 'Masukan password baru',
+                          suffixIcon: Icons.visibility,
                         ),
                         const SizedBox(height: 20),
                         FlutterPwValidator(
@@ -128,6 +130,7 @@ class _ChangeNewPasswordState extends State<ChangeNewPasswordPage> {
                           obsecureText: true,
                           textEditingController: pwConfirmController,
                           textHint: 'Konfirmasi password baru',
+                          suffixIcon: Icons.visibility,
                         ),
                       ],
                     ),
