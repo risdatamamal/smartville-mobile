@@ -21,7 +21,8 @@ class DashboardPage extends StatefulWidget {
   _DashboardPageState createState() => _DashboardPageState();
 }
 
-class _DashboardPageState extends State<DashboardPage> {
+class _DashboardPageState extends State<DashboardPage>
+    with WidgetsBindingObserver {
   List<Datum> newsList = [];
   bool isLoading = false;
   String _imageProfile = "";
@@ -101,6 +102,13 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _userData();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
@@ -127,7 +135,7 @@ class _DashboardPageState extends State<DashboardPage> {
                           ),
                           TextButton(
                             child: Text(
-                              _userName,
+                              _userName.split(" ")[0],
                               style: primaryText.copyWith(fontSize: 18),
                             ),
                             style: TextButton.styleFrom(
@@ -206,37 +214,32 @@ class _DashboardPageState extends State<DashboardPage> {
             child: Align(
               alignment: Alignment.bottomCenter,
               child: InkWell(
-                child: Container(
-                  width: double.infinity,
-                  height: 50,
-                  child: Center(
-                    child: Text(
-                      'Klik untuk lihat profile desa.',
-                      style: whiteText,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15.0),
-                      topRight: Radius.circular(15.0),
-                    ),
-                    color: Color(0xFF017262),
-                  ),
-                ),
-                onTap: () {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (context) => BottomSheetContent(),
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(24),
-                        topRight: Radius.circular(24),
+                  child: Container(
+                    width: double.infinity,
+                    height: 50,
+                    child: Center(
+                      child: Text(
+                        'Klik untuk lihat profile desa.',
+                        style: whiteText,
+                        textAlign: TextAlign.center,
                       ),
                     ),
-                  );
-                },
-              ),
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15.0),
+                        topRight: Radius.circular(15.0),
+                      ),
+                      color: Color(0xFF017262),
+                    ),
+                  ),
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) => BottomSheetContent(),
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                    );
+                  }),
             ),
           )
         ],

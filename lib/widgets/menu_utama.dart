@@ -41,15 +41,15 @@ class MenuUtama extends StatelessWidget {
                     padding: EdgeInsets.zero,
                     alignment: Alignment.centerLeft,
                   ),
-                  onPressed: () {
-                    Navigator.pushNamed(
-                        context, PermohohonanSuratPengantarPage.routeName);
-                  },
+                  onPressed: () {},
                 )
               ],
             ),
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(
+                context, PermohohonanSuratPengantarPage.routeName);
+          },
           style: TextButton.styleFrom(
             padding: EdgeInsets.zero,
             alignment: Alignment.centerLeft,
@@ -83,15 +83,13 @@ class MenuUtama extends StatelessWidget {
                     padding: EdgeInsets.zero,
                     alignment: Alignment.centerLeft,
                   ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, CitizenDataMenu.routeName);
-                  },
+                  onPressed: () {},
                 )
               ],
             ),
           ),
           onPressed: () {
-            Navigator.pushNamed(context, PelaporanWargaPage.routeName);
+            Navigator.pushNamed(context, CitizenDataMenu.routeName);
           },
           style: TextButton.styleFrom(
             padding: EdgeInsets.zero,
@@ -168,14 +166,14 @@ class MenuUtama extends StatelessWidget {
                     padding: EdgeInsets.zero,
                     alignment: Alignment.centerLeft,
                   ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, PelaporanWargaPage.routeName);
-                  },
+                  onPressed: () {},
                 )
               ],
             ),
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, PelaporanWargaPage.routeName);
+          },
           style: TextButton.styleFrom(
             padding: EdgeInsets.zero,
             alignment: Alignment.centerLeft,
