@@ -10,14 +10,14 @@ String requestSupportToJson(RequestSupport data) => json.encode(data.toJson());
 
 class RequestSupport {
   RequestSupport({
-    required this.error,
-    required this.message,
-    required this.data,
+    this.error,
+    this.message,
+    this.data,
   });
 
-  bool error;
-  String message;
-  Data data;
+  bool? error;
+  String? message;
+  Data? data;
 
   factory RequestSupport.fromJson(Map<String, dynamic> json) => RequestSupport(
     error: json["error"],
@@ -28,7 +28,7 @@ class RequestSupport {
   Map<String, dynamic> toJson() => {
     "error": error,
     "message": message,
-    "data": data.toJson(),
+    "data": data?.toJson(),
   };
 }
 
