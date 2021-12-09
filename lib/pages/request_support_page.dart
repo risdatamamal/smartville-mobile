@@ -132,132 +132,137 @@ class _RequestSupportState extends State<RequestSupportPage> {
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 24),
                 width: width,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Form(
-                      key: _formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Nama Bantuan',
-                            style: greyText,
-                          ),
-                          const SizedBox(height: 4),
-                          CustomFormField(
-                            textEditingController: namaBantuanController,
-                            textHint: 'Masukan Nama Bantuan',
-                          ),
-                          const SizedBox(height: 20),
-                          Text(
-                            'Jenis Bantuan',
-                            style: greyText,
-                          ),
-                          const SizedBox(height: 4),
-                          CustomFormField(
-                            textEditingController: jenisBantuanController,
-                            textHint: 'Masukan Jenis Bantuan',
-                          ),
-                          const SizedBox(height: 20),
-                          Text(
-                            'Jumlah Dana',
-                            style: greyText,
-                          ),
-                          const SizedBox(height: 4),
-                          CustomFormField(
-                            textEditingController: jumlahDanaController,
-                            textHint: 'Masukan Jumlah Dana',
-                            typeNumber: true,
-                          ),
-                          const SizedBox(height: 20),
-                          Text(
-                            'Alokasi Dana',
-                            style: greyText,
-                          ),
-                          const SizedBox(height: 4),
-                          CustomFormField(
-                            textEditingController: alokasiDanaController,
-                            textHint: 'Masukkan Alokasi Dana',
-                            typeNumber: true,
-                          ),
-                          const SizedBox(height: 20),
-                          Text(
-                            'Dana Terealisasi',
-                            style: greyText,
-                          ),
-                          const SizedBox(height: 4),
-                          CustomFormField(
-                            textEditingController: danaTerealisasiController,
-                            textHint: 'Masukkan Dana Yang Terealisasikan',
-                            typeNumber: true,
-                          ),
-                          const SizedBox(height: 20),
-                          Text(
-                            'Sisa Dana Bantuan',
-                            style: greyText,
-                          ),
-                          const SizedBox(height: 4),
-                          CustomFormField(
-                            textEditingController: sisadanaController,
-                            textHint: 'Masukkan Sisa Dana Bantuan',
-                            typeNumber: true,
-                          ),
-                        ],
+                child: SingleChildScrollView(
+
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 30,
                       ),
-                    ),
-                    const SizedBox(height: 30),
-                    SizedBox(
-                      width: double.infinity,
-                      child: _onSend
-                          ? const LinearProgressIndicator()
-                          : ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                primary: primaryColor,
-                              ),
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) => CustomDialog(
-                                      text:
-                                          "Apakah Anda yakin data yang dimasukan sudah benar ?",
-                                      onClick: () {
-                                        _submitFinancialHelp(
-                                            namaBantuanController.text
-                                                .toString(),
-                                            jenisBantuanController.text
-                                                .toString(),
-                                            jumlahDanaController.text
-                                                .toString(),
-                                            alokasiDanaController.text
-                                                .toString(),
-                                            danaTerealisasiController.text
-                                                .toString(),
-                                            sisadanaController.text.toString());
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                  );
-                                }
-                              },
-                              child: Text(
-                                'Simpan',
-                                style: blackText.copyWith(fontSize: 16),
-                              ),
+                      Form(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Nama Bantuan',
+                              style: greyText,
                             ),
-                    ),
-                  ],
+                            const SizedBox(height: 4),
+                            CustomFormField(
+                              textEditingController: namaBantuanController,
+                              textHint: 'Masukan Nama Bantuan',
+                            ),
+                            const SizedBox(height: 20),
+                            Text(
+                              'Jenis Bantuan',
+                              style: greyText,
+                            ),
+                            const SizedBox(height: 4),
+                            CustomFormField(
+                              textEditingController: jenisBantuanController,
+                              textHint: 'Masukan Jenis Bantuan',
+                            ),
+                            const SizedBox(height: 20),
+                            Text(
+                              'Jumlah Dana',
+                              style: greyText,
+                            ),
+                            const SizedBox(height: 4),
+                            CustomFormField(
+                              textEditingController: jumlahDanaController,
+                              textHint: 'Masukan Jumlah Dana',
+                              typeNumber: true,
+                            ),
+                            const SizedBox(height: 20),
+                            Text(
+                              'Alokasi Dana',
+                              style: greyText,
+                            ),
+                            const SizedBox(height: 4),
+                            CustomFormField(
+                              textEditingController: alokasiDanaController,
+                              textHint: 'Masukkan Alokasi Dana',
+                              typeNumber: true,
+                            ),
+                            const SizedBox(height: 20),
+                            Text(
+                              'Dana Terealisasi',
+                              style: greyText,
+                            ),
+                            const SizedBox(height: 4),
+                            CustomFormField(
+                              textEditingController: danaTerealisasiController,
+                              textHint: 'Masukkan Dana Yang Terealisasikan',
+                              typeNumber: true,
+                            ),
+                            const SizedBox(height: 20),
+                            Text(
+                              'Sisa Dana Bantuan',
+                              style: greyText,
+                            ),
+                            const SizedBox(height: 4),
+                            CustomFormField(
+                              textEditingController: sisadanaController,
+                              textHint: 'Masukkan Sisa Dana Bantuan',
+                              typeNumber: true,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 30),
+                      SizedBox(
+                        width: double.infinity,
+                        child: _onSend
+                            ? const LinearProgressIndicator()
+                            : ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: primaryColor,
+                                ),
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => CustomDialog(
+                                        text:
+                                            "Apakah Anda yakin data yang dimasukan sudah benar ?",
+                                        onClick: () {
+                                          _submitFinancialHelp(
+                                              namaBantuanController.text
+                                                  .toString(),
+                                              jenisBantuanController.text
+                                                  .toString(),
+                                              jumlahDanaController.text
+                                                  .toString(),
+                                              alokasiDanaController.text
+                                                  .toString(),
+                                              danaTerealisasiController.text
+                                                  .toString(),
+                                              sisadanaController.text
+                                                  .toString());
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    );
+                                  }
+                                },
+                                child: Text(
+                                  'Simpan',
+                                  style: blackText.copyWith(fontSize: 16),
+                                ),
+                              ),
+                      ),
+                    ],
+                  ),
                 ),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30))),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30))),
+
               ),
             ),
           ],
