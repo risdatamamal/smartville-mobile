@@ -43,8 +43,6 @@ class Data {
     required this.alokasiDana,
     required this.danaTerealisasi,
     required this.sisaDanaBantuan,
-    required this.historyId,
-    required this.omitempty,
   });
 
   int id;
@@ -55,8 +53,7 @@ class Data {
   int alokasiDana;
   int danaTerealisasi;
   int sisaDanaBantuan;
-  int historyId;
-  Omitempty omitempty;
+
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     id: json["Id"],
@@ -67,8 +64,6 @@ class Data {
     alokasiDana: json["Alokasi_dana"],
     danaTerealisasi: json["Dana_terealisasi"],
     sisaDanaBantuan: json["Sisa_dana_bantuan"],
-    historyId: json["HistoryId"],
-    omitempty: Omitempty.fromJson(json["omitempty"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -80,8 +75,6 @@ class Data {
     "Alokasi_dana": alokasiDana,
     "Dana_terealisasi": danaTerealisasi,
     "Sisa_dana_bantuan": sisaDanaBantuan,
-    "HistoryId": historyId,
-    "omitempty": omitempty.toJson(),
   };
 }
 
