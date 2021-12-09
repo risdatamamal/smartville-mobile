@@ -30,6 +30,7 @@ class RequestSupport {
     "message": message,
     "data": data?.toJson(),
   };
+
 }
 
 class Data {
