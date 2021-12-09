@@ -82,15 +82,18 @@ class _PelaporanWargaPageState extends State<PelaporanWargaPage> {
     UserProvider userProvider = context.read<UserProvider>();
     PelaporanWargaProvider provider = context.read<PelaporanWargaProvider>();
     String token = userProvider.token ?? "";
+    String registrationToken = userProvider.tokenFCM ?? "";
     Pelaporan pelaporan = await provider.submitLaporan(
-        token: token,
-        namaPelapor: namaPelapor,
-        keteranganKejadian: keteranganKejadian,
-        jenisLaporan: jenisLaporan,
-        tanggalLaporan: tanggalLaporan,
-        noHp: noHp,
-        alamatLaporan: alamatLaporan,
-        dokumentasiKejadian: dokumentasiKejadian);
+      token: token,
+      namaPelapor: namaPelapor,
+      keteranganKejadian: keteranganKejadian,
+      jenisLaporan: jenisLaporan,
+      tanggalLaporan: tanggalLaporan,
+      noHp: noHp,
+      alamatLaporan: alamatLaporan,
+      dokumentasiKejadian: dokumentasiKejadian,
+      registrationToken: registrationToken,
+    );
     if (pelaporan.error == false) {
       NotificationMessage notificationMessage = NotificationMessage(
         imageAssets: 'assets/celebration.png',
@@ -102,13 +105,6 @@ class _PelaporanWargaPageState extends State<PelaporanWargaPage> {
       );
       Navigator.pushNamed(context, NotifikasiBerhasilPage.routeName,
           arguments: notificationMessage);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            pelaporan.message ?? "",
-          ),
-        ),
-      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -126,7 +122,10 @@ class _PelaporanWargaPageState extends State<PelaporanWargaPage> {
     return Scaffold(
       backgroundColor: const Color(0xFF70C7BA),
       appBar: AppBar(
-        title: Text('Pelaporan Warga', style: whiteText),
+        title: Text(
+          'Pengaduan Warga',
+          style: whiteText.copyWith(fontSize: 14),
+        ),
         backgroundColor: const Color(0xFF70C7BA),
         elevation: 0.0,
         leading: const BackButton(color: Colors.white),
@@ -209,6 +208,7 @@ class _PelaporanWargaPageState extends State<PelaporanWargaPage> {
                               typeNumber: true,
                               textEditingController: noHpController,
                               textHint: 'Masukan No Hp',
+                              maxLength: 12,
                             ),
                             const SizedBox(
                               height: 20,

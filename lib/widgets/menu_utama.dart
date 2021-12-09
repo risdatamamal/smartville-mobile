@@ -17,6 +17,7 @@ class MenuUtama extends StatelessWidget {
         //Menu 1
         TextButton(
           child: Container(
+            height: 60,
             padding: const EdgeInsets.symmetric(
               vertical: 10,
               horizontal: 20,
@@ -29,20 +30,13 @@ class MenuUtama extends StatelessWidget {
               children: [
                 Image.asset('assets/icons/dokumen.png'),
                 const SizedBox(width: 8),
-                TextButton(
-                  child: Text(
-                    'Permohonan Surat Pengantar',
-                    style: primaryText.copyWith(
-                      fontSize: 14,
-                      color: Colors.white,
-                    ),
+                Text(
+                  'Permohonan Surat Pengantar',
+                  style: primaryText.copyWith(
+                    fontSize: 14,
+                    color: Colors.white,
                   ),
-                  style: TextButton.styleFrom(
-                    padding: EdgeInsets.zero,
-                    alignment: Alignment.centerLeft,
-                  ),
-                  onPressed: () {},
-                )
+                ),
               ],
             ),
           ),
@@ -59,6 +53,7 @@ class MenuUtama extends StatelessWidget {
         const SizedBox(height: 10),
         TextButton(
           child: Container(
+            height: 60,
             padding: const EdgeInsets.symmetric(
               vertical: 10,
               horizontal: 20,
@@ -71,19 +66,12 @@ class MenuUtama extends StatelessWidget {
               children: [
                 Image.asset('assets/icons/warga.png'),
                 const SizedBox(width: 8),
-                TextButton(
-                  child: Text(
-                    'Pendataan Warga Desa',
-                    style: primaryText.copyWith(
-                      fontSize: 14,
-                      color: Colors.white,
-                    ),
+                Text(
+                  'Pendataan Warga Desa',
+                  style: primaryText.copyWith(
+                    fontSize: 14,
+                    color: Colors.white,
                   ),
-                  style: TextButton.styleFrom(
-                    padding: EdgeInsets.zero,
-                    alignment: Alignment.centerLeft,
-                  ),
-                  onPressed: () {},
                 )
               ],
             ),
@@ -100,6 +88,7 @@ class MenuUtama extends StatelessWidget {
         const SizedBox(height: 10),
         TextButton(
           child: Container(
+            height: 60,
             padding: const EdgeInsets.symmetric(
               vertical: 10,
               horizontal: 20,
@@ -112,27 +101,19 @@ class MenuUtama extends StatelessWidget {
               children: [
                 Image.asset('assets/icons/permohonan.png'),
                 const SizedBox(width: 8),
-                TextButton(
-                  child: Text(
-                    'Permohonan Bantuan Desa',
-                    style: primaryText.copyWith(
-                      fontSize: 14,
-                      color: Colors.white,
-                    ),
+                Text(
+                  'Permohonan Bantuan Desa',
+                  style: primaryText.copyWith(
+                    fontSize: 14,
+                    color: Colors.white,
                   ),
-                  style: TextButton.styleFrom(
-                    padding: EdgeInsets.zero,
-                    alignment: Alignment.centerLeft,
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, RequestSupportPage.routeName);
-
-                  },
                 )
               ],
             ),
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, RequestSupportPage.routeName);
+          },
           style: TextButton.styleFrom(
             padding: EdgeInsets.zero,
             alignment: Alignment.centerLeft,
@@ -142,6 +123,7 @@ class MenuUtama extends StatelessWidget {
         const SizedBox(height: 10),
         TextButton(
           child: Container(
+            height: 60,
             padding: const EdgeInsets.symmetric(
               vertical: 10,
               horizontal: 20,
@@ -154,19 +136,12 @@ class MenuUtama extends StatelessWidget {
               children: [
                 Image.asset('assets/icons/pelaporan.png'),
                 const SizedBox(width: 8),
-                TextButton(
-                  child: Text(
-                    'Pelaporan ',
-                    style: primaryText.copyWith(
-                      fontSize: 14,
-                      color: Colors.white,
-                    ),
+                Text(
+                  'Pengaduan',
+                  style: primaryText.copyWith(
+                    fontSize: 14,
+                    color: Colors.white,
                   ),
-                  style: TextButton.styleFrom(
-                    padding: EdgeInsets.zero,
-                    alignment: Alignment.centerLeft,
-                  ),
-                  onPressed: () {},
                 )
               ],
             ),

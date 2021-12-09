@@ -10,9 +10,16 @@ class PermohohonanSuratProvider with ChangeNotifier {
     required String alamatPemohon,
     required String noHp,
     required String jenisSurat,
+    required String registrationToken,
   }) async {
     PermohonanSurat permohonanSurat = await RemoteDataSource.permohonanSurat(
-        token, nikPemohon, namaPemohon, alamatPemohon, noHp, jenisSurat);
+        token,
+        nikPemohon,
+        namaPemohon,
+        alamatPemohon,
+        noHp,
+        jenisSurat,
+        registrationToken);
     notifyListeners();
     return permohonanSurat;
   }

@@ -81,7 +81,9 @@ class _PendataanKelahiranPageState extends State<PendataanKelahiranPage> {
         namaIbu: namaIbu,
         anakKe: anakKe,
         tanggalKelahiran: tanggalKelahiran,
-        alamatKelahiran: alamatKelahiran);
+        alamatKelahiran: alamatKelahiran,
+        registrationToken: userProvider.tokenFCM!
+    );
     if (pendataanKelahiran.error == false) {
       NotificationMessage notificationMessage = NotificationMessage(
         imageAssets: 'assets/celebration.png',

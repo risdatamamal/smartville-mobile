@@ -59,14 +59,16 @@ class _EditUserProfileState extends State<EditUserProfile> {
       String nama, String alamat, String noHp, String email) async {
     setState(() => _onSend = true);
     UserProvider provider = context.read<UserProvider>();
-
+    bool sendJenisKelamin = jenisKelamin == JenisKelamin.L;
     Register register = await provider.editProfile(
-        token: provider.token!,
-        nama: nama,
-        email: email,
-        alamat: alamat,
-        profilePic: image,
-        noHp: noHp);
+      token: provider.token!,
+      nama: nama,
+      email: email,
+      alamat: alamat,
+      profilePic: image,
+      noHp: noHp,
+      jenisKelamin: sendJenisKelamin,
+    );
     if (register.data.token == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -98,7 +100,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
     emailController = TextEditingController(text: provider.userEmail);
     addressController = TextEditingController(text: provider.userAlamat);
     phoneController = TextEditingController(text: provider.userTelp);
-    jenisKelamin = provider.userJenisKelamin! ? JenisKelamin.P : JenisKelamin.L;
+    jenisKelamin = provider.userJenisKelamin! ? JenisKelamin.L : JenisKelamin.P;
     imageProfile = provider.imageProfile ?? "";
     tempImage = imageProfile;
   }
@@ -187,6 +189,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                 typeNumber: true,
                 textEditingController: phoneController,
                 textHint: 'Masukkan No. Telepon',
+                maxLength: 12,
               ),
               const SizedBox(height: 20),
               Text(

@@ -89,6 +89,7 @@ class RemoteDataSource {
     required String email,
     required String alamat,
     required String noHp,
+    required bool jenisKelamin,
     File? imageProfile,
   }) async {
     var formData = FormData.fromMap({
@@ -96,6 +97,7 @@ class RemoteDataSource {
       'email': email,
       'alamat': alamat,
       'no_hp': noHp,
+      'jenis_kelamin': jenisKelamin,
       if (imageProfile != null)
         'profile_pic': await MultipartFile.fromFile(imageProfile.path),
     });
@@ -114,12 +116,14 @@ class RemoteDataSource {
   }
 
   static Future<PermohonanSurat> permohonanSurat(
-      String token,
-      String nikPemohon,
-      String namaPemohon,
-      String noHp,
-      String alamatPemohon,
-      String jenisSurat) async {
+    String token,
+    String nikPemohon,
+    String namaPemohon,
+    String noHp,
+    String alamatPemohon,
+    String jenisSurat,
+    String registrationToken,
+  ) async {
     _dio.options.headers["authorization"] = "Bearer $token";
     var formData = FormData.fromMap({
       'nik_pemohon': nikPemohon,
@@ -127,6 +131,7 @@ class RemoteDataSource {
       'no_hp': noHp,
       'alamat_pemohon': alamatPemohon,
       'jenis_surat': jenisSurat,
+      'registration_token': registrationToken
     });
     Response<String> response =
         await _dio.post('/introductionmail', data: formData);
@@ -135,14 +140,16 @@ class RemoteDataSource {
   }
 
   static Future<Pelaporan> pelaporan(
-      String token,
-      String namaPelapor,
-      String deskripsi,
-      String tglLaporan,
-      String jenisLaporan,
-      String noHp,
-      String alamat,
-      File? dokumentasiKejadian) async {
+    String token,
+    String namaPelapor,
+    String deskripsi,
+    String tglLaporan,
+    String jenisLaporan,
+    String noHp,
+    String alamat,
+    File? dokumentasiKejadian,
+    String registrationToken,
+  ) async {
     _dio.options.headers["authorization"] = "Bearer $token";
     var formData = FormData.fromMap({
       'nama_pelapor': namaPelapor,
@@ -151,6 +158,7 @@ class RemoteDataSource {
       'jenis_laporan': jenisLaporan,
       'no_hp': noHp,
       'alamat': alamat,
+      'registration_token': registrationToken,
       if (dokumentasiKejadian != null)
         'foto_kejadian': await MultipartFile.fromFile(dokumentasiKejadian.path)
     });
@@ -167,6 +175,7 @@ class RemoteDataSource {
     int anakKe,
     String tanggalKelahiran,
     String alamatKelahiran,
+    String registrationToken,
   ) async {
     _dio.options.headers["authorization"] = "Bearer $token";
     var formData = FormData.fromMap({
@@ -177,7 +186,8 @@ class RemoteDataSource {
       'anak_ke': anakKe,
       'tgl_lahir': tanggalKelahiran,
       'alamat_kelahiran': alamatKelahiran,
-      'waktu_lahir': "00:00:00"
+      'waktu_lahir': "00:00:00",
+      'registration_token': registrationToken,
     });
     Response<String> response = await _dio.post('/birth-regis', data: formData);
     return pendataanKelahiranFromJson(response.data ?? "");
@@ -275,16 +285,15 @@ class RemoteDataSource {
     return historyFromJson(response.data ?? "");
   }
 
-
   static Future<RequestSupport> requestSupport(
-      String token,
-      String nama_bantuan,
-      String jenis_bantuan,
-      int jumlah_dana,
-      int alokasi_dana,
-      int dana_terealisasi,
-      int sisa_dana_bantuan,
-      ) async {
+    String token,
+    String nama_bantuan,
+    String jenis_bantuan,
+    int jumlah_dana,
+    int alokasi_dana,
+    int dana_terealisasi,
+    int sisa_dana_bantuan,
+  ) async {
     _dio.options.headers["authorization"] = "Bearer $token";
     var formData = FormData.fromMap({
       'nama_bantuan': nama_bantuan,
