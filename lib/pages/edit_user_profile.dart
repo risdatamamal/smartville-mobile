@@ -59,14 +59,16 @@ class _EditUserProfileState extends State<EditUserProfile> {
       String nama, String alamat, String noHp, String email) async {
     setState(() => _onSend = true);
     UserProvider provider = context.read<UserProvider>();
-
+    bool sendJenisKelamin = jenisKelamin == JenisKelamin.L;
     Register register = await provider.editProfile(
-        token: provider.token!,
-        nama: nama,
-        email: email,
-        alamat: alamat,
-        profilePic: image,
-        noHp: noHp);
+      token: provider.token!,
+      nama: nama,
+      email: email,
+      alamat: alamat,
+      profilePic: image,
+      noHp: noHp,
+      jenisKelamin: sendJenisKelamin,
+    );
     if (register.data.token == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

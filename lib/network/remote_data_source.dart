@@ -89,6 +89,7 @@ class RemoteDataSource {
     required String email,
     required String alamat,
     required String noHp,
+    required bool jenisKelamin,
     File? imageProfile,
   }) async {
     var formData = FormData.fromMap({
@@ -96,6 +97,7 @@ class RemoteDataSource {
       'email': email,
       'alamat': alamat,
       'no_hp': noHp,
+      'jenis_kelamin': jenisKelamin,
       if (imageProfile != null)
         'profile_pic': await MultipartFile.fromFile(imageProfile.path),
     });
