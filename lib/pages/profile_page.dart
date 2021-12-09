@@ -20,15 +20,12 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-
-
   String _imageProfile = "";
   String _userName = "";
   String _userEmail = "";
   String _userTelp = "";
   String _userNik = "";
   Future<void> _userData() async {
-
     UserProvider provider = context.read<UserProvider>();
     String imageProfile = provider.imageProfile ?? "";
     String userName = provider.userName ?? "";
@@ -36,9 +33,7 @@ class _ProfilePageState extends State<ProfilePage> {
     String userTelp = provider.userTelp ?? "";
     String userNik = provider.userNik ?? "";
 
-
     setState(() {
-
       _imageProfile = imageProfile;
       _userName = userName;
       _userEmail = userEmail;
@@ -65,11 +60,10 @@ class _ProfilePageState extends State<ProfilePage> {
               padding: EdgeInsets.all(1.2),
               child: Container(
                 decoration: BoxDecoration(
-                  image:  DecorationImage(
+                  image: DecorationImage(
                     image: _imageProfile == ""
-                        ? const AssetImage(
-                        'assets/default_profile.png')
-                    as ImageProvider
+                        ? const AssetImage('assets/default_profile.png')
+                            as ImageProvider
                         : NetworkImage(_imageProfile),
                     fit: BoxFit.cover,
                   ),
@@ -93,8 +87,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     text: '$_userName\n',
                     style: primaryText.copyWith(fontSize: 20)),
                 TextSpan(
-                    text: _userEmail,
-                    style: greyText.copyWith(fontSize: 15)),
+                    text: _userEmail, style: greyText.copyWith(fontSize: 15)),
               ]),
             )
           ],
@@ -204,11 +197,12 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 }
 
-Card CustomButton(
-    {required String imageUrl,
-      required String text,
-      required TextStyle style,
-      required double scale,}) {
+Card CustomButton({
+  required String imageUrl,
+  required String text,
+  required TextStyle style,
+  required double scale,
+}) {
   return Card(
     elevation: 10,
     shape: RoundedRectangleBorder(

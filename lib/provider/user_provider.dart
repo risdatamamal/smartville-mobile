@@ -204,6 +204,7 @@ class UserProvider with ChangeNotifier {
     required String alamat,
     required String noHp,
     required String email,
+    required bool jenisKelamin,
     File? profilePic,
   }) async {
     Register register = await RemoteDataSource.editProfile(
@@ -213,6 +214,7 @@ class UserProvider with ChangeNotifier {
       alamat: alamat,
       noHp: noHp,
       imageProfile: profilePic,
+      jenisKelamin: jenisKelamin,
     );
     if (profilePic != null) {
       _imageProfile = register.data.profilePic;
@@ -221,6 +223,7 @@ class UserProvider with ChangeNotifier {
     _userEmail = register.data.email;
     _userAlamat = register.data.alamat;
     _userTelp = register.data.noHp;
+    _userJenisKelamin = register.data.jenisKelamin;
     if (_token != null) {
       if (profilePic != null) {
         await _preferences.setString(
@@ -243,6 +246,10 @@ class UserProvider with ChangeNotifier {
       await _preferences.setString(
         keyUserAlamat,
         _userAlamat!,
+      );
+      await _preferences.setBool(
+        keyUserJenisKelamin,
+        _userJenisKelamin!,
       );
     }
     notifyListeners();

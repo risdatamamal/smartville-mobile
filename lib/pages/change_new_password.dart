@@ -74,6 +74,15 @@ class _ChangeNewPasswordState extends State<ChangeNewPasswordPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Permohonan Surat Pengantar',
+            style: whiteText.copyWith(fontSize: 14),
+          ),
+          backgroundColor: Colors.white,
+          elevation: 0.0,
+          leading: const BackButton(color: Color(0xFF3C4D60)),
+        ),
         body: Center(
           child: SingleChildScrollView(
             child: Container(
@@ -86,9 +95,11 @@ class _ChangeNewPasswordState extends State<ChangeNewPasswordPage> {
                       image: AssetImage('assets/password.png'),
                     ),
                   ),
-                  const Text(
-                    'Atur Ulang Password',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                  const SizedBox(height: 40),
+                  Text(
+                    'Atur Ulang\nPassword',
+                    style: blackText.copyWith(
+                        fontWeight: FontWeight.bold, fontSize: 22),
                   ),
                   const SizedBox(
                     height: 15,
@@ -102,14 +113,23 @@ class _ChangeNewPasswordState extends State<ChangeNewPasswordPage> {
                           obsecureText: true,
                           textEditingController: oldPwController,
                           textHint: 'Masukan password lama',
-                          suffixIcon: Icons.visibility,
+                          suffixIcon: Icons.visibility_rounded,
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 22),
+                        Container(
+                          margin: const EdgeInsets.only(
+                            left: 20,
+                            right: 20,
+                          ),
+                          height: 3,
+                          color: const Color(0xFFF38263),
+                        ),
+                        const SizedBox(height: 22),
                         CustomFormField(
                           obsecureText: true,
                           textEditingController: newPwController,
                           textHint: 'Masukan password baru',
-                          suffixIcon: Icons.visibility,
+                          suffixIcon: Icons.visibility_rounded,
                         ),
                         const SizedBox(height: 20),
                         FlutterPwValidator(
@@ -130,7 +150,7 @@ class _ChangeNewPasswordState extends State<ChangeNewPasswordPage> {
                           obsecureText: true,
                           textEditingController: pwConfirmController,
                           textHint: 'Konfirmasi password baru',
-                          suffixIcon: Icons.visibility,
+                          suffixIcon: Icons.visibility_rounded,
                         ),
                       ],
                     ),

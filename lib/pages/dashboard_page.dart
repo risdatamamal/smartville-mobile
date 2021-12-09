@@ -21,8 +21,7 @@ class DashboardPage extends StatefulWidget {
   _DashboardPageState createState() => _DashboardPageState();
 }
 
-class _DashboardPageState extends State<DashboardPage>
-    with WidgetsBindingObserver {
+class _DashboardPageState extends State<DashboardPage> {
   List<Datum> newsList = [];
   bool isLoading = false;
   String _imageProfile = "";
@@ -102,10 +101,8 @@ class _DashboardPageState extends State<DashboardPage>
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      _userData();
-    }
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -124,31 +121,28 @@ class _DashboardPageState extends State<DashboardPage>
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Halo,',
-                            style: greyText,
-                            textAlign: TextAlign.start,
-                          ),
-                          TextButton(
-                            child: Text(
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Halo,',
+                              style: greyText,
+                              textAlign: TextAlign.start,
+                            ),
+                            Text(
                               _userName.split(" ")[0],
                               style: primaryText.copyWith(fontSize: 18),
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            style: TextButton.styleFrom(
-                              padding: EdgeInsets.zero,
-                              alignment: Alignment.centerLeft,
-                            ),
-                            onPressed: () {},
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, ProfilePage.routeName);
+                          Navigator.pushNamed(context, ProfilePage.routeName)
+                              .then((value) => _userData());
                         },
                         child: Container(
                           margin: const EdgeInsets.only(right: 17, top: 24),

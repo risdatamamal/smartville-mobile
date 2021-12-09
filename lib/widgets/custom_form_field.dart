@@ -81,11 +81,12 @@ class _CustomFormFieldState extends State<CustomFormField> {
         suffixIcon: widget.suffixIcon != null
             ? IconButton(
                 icon: Icon(
-                  widget.obsecureText ? Icons.visibility : Icons.visibility_off,
+                  widget.obsecureText
+                      ? Icons.visibility_rounded
+                      : Icons.visibility_off,
                   color: Theme.of(context).primaryColorDark,
                 ),
                 onPressed: () {
-                  // Update the state i.e. toogle the state of passwordVisible variable
                   setState(() {
                     widget.obsecureText = !widget.obsecureText;
                   });
