@@ -175,6 +175,7 @@ class RemoteDataSource {
     int anakKe,
     String tanggalKelahiran,
     String alamatKelahiran,
+    String registrationToken,
   ) async {
     _dio.options.headers["authorization"] = "Bearer $token";
     var formData = FormData.fromMap({
@@ -185,7 +186,8 @@ class RemoteDataSource {
       'anak_ke': anakKe,
       'tgl_lahir': tanggalKelahiran,
       'alamat_kelahiran': alamatKelahiran,
-      'waktu_lahir': "00:00:00"
+      'waktu_lahir': "00:00:00",
+      'registration_token': registrationToken,
     });
     Response<String> response = await _dio.post('/birth-regis', data: formData);
     return pendataanKelahiranFromJson(response.data ?? "");
