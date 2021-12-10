@@ -310,7 +310,7 @@ class _PendataanKelahiranPageState extends State<PendataanKelahiranPage> {
                             const SizedBox(height: 4),
                             CustomFormField(
                               textEditingController: waktuKelahiranController,
-                              textHint: 'Masukan Tanggal Kelahiran',
+                              textHint: 'Masukan Waktu Kelahiran',
                               readOnly: true,
                               onTap: () {
                                _selectTime(context, waktuKelahiranController);
