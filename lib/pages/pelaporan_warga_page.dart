@@ -14,6 +14,7 @@ import 'package:smartville/widgets/custom_dialog.dart';
 import 'package:smartville/widgets/custom_form_field.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/src/provider.dart';
+import 'package:smartville/widgets/custom_select_option.dart';
 
 class PelaporanWargaPage extends StatefulWidget {
   const PelaporanWargaPage({Key? key}) : super(key: key);
@@ -30,12 +31,13 @@ class _PelaporanWargaPageState extends State<PelaporanWargaPage> {
   TextEditingController jenisLaporanController = TextEditingController();
   TextEditingController tanggalLaporanController = TextEditingController();
   TextEditingController alamatKejadianController = TextEditingController();
+  TextEditingController jenisLaporanLainnyaController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
   bool _onSend = false;
   File? image;
   String? tanggalFormatted;
-
+  bool jenisLaporanLainnya = false;
   Future _pickImage(ImageSource source) async {
     try {
       final image = await ImagePicker().pickImage(source: source);
@@ -182,10 +184,42 @@ class _PelaporanWargaPageState extends State<PelaporanWargaPage> {
                               'Jenis Laporan',
                               style: greyText,
                             ),
-                            CustomFormField(
-                              textEditingController: jenisLaporanController,
-                              textHint: 'Masukan jenis laporan',
+                            CustomSelectOption(
+                              items: const [
+                                'Kehilangan',
+                                'Pencurian',
+                                'Penculikan',
+                                'Lainnya'
+                              ],
+                              onChanged: (val) {
+                                jenisLaporanController.text = val ?? "";
+                                if (val == "Lainnya") {
+                                  setState(() {
+                                    jenisLaporanLainnya = true;
+                                  });
+                                } else {
+                                  setState(() {
+                                    jenisLaporanLainnya = false;
+                                  });
+                                }
+                              },
                             ),
+                            jenisLaporanLainnya
+                                ? const SizedBox(height: 20)
+                                : const SizedBox(height: 0),
+                            jenisLaporanLainnya
+                                ? Text(
+                                    'Isi Jenis Laporan Lainnya',
+                                    style: greyText,
+                                  )
+                                : const SizedBox(height: 0),
+                            jenisLaporanLainnya
+                                ? CustomFormField(
+                                    textEditingController:
+                                        jenisLaporanLainnyaController,
+                                    textHint: 'Masukan jenis laporan lainnya',
+                                  )
+                                : const SizedBox(height: 0),
                             const SizedBox(height: 20),
                             Text(
                               'Tanggal Laporan',
@@ -279,11 +313,18 @@ class _PelaporanWargaPageState extends State<PelaporanWargaPage> {
                                                 text:
                                                     "Apakah Anda yakin data yang dimasukan sudah benar ?",
                                                 onClick: () {
+                                                  String jenisLaporan =
+                                                      jenisLaporanLainnyaController
+                                                              .text.isNotEmpty
+                                                          ? jenisLaporanLainnyaController
+                                                              .text
+                                                          : jenisLaporanController
+                                                              .text;
                                                   pelaporan(
                                                     namaPelaporController.text,
                                                     keteranganKejadianController
                                                         .text,
-                                                    jenisLaporanController.text,
+                                                    jenisLaporan,
                                                     tanggalFormatted!,
                                                     noHpController.text,
                                                     alamatKejadianController
