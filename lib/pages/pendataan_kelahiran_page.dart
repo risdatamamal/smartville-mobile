@@ -33,6 +33,21 @@ class _PendataanKelahiranPageState extends State<PendataanKelahiranPage> {
   final _formKey = GlobalKey<FormState>();
   bool _onSend = false;
   String? tanggalFormatted;
+  String? tanggalWaktu;
+
+
+  String getTime(){
+
+      if(tanggalFormatted != null && waktuKelahiranController.text != null){
+        return tanggalWaktu = '$tanggalFormatted ${waktuKelahiranController.text}';
+      }
+      else{
+        return '';
+      }
+
+
+
+  }
 
   _selectDate(BuildContext context, TextEditingController controller) async {
     int yearNow = DateTime.parse(DateTime.now().toString()).year;
@@ -54,40 +69,58 @@ class _PendataanKelahiranPageState extends State<PendataanKelahiranPage> {
     }
   }
 
+  TimeOfDay? time;
+
+  Future _selectTime(
+      BuildContext context, TextEditingController controller) async {
+    final initialTime = TimeOfDay(hour: 9, minute: 0);
+    final newTime = await showTimePicker(
+        context: context, initialTime: time ?? initialTime);
+
+    if (newTime == null) return;
+    setState(() {
+      time = newTime;
+      controller.text =
+          '${time!.hour.toString().padLeft(2, '0')}:${time!.minute.toString().padLeft(2, '0')}:00';
+      print(controller.text);
+    });
+  }
+
   JenisKelamin? _jenisKelamin = JenisKelamin.L;
 
   Future<void> pendataanKelahiran(
-      String namaBayi,
-      String namaAyah,
-      String namaIbu,
-      bool jenisKelamin,
-      int anakKe,
-      String tanggalKelahiran,
-      String alamatKelahiran,
-      ) async {
+    String namaBayi,
+    String namaAyah,
+    String namaIbu,
+    bool jenisKelamin,
+    int anakKe,
+    String tanggalKelahiran,
+    String alamatKelahiran,
+  ) async {
     setState(() {
       _onSend = true;
     });
     UserProvider userProvider = context.read<UserProvider>();
     PendataanKelahiranProvider provider =
-    context.read<PendataanKelahiranProvider>();
+        context.read<PendataanKelahiranProvider>();
     String token = userProvider.token ?? "";
     PendataanKelahiran pendataanKelahiran =
-    await provider.submitPendataanKelahiran(
-        token: token,
-        namaBayi: namaBayi,
-        jenisKelamin: jenisKelamin,
-        namaAyah: namaAyah,
-        namaIbu: namaIbu,
-        anakKe: anakKe,
-        tanggalKelahiran: tanggalKelahiran,
-        alamatKelahiran: alamatKelahiran);
+        await provider.submitPendataanKelahiran(
+            token: token,
+            namaBayi: namaBayi,
+            jenisKelamin: jenisKelamin,
+            namaAyah: namaAyah,
+            namaIbu: namaIbu,
+            anakKe: anakKe,
+            tanggalKelahiran: tanggalKelahiran,
+            alamatKelahiran: alamatKelahiran,
+            registrationToken: userProvider.tokenFCM!);
     if (pendataanKelahiran.error == false) {
       NotificationMessage notificationMessage = NotificationMessage(
         imageAssets: 'assets/celebration.png',
         title: "Pelaporan Terkirim!",
         message:
-        "Pelaporan telah dikirim. Silahkan tunggu notifikasi dari admin untuk tindak lanjut. ",
+            "Pelaporan telah dikirim. Silahkan tunggu notifikasi dari admin untuk tindak lanjut. ",
         textButton: "Kembali ke halaman dashboard",
         navigateTo: "dashboard",
       );
@@ -271,6 +304,20 @@ class _PendataanKelahiranPageState extends State<PendataanKelahiranPage> {
                             ),
                             const SizedBox(height: 20),
                             Text(
+                              'Waktu Kelahiran',
+                              style: greyText,
+                            ),
+                            const SizedBox(height: 4),
+                            CustomFormField(
+                              textEditingController: waktuKelahiranController,
+                              textHint: 'Masukan Waktu Kelahiran',
+                              readOnly: true,
+                              onTap: () {
+                               _selectTime(context, waktuKelahiranController);
+                              },
+                            ),
+                            const SizedBox(height: 20),
+                            Text(
                               'Alamat Kelahiran',
                               style: greyText,
                             ),
@@ -286,35 +333,47 @@ class _PendataanKelahiranPageState extends State<PendataanKelahiranPage> {
                                 child: _onSend
                                     ? const LinearProgressIndicator()
                                     : ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    primary: primaryColor,
-                                  ),
-                                  onPressed: () {
-                                    if (_formKey.currentState!
-                                        .validate()) {
-                                      showDialog(context: context, builder: (context) => CustomDialog(text: "Apakah Anda yakin data yang dimasukan sudah benar ?", onClick: (){
-                                        pendataanKelahiran(
-                                            namaBayiController.text,
-                                            namaAyahController.text,
-                                            namaIbuController.text,
-                                            (_jenisKelamin == JenisKelamin.L
-                                                ? true
-                                                : false),
-                                            int.parse(
-                                                anakKeController.text),
-                                            tanggalFormatted!,
-                                            alamatKelahiranController.text);
-                                        Navigator.pop(context);
-                                      },),);
-                                      print(tanggalFormatted);
-                                    }
-                                  },
-                                  child: Text(
-                                    'Submit',
-                                    style:
-                                    blackText.copyWith(fontSize: 16),
-                                  ),
-                                )),
+                                        style: ElevatedButton.styleFrom(
+                                          primary: primaryColor,
+                                        ),
+                                        onPressed: () {
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) =>
+                                                  CustomDialog(
+                                                text:
+                                                    "Apakah Anda yakin data yang dimasukan sudah benar ?",
+                                                onClick: () {
+                                                  pendataanKelahiran(
+                                                    namaBayiController.text,
+                                                    namaAyahController.text,
+                                                    namaIbuController.text,
+                                                    (_jenisKelamin ==
+                                                            JenisKelamin.L
+                                                        ? true
+                                                        : false),
+                                                    int.parse(
+                                                        anakKeController.text),
+                                                   getTime(),
+                                                    alamatKelahiranController
+                                                        .text,
+                                                  );
+                                                  Navigator.pop(context);
+                                                },
+                                              ),
+                                            );
+                                            print(tanggalFormatted);
+                                          }
+                                        },
+                                        child: Text(
+                                          'Submit',
+                                          style:
+                                              blackText.copyWith(fontSize: 16),
+                                        ),
+                                      )),
+
                           ],
                         ),
                       ),

@@ -12,6 +12,8 @@ class PendataanKelahiranProvider with ChangeNotifier {
     required int anakKe,
     required String tanggalKelahiran,
     required String alamatKelahiran,
+    required String registrationToken,
+
   }) async {
     PendataanKelahiran pendataanKelahiran =
         await RemoteDataSource.pendataanKelahiran(
@@ -23,6 +25,7 @@ class PendataanKelahiranProvider with ChangeNotifier {
       anakKe,
       tanggalKelahiran,
       alamatKelahiran,
+      registrationToken,
     );
     notifyListeners();
     return pendataanKelahiran;

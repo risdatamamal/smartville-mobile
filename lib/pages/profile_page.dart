@@ -81,14 +81,15 @@ class _ProfilePageState extends State<ProfilePage> {
                 color: secondaryColor,
               ),
             ),
-            RichText(
-              text: TextSpan(children: [
-                TextSpan(
-                    text: '$_userName\n',
-                    style: primaryText.copyWith(fontSize: 20)),
-                TextSpan(
-                    text: _userEmail, style: greyText.copyWith(fontSize: 15)),
-              ]),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('${_userName.split(' ').first}', style: primaryText.copyWith(fontSize: 20), overflow: TextOverflow.ellipsis,),
+                  Text(_userEmail,style: greyText.copyWith(fontSize: 15),overflow: TextOverflow.ellipsis)
+                ],
+              ),
             )
           ],
         ),
@@ -146,7 +147,8 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         InkWell(
           onTap: () {
-            Navigator.pushNamed(context, EditUserProfile.routeName);
+            Navigator.pushNamed(context, EditUserProfile.routeName)
+                .then((value) => _userData());
           },
           child: CustomButton(
               scale: 6,
