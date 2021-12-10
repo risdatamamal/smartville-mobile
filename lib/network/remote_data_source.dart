@@ -184,9 +184,9 @@ class RemoteDataSource {
       'nama_ayah': namaAyah,
       'nama_ibu': namaIbu,
       'anak_ke': anakKe,
-      'tgl_lahir': tanggalKelahiran,
+      'tgl_lahir': tanggalKelahiran.split(' ').first,
       'alamat_kelahiran': alamatKelahiran,
-      'waktu_lahir': "00:00:00",
+      'waktu_lahir':tanggalKelahiran.split(' ').last,
       'registration_token': registrationToken,
     });
     Response<String> response = await _dio.post('/birth-regis', data: formData);
@@ -201,6 +201,7 @@ class RemoteDataSource {
     int usia,
     String tglWafat,
     String alamat,
+      String registerToken,
   ) async {
     _dio.options.headers["authorization"] = "Bearer $token";
     var formData = FormData.fromMap({
@@ -210,6 +211,7 @@ class RemoteDataSource {
       'usia': usia,
       'tgl_wafat': tglWafat,
       'alamat': alamat,
+      'registration_token': registerToken,
     });
     Response<String> response = await _dio.post('/deathdata', data: formData);
     return pendataanKematianFromJson(response.data ?? "");
@@ -222,6 +224,7 @@ class RemoteDataSource {
     String tglLahir,
     String asalDomisili,
     String tujuanDomisili,
+    String registerToken,
   ) async {
     _dio.options.headers["authorization"] = "Bearer $token";
     var formData = FormData.fromMap({
@@ -230,6 +233,7 @@ class RemoteDataSource {
       "tgl_lahir": tglLahir,
       "asal_domisili": asalDomisili,
       "tujuan_domisili": tujuanDomisili,
+      'registration_token': registerToken,
     });
     Response<String> response =
         await _dio.post('/domicile-regis', data: formData);

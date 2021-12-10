@@ -11,10 +11,11 @@ class PendataanKematianProvider with ChangeNotifier {
     required int usia,
     required String tglWafat,
     required String alamat,
+    required String registerToken,
   }) async {
     PendataanKematian pendataanKematian =
         await RemoteDataSource.pendataanKematian(
-            token, nik, nama, jenisKelamin, usia, tglWafat, alamat);
+            token, nik, nama, jenisKelamin, usia, tglWafat, alamat,registerToken);
     notifyListeners();
     return pendataanKematian;
   }

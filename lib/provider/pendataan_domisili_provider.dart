@@ -10,10 +10,11 @@ class PendataanDomisiliProvider with ChangeNotifier {
     required String tglLahir,
     required String asalDomisili,
     required String tujuanDomisili,
+    required String registerToken,
   }) async {
     PendataanDomisili pendataanDomisili =
         await RemoteDataSource.pendataanDomisili(token, nikPemohon, namaPemohon,
-            tglLahir, asalDomisili, tujuanDomisili);
+            tglLahir, asalDomisili, tujuanDomisili,registerToken);
     notifyListeners();
     return pendataanDomisili;
   }
