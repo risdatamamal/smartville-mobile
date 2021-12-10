@@ -65,7 +65,8 @@ class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
             namaPemohon: namaPemohon,
             tglLahir: tglLahir,
             asalDomisili: asalDomisili,
-            tujuanDomisili: tujuanDomisili);
+            tujuanDomisili: tujuanDomisili,
+        registerToken: userProvider.tokenFCM!);
 
     if (pendataanDomisili.error == false) {
       NotificationMessage notificationMessage = NotificationMessage(
@@ -95,6 +96,13 @@ class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
       );
     }
     setState(() => _onSend = false);
+  }
+
+  Future isiDataSaya() async{
+    UserProvider userProvider = context.read<UserProvider>();
+    nikPemohonController.text = userProvider.userNik!;
+    namaPemohonController.text = userProvider.userName!;
+   asalDomisiliController.text = userProvider.userAlamat!;
   }
 
   @override
@@ -140,9 +148,22 @@ class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'NIK',
-                            style: greyText,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'NIK',
+                                style: greyText,
+                              ),
+                              InkWell(
+                                onTap: (){isiDataSaya();},
+                                child: Text(
+                                  'Klik untuk pakai data saya',
+                                  style: orangeText.copyWith(decoration: TextDecoration.underline)
+
+                                ),
+                              ),
+                            ],
                           ),
                           const SizedBox(
                             height: 4,

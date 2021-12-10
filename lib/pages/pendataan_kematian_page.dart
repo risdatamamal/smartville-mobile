@@ -5,6 +5,7 @@ import 'package:smartville/common/colors.dart';
 import 'package:smartville/common/text_styles.dart';
 import 'package:smartville/model/notification_message.dart';
 import 'package:smartville/model/pendataan_kematian_response.dart';
+import 'package:smartville/model/user_response.dart';
 import 'package:smartville/provider/pendataan_kematian_provider.dart';
 import 'package:smartville/provider/user_provider.dart';
 import 'package:smartville/widgets/custom_dialog.dart';
@@ -54,6 +55,17 @@ class _PendataanKematianPageState extends State<PendataanKematianPage> {
     }
   }
 
+  Future isiDataSaya() async {
+    UserProvider userProvider = context.read<UserProvider>();
+    nikController.text = userProvider.userNik!;
+    namaAlmarhumController.text = userProvider.userName!;
+    alamatAlmarhumController.text = userProvider.userAlamat!;
+    setState(() {
+      _jenisKelamin = userProvider.userJenisKelamin! == true ? JenisKelamin.L : JenisKelamin.P;
+    });
+
+  }
+
   Future<void> pendataanKematian(
     String nik,
     String nama,
@@ -77,7 +89,8 @@ class _PendataanKematianPageState extends State<PendataanKematianPage> {
             jenisKelamin: jenisKelamin,
             usia: usia,
             tglWafat: tglWafat,
-            alamat: alamat);
+            alamat: alamat,
+            registerToken: userProvider.tokenFCM!);
     if (pendataanKematian.error == false) {
       NotificationMessage notificationMessage = NotificationMessage(
         imageAssets: 'assets/angel.png',
@@ -152,9 +165,20 @@ class _PendataanKematianPageState extends State<PendataanKematianPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'NIK',
-                            style: greyText,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'NIK',
+                                style: greyText,
+                              ),
+                              InkWell(
+                                onTap: (){isiDataSaya();},
+                                child: Text('Klik untuk pakai data saya',
+                                    style: orangeText.copyWith(
+                                        decoration: TextDecoration.underline)),
+                              ),
+                            ],
                           ),
                           const SizedBox(
                             height: 4,
@@ -173,8 +197,9 @@ class _PendataanKematianPageState extends State<PendataanKematianPage> {
                           const SizedBox(
                             height: 4,
                           ),
-                          CustomFormField(textEditingController: namaAlmarhumController, textHint: 'Masukan nama Almarhum / Almarhumah'),
-
+                          CustomFormField(
+                              textEditingController: namaAlmarhumController,
+                              textHint: 'Masukan nama Almarhum / Almarhumah'),
                           const SizedBox(height: 20),
                           Text(
                             'Jenis Kelamin',
@@ -284,10 +309,27 @@ class _PendataanKematianPageState extends State<PendataanKematianPage> {
                                     ),
                                     onPressed: () {
                                       if (_formKey.currentState!.validate()) {
-                                        showDialog(context: context, builder: (context) => CustomDialog(text:  "Apakah Anda yakin data yang dimasukan sudah benar ?", onClick: (){
-                                          pendataanKematian(nikController.text, namaAlmarhumController.text, _jenisKelamin == JenisKelamin.L ? true : false, int.parse(usiaController.text), tanggalFormatted!, alamatAlmarhumController.text);
-                                          Navigator.pop(context);
-                                        }),);
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) => CustomDialog(
+                                              text:
+                                                  "Apakah Anda yakin data yang dimasukan sudah benar ?",
+                                              onClick: () {
+                                                pendataanKematian(
+                                                    nikController.text,
+                                                    namaAlmarhumController.text,
+                                                    _jenisKelamin ==
+                                                            JenisKelamin.L
+                                                        ? true
+                                                        : false,
+                                                    int.parse(
+                                                        usiaController.text),
+                                                    tanggalFormatted!,
+                                                    alamatAlmarhumController
+                                                        .text);
+                                                Navigator.pop(context);
+                                              }),
+                                        );
                                       }
                                     },
                                     child: Text('Submit',
