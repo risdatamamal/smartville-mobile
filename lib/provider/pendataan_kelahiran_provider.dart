@@ -26,7 +26,6 @@ class PendataanKelahiranProvider with ChangeNotifier {
       tanggalKelahiran,
       alamatKelahiran,
       registrationToken,
-
     );
     notifyListeners();
     return pendataanKelahiran;
