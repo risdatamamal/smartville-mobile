@@ -33,6 +33,21 @@ class _PendataanKelahiranPageState extends State<PendataanKelahiranPage> {
   final _formKey = GlobalKey<FormState>();
   bool _onSend = false;
   String? tanggalFormatted;
+  String? tanggalWaktu;
+
+
+  String getTime(){
+
+      if(tanggalFormatted != null && waktuKelahiranController.text != null){
+        return tanggalWaktu = '$tanggalFormatted ${waktuKelahiranController.text}';
+      }
+      else{
+        return '';
+      }
+
+
+
+  }
 
   _selectDate(BuildContext context, TextEditingController controller) async {
     int yearNow = DateTime.parse(DateTime.now().toString()).year;
@@ -289,6 +304,20 @@ class _PendataanKelahiranPageState extends State<PendataanKelahiranPage> {
                             ),
                             const SizedBox(height: 20),
                             Text(
+                              'Waktu Kelahiran',
+                              style: greyText,
+                            ),
+                            const SizedBox(height: 4),
+                            CustomFormField(
+                              textEditingController: waktuKelahiranController,
+                              textHint: 'Masukan Tanggal Kelahiran',
+                              readOnly: true,
+                              onTap: () {
+                               _selectTime(context, waktuKelahiranController);
+                              },
+                            ),
+                            const SizedBox(height: 20),
+                            Text(
                               'Alamat Kelahiran',
                               style: greyText,
                             ),
@@ -327,7 +356,7 @@ class _PendataanKelahiranPageState extends State<PendataanKelahiranPage> {
                                                         : false),
                                                     int.parse(
                                                         anakKeController.text),
-                                                    tanggalFormatted!,
+                                                   getTime(),
                                                     alamatKelahiranController
                                                         .text,
                                                   );
@@ -344,6 +373,7 @@ class _PendataanKelahiranPageState extends State<PendataanKelahiranPage> {
                                               blackText.copyWith(fontSize: 16),
                                         ),
                                       )),
+
                           ],
                         ),
                       ),

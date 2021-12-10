@@ -184,9 +184,9 @@ class RemoteDataSource {
       'nama_ayah': namaAyah,
       'nama_ibu': namaIbu,
       'anak_ke': anakKe,
-      'tgl_lahir': tanggalKelahiran,
+      'tgl_lahir': tanggalKelahiran.split(' ').first,
       'alamat_kelahiran': alamatKelahiran,
-      'waktu_lahir': '00:00:00',
+      'waktu_lahir':tanggalKelahiran.split(' ').last,
       'registration_token': registrationToken,
     });
     Response<String> response = await _dio.post('/birth-regis', data: formData);
