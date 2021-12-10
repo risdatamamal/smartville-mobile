@@ -30,6 +30,7 @@ import 'package:smartville/provider/pendataan_domisili_provider.dart';
 import 'package:smartville/provider/pendataan_kelahiran_provider.dart';
 import 'package:smartville/provider/pendataan_kematian_provider.dart';
 import 'package:smartville/provider/permohonan_surat_provider.dart';
+import 'package:smartville/provider/request_support_provider.dart';
 import 'package:smartville/provider/user_provider.dart';
 import 'package:smartville/provider/news_provider.dart';
 import 'package:smartville/model/notification_message.dart';
@@ -93,6 +94,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => PendataanKematianProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => RequestSupportProvider(),
         ),
         ChangeNotifierProvider(
           create: (_) => HistoryProvider(),

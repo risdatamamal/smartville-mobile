@@ -22,7 +22,7 @@ class RequestSupport {
   factory RequestSupport.fromJson(Map<String, dynamic> json) => RequestSupport(
     error: json["error"],
     message: json["message"],
-    data: Data.fromJson(json["data"]),
+    data: json["data"] != null ? Data.fromJson(json["data"]) : null,
   );
 
   Map<String, dynamic> toJson() => {

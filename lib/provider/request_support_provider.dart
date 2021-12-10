@@ -11,6 +11,7 @@ class RequestSupportProvider with ChangeNotifier {
     required int alokasi_dana,
     required int dana_terealisasi,
     required int sisa_dana_bantuan,
+    required String registrationToken,
   }) async {
     RequestSupport requestSupport = await RemoteDataSource.requestSupport(token,
         nama_bantuan,
@@ -18,7 +19,8 @@ class RequestSupportProvider with ChangeNotifier {
         jumlah_dana,
         alokasi_dana,
         dana_terealisasi,
-        sisa_dana_bantuan);
+        sisa_dana_bantuan,
+        registrationToken);
     notifyListeners();
     return requestSupport;
   }

@@ -53,6 +53,7 @@ class _RequestSupportState extends State<RequestSupportPage> {
     RequestSupportProvider requestSupportProvider =
         context.read<RequestSupportProvider>();
     String token = userProvider.token ?? "";
+    String registrationToken = userProvider.tokenFCM ?? "";
     RequestSupport requestSupport =
         await requestSupportProvider.submitRequestSupport(
             token: token,
@@ -61,7 +62,8 @@ class _RequestSupportState extends State<RequestSupportPage> {
             jumlah_dana: jumlahDanaParse,
             alokasi_dana: alokasiDanaParse,
             dana_terealisasi: danaTerealisasiParse,
-            sisa_dana_bantuan: sisaDanaBantuanParse);
+            sisa_dana_bantuan: sisaDanaBantuanParse,
+          registrationToken: registrationToken);
 
     if (requestSupport.error == false) {
       NotificationMessage notificationMessage = NotificationMessage(
