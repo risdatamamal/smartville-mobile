@@ -16,87 +16,118 @@ class CitizenDataMenu extends StatefulWidget {
 }
 
 class _CitizenDataMenuState extends State<CitizenDataMenu> {
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-          leading: const BackButton(color: primaryColor),
-        ),
-        backgroundColor: Colors.white,
-        body: Center(
-          child: Column(children: <Widget>[
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                'Pendataan Warga Desa',
-                style: primaryText.copyWith(fontSize: 22),
-              ),
+    return Scaffold(
+      backgroundColor: greenColor1,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            padding: const EdgeInsets.only(
+              top: 40.0,
+              left: 15.0,
+              right: 30.0,
+              bottom: 30.0,
             ),
-            const Padding(
-              padding: EdgeInsets.all(20),
-            ),
-            Material(
-              borderRadius: BorderRadius.circular(20),
-              color: Color.fromRGBO(121, 175, 167, 1),
-              shadowColor: Color.fromRGBO(0, 0, 0, 0.25),
-              child:  InkWell(
-                onTap: (){Navigator.pushNamed(context, PendataanKelahiranPage.routeName);},
-                splashColor: Colors.greenAccent,
-                child: const Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Text(
-                    "Pendataan Kelahiran",
-                    style: TextStyle(color: Colors.white),
+            child: Row(
+              children: [
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Icon(
+                    Icons.arrow_back,
+                    size: 33,
+                    color: greenColor,
                   ),
                 ),
-              ),
+                const SizedBox(
+                  width: 10,
+                ),
+              ],
             ),
+          ),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              decoration: const BoxDecoration(
+                color: greenColor1,
+                borderRadius: BorderRadius.only(
 
-            const Padding(
-              padding: EdgeInsets.all(20),
-            ),
-
-            Material(
-              borderRadius: BorderRadius.circular(20),
-              color: Color.fromRGBO(121, 175, 167, 1),
-              shadowColor: Color.fromRGBO(0, 0, 0, 0.25),
-              child:  InkWell(
-                onTap: (){Navigator.pushNamed(context, PendataanKematianPage.routeName);},
-                splashColor: Colors.greenAccent,
-                child: const Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Text(
-                    "Pendataan Kematian",
-                    style: TextStyle(color: Colors.white),
-                  ),
                 ),
               ),
-            ),
-
-            const Padding(
-              padding: EdgeInsets.all(20),
-            ),
-            Material(
-              borderRadius: BorderRadius.circular(20),
-              color: Color.fromRGBO(121, 175, 167, 1),
-              shadowColor: Color.fromRGBO(0, 0, 0, 0.25),
-              child:  InkWell(
-                onTap: (){Navigator.pushNamed(context, PendataanDomisiliPage.routeName);},
-                splashColor: Colors.greenAccent,
-                child: const Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Text(
-                    "Pendataan Domisili",
-                    style: TextStyle(color: Colors.white),
+              child: ListView(
+                children: [
+                  Center(child: Text( 'Pendataan Warga Desa',
+                    style: primaryText.copyWith(
+                        color: greenButton,
+                        fontSize: 20, fontWeight: FontWeight.w600),
+                    textAlign: TextAlign.center,),),
+                  const SizedBox(
+                    height: 40,
                   ),
-                ),
+                  InkWell(
+                    onTap: (){Navigator.pushNamed(context, PendataanKelahiranPage.routeName);},
+                    child: Container(
+                      width: double.infinity,
+                      height: 50,
+                      child: Center(
+                        child: Text(
+                          'Pendataan Kelahiran',
+                          style: whiteText.copyWith(fontWeight: FontWeight.w700,fontSize: 15),
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                          color: greenButton,
+                          borderRadius: BorderRadius.circular(20)),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  InkWell(
+                    onTap: (){Navigator.pushNamed(context, PendataanKematianPage.routeName);},
+                    child: Container(
+                      width: double.infinity,
+                      height: 50,
+                      child: Center(
+                        child: Text(
+                          'Pendataan Kematian',
+                          style: whiteText.copyWith(fontWeight: FontWeight.w700,fontSize: 15),
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                          color: greenButton,
+                          borderRadius: BorderRadius.circular(20)),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  InkWell(
+                    onTap: (){Navigator.pushNamed(context, PendataanDomisiliPage.routeName);},
+                    child: Container(
+                      width: double.infinity,
+                      height: 50,
+                      child: Center(
+                        child: Text(
+                          'Pendataan Domisili',
+                          style: whiteText.copyWith(fontWeight: FontWeight.w700,fontSize: 15),
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                          color: greenButton,
+                          borderRadius: BorderRadius.circular(20)),
+                    ),
+                  )
+                ],
+
               ),
-            )
-          ]),
-        ),
+            ),
+          ),
+        ],
       ),
     );
   }
