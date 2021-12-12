@@ -1,4 +1,4 @@
-package com.example.smartville
+package id.smartville
 
 import io.flutter.embedding.android.FlutterActivity
 

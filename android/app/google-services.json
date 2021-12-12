@@ -41,6 +41,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:245637640459:android:be704ddc4e0687e3baf20e",
+        "android_client_info": {
+          "package_name": "id.smartville"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "245637640459-0831bp33e4oc7r6me5rufjeej1m9pbff.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1ppHHcDRXk1J9PJdcvY7geaJOljkCZSE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "245637640459-0831bp33e4oc7r6me5rufjeej1m9pbff.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
