@@ -15,7 +15,7 @@ final TextStyle secondaryText = GoogleFonts.montserrat(
 );
 
 final TextStyle blackText = GoogleFonts.montserrat(
-  fontSize: 12,
+  fontSize: 15,
   fontWeight: FontWeight.w400,
 );
 
@@ -35,4 +35,9 @@ final TextStyle orangeText = GoogleFonts.montserrat(
     fontSize: 12,
     fontWeight: FontWeight.w400,
     color: redColor
+);
+
+final TextStyle blackTextJudul = GoogleFonts.montserrat(
+  fontSize: 35,
+  fontWeight: FontWeight.w700,
 );

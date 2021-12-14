@@ -27,6 +27,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  bulleted_list: ^0.0.1+0.1a
   cupertino_icons: ^1.0.2
   dio: ^4.0.1
   firebase_core: ^1.10.2
