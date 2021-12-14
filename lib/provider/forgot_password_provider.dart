@@ -39,11 +39,13 @@ class ForgotPasswordProvider with ChangeNotifier {
   Future<ForgotPasswordResponse> changeNewPassword({
     required String oldPassword,
     required String newPassword,
+    required String token,
   }) async {
     ForgotPasswordResponse forgotPasswordResponse =
         await RemoteDataSource.newPassword(
       oldPassword: oldPassword,
       newPassword: newPassword,
+      token: token,
     );
 
     return forgotPasswordResponse;
