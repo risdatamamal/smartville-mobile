@@ -41,6 +41,9 @@ class RemoteDataSource {
       data: formData,
     );
     print(response);
+    print("login");
+    print(email);
+    print(password);
     return userFromJson(response.data ?? "");
   }
 
@@ -186,7 +189,7 @@ class RemoteDataSource {
       'anak_ke': anakKe,
       'tgl_lahir': tanggalKelahiran.split(' ').first,
       'alamat_kelahiran': alamatKelahiran,
-      'waktu_lahir':tanggalKelahiran.split(' ').last,
+      'waktu_lahir': tanggalKelahiran.split(' ').last,
       'registration_token': registrationToken,
     });
     Response<String> response = await _dio.post('/birth-regis', data: formData);
@@ -201,7 +204,7 @@ class RemoteDataSource {
     int usia,
     String tglWafat,
     String alamat,
-      String registerToken,
+    String registerToken,
   ) async {
     _dio.options.headers["authorization"] = "Bearer $token";
     var formData = FormData.fromMap({
@@ -270,15 +273,19 @@ class RemoteDataSource {
   static Future<ForgotPasswordResponse> newPassword({
     required String oldPassword,
     required String newPassword,
+    required String token,
   }) async {
     var formData = FormData.fromMap({
-      'old_password': newPassword,
+      'old_password': oldPassword,
       'new_password': newPassword,
+      'token': token,
     });
+    _dio.options.headers["authorization"] = "Bearer $token";
     Response<String> response = await _dio.put<String>(
-      '/user/forgot-password',
+      '/user/change-password',
       data: formData,
     );
+
     return forgotPasswordResponseFromJson(response.data ?? "");
   }
 
