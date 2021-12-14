@@ -56,16 +56,16 @@ class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
     setState(() => _onSend = true);
     UserProvider userProvider = context.read<UserProvider>();
     PendataanDomisiliProvider pendataanDomisiliProvider =
-        context.read<PendataanDomisiliProvider>();
+    context.read<PendataanDomisiliProvider>();
     String token = userProvider.token ?? "";
     PendataanDomisili pendataanDomisili =
-        await pendataanDomisiliProvider.submitPendataanDomisili(
-            token: token,
-            nikPemohon: nikPemohon,
-            namaPemohon: namaPemohon,
-            tglLahir: tglLahir,
-            asalDomisili: asalDomisili,
-            tujuanDomisili: tujuanDomisili,
+    await pendataanDomisiliProvider.submitPendataanDomisili(
+        token: token,
+        nikPemohon: nikPemohon,
+        namaPemohon: namaPemohon,
+        tglLahir: tglLahir,
+        asalDomisili: asalDomisili,
+        tujuanDomisili: tujuanDomisili,
         registerToken: userProvider.tokenFCM!);
 
     if (pendataanDomisili.error == false) {
@@ -73,7 +73,7 @@ class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
         imageAssets: 'assets/celebration.png',
         title: "Permohonan Terkirim!",
         message:
-            "Permohonan telah dikirim. Silahkan tunggu notifikasi dari admin.",
+        "Permohonan telah dikirim. Silahkan tunggu notifikasi dari admin.",
         textButton: "Kembali ke halaman dashboard",
         navigateTo: "dashboard",
       );
@@ -98,11 +98,11 @@ class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
     setState(() => _onSend = false);
   }
 
-  Future isiDataSaya() async{
+  Future isiDataSaya() async {
     UserProvider userProvider = context.read<UserProvider>();
     nikPemohonController.text = userProvider.userNik!;
     namaPemohonController.text = userProvider.userName!;
-   asalDomisiliController.text = userProvider.userAlamat!;
+    asalDomisiliController.text = userProvider.userAlamat!;
   }
 
   @override
@@ -148,22 +148,9 @@ class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'NIK',
-                                style: greyText,
-                              ),
-                              InkWell(
-                                onTap: (){isiDataSaya();},
-                                child: Text(
-                                  'Klik untuk pakai data saya',
-                                  style: orangeText.copyWith(decoration: TextDecoration.underline)
-
-                                ),
-                              ),
-                            ],
+                          Text(
+                            'NIK',
+                            style: greyText,
                           ),
                           const SizedBox(
                             height: 4,
@@ -231,34 +218,34 @@ class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
                             child: _onSend
                                 ? const LinearProgressIndicator()
                                 : ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      primary: primaryColor,
+                              style: ElevatedButton.styleFrom(
+                                primary: primaryColor,
+                              ),
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => CustomDialog(
+                                      text:
+                                      "Apakah Anda yakin data yang dimasukan sudah benar ?",
+                                      onClick: () {
+                                        _submitPendataanDomisili(
+                                            nikPemohonController.text,
+                                            namaPemohonController.text,
+                                            tanggalFormatted!,
+                                            asalDomisiliController.text,
+                                            tujuanDomisiliController
+                                                .text);
+                                        Navigator.pop(context);
+                                      },
                                     ),
-                                    onPressed: () {
-                                      if (_formKey.currentState!.validate()) {
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) => CustomDialog(
-                                            text:
-                                                "Apakah Anda yakin data yang dimasukan sudah benar ?",
-                                            onClick: () {
-                                              _submitPendataanDomisili(
-                                                  nikPemohonController.text,
-                                                  namaPemohonController.text,
-                                                  tanggalFormatted!,
-                                                  asalDomisiliController.text,
-                                                  tujuanDomisiliController
-                                                      .text);
-                                              Navigator.pop(context);
-                                            },
-                                          ),
-                                        );
-                                      }
-                                    },
-                                    child: Text('Submit',
-                                        style:
-                                            blackText.copyWith(fontSize: 16)),
-                                  ),
+                                  );
+                                }
+                              },
+                              child: Text('Submit',
+                                  style:
+                                  blackText.copyWith(fontSize: 16)),
+                            ),
                           ),
                         ],
                       ),

@@ -304,6 +304,7 @@ class RemoteDataSource {
     int alokasi_dana,
     int dana_terealisasi,
     int sisa_dana_bantuan,
+    String registrationToken,
   ) async {
     _dio.options.headers["authorization"] = "Bearer $token";
     var formData = FormData.fromMap({
@@ -312,13 +313,16 @@ class RemoteDataSource {
       'jumlah_dana': jumlah_dana,
       'alokasi_dana': alokasi_dana,
       'dana_terealisasi': dana_terealisasi,
-      'sisa_dana_bantuan': sisa_dana_bantuan
+      'sisa_dana_bantuan': sisa_dana_bantuan,
+      'registration_token': registrationToken
     });
 
-    Response<String> response = await _dio.post<String>(
+    Response<String> response = await _dio.post(
       '/financialhelp',
       data: formData,
     );
+
+    print(response.data ?? "");
 
     return requestSupportFromJson(response.data ?? "");
   }

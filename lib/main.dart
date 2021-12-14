@@ -21,6 +21,7 @@ import 'package:smartville/pages/profile_page.dart';
 import 'package:smartville/pages/register_page_2.dart';
 import 'package:smartville/pages/register_page_3.dart';
 import 'package:smartville/pages/request_support_page.dart';
+import 'package:smartville/pages/syarat_ketentuan.dart';
 import 'package:smartville/pages/wrapper_page.dart';
 import 'package:smartville/pages/notifikasi_berhasil_page.dart';
 import 'package:smartville/provider/forgot_password_provider.dart';
@@ -30,6 +31,7 @@ import 'package:smartville/provider/pendataan_domisili_provider.dart';
 import 'package:smartville/provider/pendataan_kelahiran_provider.dart';
 import 'package:smartville/provider/pendataan_kematian_provider.dart';
 import 'package:smartville/provider/permohonan_surat_provider.dart';
+import 'package:smartville/provider/request_support_provider.dart';
 import 'package:smartville/provider/user_provider.dart';
 import 'package:smartville/provider/news_provider.dart';
 import 'package:smartville/model/notification_message.dart';
@@ -93,6 +95,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => PendataanKematianProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => RequestSupportProvider(),
         ),
         ChangeNotifierProvider(
           create: (_) => HistoryProvider(),
@@ -171,6 +176,9 @@ class MyApp extends StatelessWidget {
 
             case EditUserProfile.routeName:
               return MaterialPageRoute(builder: (_) => const EditUserProfile());
+
+              case SyaratKetentuan.routeName:
+              return MaterialPageRoute(builder: (_) => const SyaratKetentuan());
 
             case RequestSupportPage.routeName:
               return MaterialPageRoute(

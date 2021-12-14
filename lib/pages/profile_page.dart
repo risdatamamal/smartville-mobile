@@ -130,7 +130,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     TextSpan(
                         text: 'No.Telp\n',
                         style: orangeText.copyWith(fontSize: 15)),
-                    TextSpan(text: _userTelp, style: blackText),
+                    TextSpan(text: _userTelp.isNotEmpty ? _userTelp : '-', style: blackText),
                   ]),
                   textAlign: TextAlign.center,
                 ),
