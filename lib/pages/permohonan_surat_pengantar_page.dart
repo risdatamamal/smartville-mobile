@@ -28,6 +28,7 @@ class _PermohohonanSuratPengantarState
   TextEditingController noHpController = TextEditingController();
   TextEditingController alamatController = TextEditingController();
   TextEditingController suratPermohonanController = TextEditingController();
+  bool isChecked = false;
 
   final _formKey = GlobalKey<FormState>();
   bool _onSend = false;
@@ -45,6 +46,14 @@ class _PermohohonanSuratPengantarState
       noHpController.text = userTelp;
       alamatController.text = userAlamat;
     });
+  }
+
+  _resetForm() {
+    _formKey.currentState?.reset();
+    nikController.clear();
+    namaController.clear();
+    noHpController.clear();
+    alamatController.clear();
   }
 
   Future<void> _submitPermohonanSurat(String nikPemohon, String namaPemohon,
@@ -90,6 +99,18 @@ class _PermohohonanSuratPengantarState
     setState(() => _onSend = false);
   }
 
+  Color getColor(Set<MaterialState> states) {
+    const Set<MaterialState> interactiveStates = <MaterialState>{
+      MaterialState.pressed,
+      MaterialState.hovered,
+      MaterialState.focused,
+    };
+    if (states.any(interactiveStates.contains)) {
+      return Colors.blue;
+    }
+    return Color(0xFFF38263);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,13 +150,6 @@ class _PermohohonanSuratPengantarState
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Center(
-                              child: TextButton(
-                                child: const Text(
-                                    'Gunakan data saya untuk mengisi form'),
-                                onPressed: () => {_autoFillForm()},
-                              ),
-                            ),
                             Text(
                               'NIK',
                               style: greyText,
@@ -149,6 +163,39 @@ class _PermohohonanSuratPengantarState
                               maxLengthEnforcement:
                                   MaxLengthEnforcement.enforced,
                               typeNumber: true,
+                            ),
+                            Row(
+                              children: [
+                                Checkbox(
+                                  value: isChecked,
+                                  fillColor: MaterialStateProperty.resolveWith(
+                                      getColor),
+                                  onChanged: (val) {
+                                    setState(() {
+                                      isChecked = val!;
+                                    });
+                                    if (isChecked) {
+                                      _autoFillForm();
+                                    } else {
+                                      _resetForm();
+                                    }
+                                  },
+                                  activeColor: Colors.white,
+                                ),
+                                InkWell(
+                                  child: Text(
+                                    'Centang untuk pakai data saya',
+                                    style: orangeText.copyWith(
+                                        fontSize: 12,
+                                        decoration: TextDecoration.underline),
+                                  ),
+                                  onTap: () {
+                                    setState(() {
+                                      !isChecked;
+                                    });
+                                  },
+                                ),
+                              ],
                             ),
                             const SizedBox(height: 20),
                             Text(
@@ -178,7 +225,7 @@ class _PermohohonanSuratPengantarState
                               typeNumber: true,
                               textEditingController: noHpController,
                               textHint: 'Masukan No Hp',
-                              maxLength: 12,
+                              maxLength: 14,
                             ),
                             const SizedBox(height: 20),
                             Text(

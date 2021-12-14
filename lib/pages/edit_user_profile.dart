@@ -189,7 +189,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                 typeNumber: true,
                 textEditingController: phoneController,
                 textHint: 'Masukkan No. Telepon',
-                maxLength: 12,
+                maxLength: 14,
               ),
               const SizedBox(height: 20),
               Text(

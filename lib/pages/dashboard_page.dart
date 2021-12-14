@@ -1,5 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/src/provider.dart';
 import 'package:smartville/common/colors.dart';
@@ -12,6 +13,8 @@ import 'package:smartville/utils/firebase_messaging.dart';
 import 'package:smartville/widgets/list_pengumuman.dart';
 import 'package:smartville/widgets/menu_utama.dart';
 import 'package:smartville/widgets/bottom_sheet_content.dart';
+import 'package:url_launcher/link.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DashboardPage extends StatefulWidget {
   static const routeName = 'dashboard_page';
@@ -45,6 +48,17 @@ class _DashboardPageState extends State<DashboardPage> {
       _imageProfile = imageProfile;
       _userName = userName;
     });
+  }
+
+  Future<void> _launchEmailSubmission() async {
+    final Email email = Email(
+      body: '',
+      subject: 'Butuh bantuan',
+      recipients: ['smartville.dev@gmail.com'],
+      isHTML: false,
+    );
+
+    await FlutterEmailSender.send(email);
   }
 
   @override
@@ -199,6 +213,19 @@ class _DashboardPageState extends State<DashboardPage> {
                   ),
                   const SizedBox(height: 8),
                   const MenuUtama(),
+                  const SizedBox(height: 8),
+                  Align(
+                    child: TextButton(
+                      child: Text(
+                        'Butuh bantuan? Klik disini',
+                        style: primaryText.copyWith(
+                            decoration: TextDecoration.underline),
+                      ),
+                      onPressed: () => {_launchEmailSubmission()},
+                    ),
+                    alignment: Alignment.centerRight,
+                  ),
+
                   const SizedBox(height: 90),
                 ],
               ),
