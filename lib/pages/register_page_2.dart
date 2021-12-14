@@ -6,6 +6,7 @@ import 'package:smartville/common/text_styles.dart';
 import 'package:smartville/model/register_data.dart';
 import 'package:smartville/model/register_response.dart';
 import 'package:smartville/pages/register_page_3.dart';
+import 'package:smartville/pages/syarat_ketentuan.dart';
 import 'package:smartville/utils/email_validator.dart';
 import 'package:smartville/utils/password_string_validator.dart';
 import 'package:smartville/widgets/custom_form_field.dart';
@@ -260,37 +261,40 @@ class _RegisterPage2State extends State<RegisterPage2> {
                                         width: 10,
                                       ),
                                       Expanded(
-                                        child: RichText(
-                                          textAlign: TextAlign.justify,
-                                          text: const TextSpan(
-                                            style: TextStyle(
-                                              color: primaryColor,
-                                              fontSize: 13,
+                                        child: InkWell(
+                                          onTap: (){Navigator.pushNamed(context, SyaratKetentuan.routeName);},
+                                          child: RichText(
+                                            textAlign: TextAlign.justify,
+                                            text: const TextSpan(
+                                              style: TextStyle(
+                                                color: primaryColor,
+                                                fontSize: 13,
+                                              ),
+                                              children: <TextSpan>[
+                                                TextSpan(
+                                                  text:
+                                                      'Dengan membuat akun berarti Anda menyetujui ',
+                                                ),
+                                                TextSpan(
+                                                  text: 'syarat dan ketentuan',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                                ),
+                                                TextSpan(
+                                                  text: ' serta ',
+                                                ),
+                                                TextSpan(
+                                                  text: 'kebijakan privasi',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                                ),
+                                                TextSpan(
+                                                  text: ' kami.',
+                                                ),
+                                              ],
                                             ),
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                text:
-                                                    'Dengan membuat akun berarti Anda menyetujui ',
-                                              ),
-                                              TextSpan(
-                                                text: 'syarat dan ketentuan',
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.w700,
-                                                ),
-                                              ),
-                                              TextSpan(
-                                                text: ' serta ',
-                                              ),
-                                              TextSpan(
-                                                text: 'kebijakan privasi',
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.w700,
-                                                ),
-                                              ),
-                                              TextSpan(
-                                                text: ' kami.',
-                                              ),
-                                            ],
                                           ),
                                         ),
                                       ),
