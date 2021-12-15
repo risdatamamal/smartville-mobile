@@ -30,6 +30,7 @@ class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
   final _formKey = GlobalKey<FormState>();
   String? tanggalFormatted;
   bool _onSend = false;
+  bool isChecked = false;
 
   _selectDate(BuildContext context, TextEditingController controller) async {
     int yearNow = DateTime.parse(DateTime.now().toString()).year;
@@ -104,6 +105,25 @@ class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
     namaPemohonController.text = userProvider.userName!;
     asalDomisiliController.text = userProvider.userAlamat!;
   }
+  _resetForm() {
+    _formKey.currentState?.reset();
+    nikPemohonController.clear();
+    namaPemohonController.clear();
+    asalDomisiliController.clear();
+
+  }
+
+  Color getColor(Set<MaterialState> states) {
+    const Set<MaterialState> interactiveStates = <MaterialState>{
+      MaterialState.pressed,
+      MaterialState.hovered,
+      MaterialState.focused,
+    };
+    if (states.any(interactiveStates.contains)) {
+      return Colors.blue;
+    }
+    return Color(0xFFF38263);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -160,6 +180,40 @@ class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
                             textHint: 'Masukkan NIK',
                             maxLength: 16,
                             typeNumber: true,
+                          ),
+                          const SizedBox(height: 20),
+                          Row(
+                            children: [
+                              Checkbox(
+                                value: isChecked,
+                                fillColor: MaterialStateProperty.resolveWith(
+                                    getColor),
+                                onChanged: (val) {
+                                  setState(() {
+                                    isChecked = val!;
+                                  });
+                                  if (isChecked) {
+                                    isiDataSaya();
+                                  } else {
+                                    _resetForm();
+                                  }
+                                },
+                                activeColor: Colors.white,
+                              ),
+                              InkWell(
+                                child: Text(
+                                  'Centang untuk pakai data saya',
+                                  style: orangeText.copyWith(
+                                      fontSize: 12,
+                                      decoration: TextDecoration.underline),
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    !isChecked;
+                                  });
+                                },
+                              ),
+                            ],
                           ),
                           const SizedBox(height: 20),
                           Text(
