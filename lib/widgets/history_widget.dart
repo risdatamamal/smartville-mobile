@@ -41,7 +41,7 @@ class HistoryWidget extends StatelessWidget {
                   Text(title),
                   const SizedBox(height: 5),
                   Text(
-                    dateForHistory(date),
+                    dateForHistory(date.toLocal()),
                     style: blackText.copyWith(color: redColor),
                   ),
                 ],
