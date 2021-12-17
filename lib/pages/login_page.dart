@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: primaryColor,
+        backgroundColor: const Color(0xFF017262),
         body: Center(
           child: SingleChildScrollView(
             child: Padding(
