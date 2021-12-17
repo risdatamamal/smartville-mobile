@@ -9,6 +9,7 @@ import 'package:smartville/provider/request_support_provider.dart';
 import 'package:smartville/provider/user_provider.dart';
 import 'package:smartville/widgets/custom_dialog.dart';
 import 'package:smartville/widgets/custom_form_field.dart';
+import 'package:smartville/widgets/custom_select_option.dart';
 
 import 'notifikasi_berhasil_page.dart';
 
@@ -23,6 +24,7 @@ class RequestSupportPage extends StatefulWidget {
 class _RequestSupportState extends State<RequestSupportPage> {
   TextEditingController namaBantuanController = TextEditingController();
   TextEditingController jenisBantuanController = TextEditingController();
+  TextEditingController jenisBantuanLainnyaController = TextEditingController();
   TextEditingController jumlahDanaController = TextEditingController();
   TextEditingController alokasiDanaController = TextEditingController();
   TextEditingController danaTerealisasiController = TextEditingController();
@@ -30,6 +32,7 @@ class _RequestSupportState extends State<RequestSupportPage> {
 
   final _formKey = GlobalKey<FormState>();
   bool _onSend = false;
+  bool jenisBantuanLainnya = false;
 
   Future<void> _submitFinancialHelp(
       String nama_bantuan,
@@ -157,16 +160,55 @@ class _RequestSupportState extends State<RequestSupportPage> {
                               textEditingController: namaBantuanController,
                               textHint: 'Masukan Nama Bantuan',
                             ),
-                            const SizedBox(height: 20),
+
+                            const SizedBox(height: 4),
                             Text(
                               'Jenis Bantuan',
                               style: greyText,
                             ),
-                            const SizedBox(height: 4),
+                            CustomSelectOption(
+                              items: const [
+                                'Perbaikan Jalan',
+                                'Perbaikan Sekolah',
+                                'Perbaikan Masjid',
+                                'Lainnya'
+                              ],
+                              onChanged: (val) {
+                                jenisBantuanController.text = val ?? "";
+                                if (val == "Lainnya") {
+                                  setState(() {
+                                    jenisBantuanLainnya = true;
+                                  });
+                                } else {
+                                  setState(() {
+                                    jenisBantuanLainnya = false;
+                                  });
+                                }
+                              },
+                            ),
+                            jenisBantuanLainnya
+                                ? const SizedBox(height: 20)
+                                : const SizedBox(height: 0),
+                            jenisBantuanLainnya
+                                ? Text(
+                              'Isi Jenis Bantuan Lainnya',
+                              style: greyText,
+                            )
+                                : const SizedBox(height: 0),
+                            jenisBantuanLainnya
+                                ? CustomFormField(
+                              textEditingController:
+                              jenisBantuanLainnyaController,
+                              textHint: 'Masukan jenis bantuan lainnya',
+                            )
+                                : const SizedBox(height: 0),
+
+
+                            /*const SizedBox(height: 4),
                             CustomFormField(
                               textEditingController: jenisBantuanController,
                               textHint: 'Masukan Jenis Bantuan',
-                            ),
+                            ),*/
                             const SizedBox(height: 20),
                             Text(
                               'Jumlah Dana',
