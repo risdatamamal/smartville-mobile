@@ -9,6 +9,7 @@ import 'package:smartville/model/notification_message.dart';
 import 'package:smartville/pages/login_page.dart';
 import 'package:smartville/pages/notifikasi_berhasil_page.dart';
 import 'package:smartville/provider/forgot_password_provider.dart';
+import 'package:smartville/provider/user_provider.dart';
 import 'package:smartville/utils/password_string_validator.dart';
 import 'package:smartville/widgets/custom_form_field.dart';
 
@@ -30,7 +31,7 @@ class _ChangeNewPasswordState extends State<ChangeNewPasswordPage> {
   Future _changeNewPassword() async {
     ForgotPasswordProvider changePasswordProvider =
         context.read<ForgotPasswordProvider>();
-
+    UserProvider userProvider = context.read<UserProvider>();
     setState(() {
       _onSend = true;
     });
@@ -51,8 +52,8 @@ class _ChangeNewPasswordState extends State<ChangeNewPasswordPage> {
           await changePasswordProvider.changeNewPassword(
         oldPassword: oldPwController.text,
         newPassword: newPwController.text,
+        token: userProvider.token!,
       );
-
       if (res.error) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -62,6 +63,13 @@ class _ChangeNewPasswordState extends State<ChangeNewPasswordPage> {
           ),
         );
       } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              res.message,
+            ),
+          ),
+        );
         Navigator.pop(context);
       }
     }

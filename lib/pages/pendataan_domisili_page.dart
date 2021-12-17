@@ -30,6 +30,7 @@ class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
   final _formKey = GlobalKey<FormState>();
   String? tanggalFormatted;
   bool _onSend = false;
+  bool isChecked = false;
 
   _selectDate(BuildContext context, TextEditingController controller) async {
     int yearNow = DateTime.parse(DateTime.now().toString()).year;
@@ -56,16 +57,16 @@ class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
     setState(() => _onSend = true);
     UserProvider userProvider = context.read<UserProvider>();
     PendataanDomisiliProvider pendataanDomisiliProvider =
-        context.read<PendataanDomisiliProvider>();
+    context.read<PendataanDomisiliProvider>();
     String token = userProvider.token ?? "";
     PendataanDomisili pendataanDomisili =
-        await pendataanDomisiliProvider.submitPendataanDomisili(
-            token: token,
-            nikPemohon: nikPemohon,
-            namaPemohon: namaPemohon,
-            tglLahir: tglLahir,
-            asalDomisili: asalDomisili,
-            tujuanDomisili: tujuanDomisili,
+    await pendataanDomisiliProvider.submitPendataanDomisili(
+        token: token,
+        nikPemohon: nikPemohon,
+        namaPemohon: namaPemohon,
+        tglLahir: tglLahir,
+        asalDomisili: asalDomisili,
+        tujuanDomisili: tujuanDomisili,
         registerToken: userProvider.tokenFCM!);
 
     if (pendataanDomisili.error == false) {
@@ -73,7 +74,7 @@ class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
         imageAssets: 'assets/celebration.png',
         title: "Permohonan Terkirim!",
         message:
-            "Permohonan telah dikirim. Silahkan tunggu notifikasi dari admin.",
+        "Permohonan telah dikirim. Silahkan tunggu notifikasi dari admin.",
         textButton: "Kembali ke halaman dashboard",
         navigateTo: "dashboard",
       );
@@ -98,11 +99,30 @@ class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
     setState(() => _onSend = false);
   }
 
-  Future isiDataSaya() async{
+  Future isiDataSaya() async {
     UserProvider userProvider = context.read<UserProvider>();
     nikPemohonController.text = userProvider.userNik!;
     namaPemohonController.text = userProvider.userName!;
-   asalDomisiliController.text = userProvider.userAlamat!;
+    asalDomisiliController.text = userProvider.userAlamat!;
+  }
+  _resetForm() {
+    _formKey.currentState?.reset();
+    nikPemohonController.clear();
+    namaPemohonController.clear();
+    asalDomisiliController.clear();
+
+  }
+
+  Color getColor(Set<MaterialState> states) {
+    const Set<MaterialState> interactiveStates = <MaterialState>{
+      MaterialState.pressed,
+      MaterialState.hovered,
+      MaterialState.focused,
+    };
+    if (states.any(interactiveStates.contains)) {
+      return Colors.blue;
+    }
+    return Color(0xFFF38263);
   }
 
   @override
@@ -148,22 +168,9 @@ class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'NIK',
-                                style: greyText,
-                              ),
-                              InkWell(
-                                onTap: (){isiDataSaya();},
-                                child: Text(
-                                  'Klik untuk pakai data saya',
-                                  style: orangeText.copyWith(decoration: TextDecoration.underline)
-
-                                ),
-                              ),
-                            ],
+                          Text(
+                            'NIK',
+                            style: greyText,
                           ),
                           const SizedBox(
                             height: 4,
@@ -173,6 +180,40 @@ class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
                             textHint: 'Masukkan NIK',
                             maxLength: 16,
                             typeNumber: true,
+                          ),
+                          const SizedBox(height: 20),
+                          Row(
+                            children: [
+                              Checkbox(
+                                value: isChecked,
+                                fillColor: MaterialStateProperty.resolveWith(
+                                    getColor),
+                                onChanged: (val) {
+                                  setState(() {
+                                    isChecked = val!;
+                                  });
+                                  if (isChecked) {
+                                    isiDataSaya();
+                                  } else {
+                                    _resetForm();
+                                  }
+                                },
+                                activeColor: Colors.white,
+                              ),
+                              InkWell(
+                                child: Text(
+                                  'Centang untuk pakai data saya',
+                                  style: orangeText.copyWith(
+                                      fontSize: 12,
+                                      decoration: TextDecoration.underline),
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    !isChecked;
+                                  });
+                                },
+                              ),
+                            ],
                           ),
                           const SizedBox(height: 20),
                           Text(
@@ -231,34 +272,34 @@ class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
                             child: _onSend
                                 ? const LinearProgressIndicator()
                                 : ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      primary: primaryColor,
+                              style: ElevatedButton.styleFrom(
+                                primary: primaryColor,
+                              ),
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => CustomDialog(
+                                      text:
+                                      "Apakah Anda yakin data yang dimasukan sudah benar ?",
+                                      onClick: () {
+                                        _submitPendataanDomisili(
+                                            nikPemohonController.text,
+                                            namaPemohonController.text,
+                                            tanggalFormatted!,
+                                            asalDomisiliController.text,
+                                            tujuanDomisiliController
+                                                .text);
+                                        Navigator.pop(context);
+                                      },
                                     ),
-                                    onPressed: () {
-                                      if (_formKey.currentState!.validate()) {
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) => CustomDialog(
-                                            text:
-                                                "Apakah Anda yakin data yang dimasukan sudah benar ?",
-                                            onClick: () {
-                                              _submitPendataanDomisili(
-                                                  nikPemohonController.text,
-                                                  namaPemohonController.text,
-                                                  tanggalFormatted!,
-                                                  asalDomisiliController.text,
-                                                  tujuanDomisiliController
-                                                      .text);
-                                              Navigator.pop(context);
-                                            },
-                                          ),
-                                        );
-                                      }
-                                    },
-                                    child: Text('Submit',
-                                        style:
-                                            blackText.copyWith(fontSize: 16)),
-                                  ),
+                                  );
+                                }
+                              },
+                              child: Text('Submit',
+                                  style:
+                                  blackText.copyWith(fontSize: 16)),
+                            ),
                           ),
                         ],
                       ),
