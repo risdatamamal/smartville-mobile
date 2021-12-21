@@ -55,7 +55,7 @@ class BottomSheetContent extends StatelessWidget {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Desa Pemaron Waru',
+                  'Desa Pemaron',
                   style: whiteText.copyWith(fontSize: 22),
                 ),
               ),
