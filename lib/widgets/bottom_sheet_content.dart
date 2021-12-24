@@ -69,6 +69,11 @@ class BottomSheetContent extends StatelessWidget {
                 style: whiteText.copyWith(fontWeight: FontWeight.w700),
                 textAlign: TextAlign.justify,
               ),
+              Text(
+                  '\nSumber : https://sidesa.jatengprov.go.idhttps://triaalyasjayablog.wordpress.com',
+                  style: whiteText.copyWith(
+                      fontWeight: FontWeight.w400, fontSize: 10),
+                  textAlign: TextAlign.justify),
               const SizedBox(
                 height: 20,
               )
