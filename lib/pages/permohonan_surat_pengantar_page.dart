@@ -166,21 +166,26 @@ class _PermohohonanSuratPengantarState
                             ),
                             Row(
                               children: [
-                                Checkbox(
-                                  value: isChecked,
-                                  fillColor: MaterialStateProperty.resolveWith(
-                                      getColor),
-                                  onChanged: (val) {
-                                    setState(() {
-                                      isChecked = val!;
-                                    });
-                                    if (isChecked) {
-                                      _autoFillForm();
-                                    } else {
-                                      _resetForm();
-                                    }
-                                  },
-                                  activeColor: Colors.white,
+                                SizedBox(
+                                  width: 30,
+                                  height: 20,
+                                  child: Checkbox(
+                                    value: isChecked,
+                                    fillColor:
+                                        MaterialStateProperty.resolveWith(
+                                            getColor),
+                                    onChanged: (val) {
+                                      setState(() {
+                                        isChecked = val!;
+                                      });
+                                      if (isChecked) {
+                                        _autoFillForm();
+                                      } else {
+                                        _resetForm();
+                                      }
+                                    },
+                                    activeColor: Colors.white,
+                                  ),
                                 ),
                                 InkWell(
                                   child: Text(

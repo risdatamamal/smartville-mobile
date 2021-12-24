@@ -61,14 +61,20 @@ class BottomSheetContent extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               Text(
-                'Sebuah desa yang terletak di kecamatan Brebes kabupaten Brebes ini adalah sebuah desa yang memiliki cakupan daerah paling luas' +
-                    'diantara dusun lainnya di keluran Pemaron ini. Desa tersebut menurut sesepuh setempat sudah ada sejak jaman kolonial Belanda. ' +
-                    'Dibuktikan dengan ditemukannya rel kereta api tua di samping sawah desa setempat. Ditinggali oleh sekitar 200 warga yang terdiri' +
-                    'dari kurang lebih 40 kepala keluarga, yang mana beberapa warga ada yang bukan orang asli desa tersebut. Lokasi dari desa Pemaron' +
-                    'Waru sendiri memang cukup strategis mengingat lokasinya yang dilalui oleh jalan alternatif penghubung antara kota Brebes - Jatibarang.',
+                'Sebuah desa yang terletak di kecamatan Brebes kabupaten Brebes ini adalah sebuah desa yang memiliki 3 dusun' +
+                    'yaitu dusun Waru, dusun Pemaron, dan dusun Jetis. Memiliki penduduk kurang lebih 6.035 jiwa yang tersebar di' +
+                    'ketiga dusun tersebut. Desa pemaron dilintasi oleh jalur alternatif penghubung jalan pantura utara dengan jalan'
+                        'pantura selatan. Selain itu, desa ini dikelilingi oleh sawah serta. Asal usul dari desa ini masih menjadi misteri, ' +
+                    'salah satu sumber mengatakan kalau kata “Pemaron” itu memiliki arti irigasi karena zaman dulu semua sawah di desa ini' +
+                    'mendapat saluran irigasi dari kali Pemali yang ada di sebelah barat desa Pemaron dan oleh sebab itu desa ini dinamakan desa Pemaron.',
                 style: whiteText.copyWith(fontWeight: FontWeight.w700),
                 textAlign: TextAlign.justify,
               ),
+              Text(
+                  '\nSumber : https://sidesa.jatengprov.go.idhttps://triaalyasjayablog.wordpress.com',
+                  style: whiteText.copyWith(
+                      fontWeight: FontWeight.w400, fontSize: 10),
+                  textAlign: TextAlign.justify),
               const SizedBox(
                 height: 20,
               )
