@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:smartville/common/colors.dart';
-import 'package:smartville/common/text_styles.dart';
+
+import '../common/text_styles.dart';
 
 class BottomSheetContent extends StatelessWidget {
+  const BottomSheetContent({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     Widget makeDismissible({required Widget child}) => GestureDetector(
@@ -15,9 +17,9 @@ class BottomSheetContent extends StatelessWidget {
         );
     return makeDismissible(
       child: DraggableScrollableSheet(
-        initialChildSize: 0.5,
-        minChildSize: 0.5,
-        maxChildSize: 0.5,
+        initialChildSize: 0.6,
+        minChildSize: 0.6,
+        maxChildSize: 0.6,
         builder: (_, controller) => Container(
           padding: const EdgeInsets.all(24),
           decoration: const BoxDecoration(
@@ -32,11 +34,14 @@ class BottomSheetContent extends StatelessWidget {
               Center(
                 child: Text(
                   'Geser ke bawah untuk menutup',
-                  style: primaryText.copyWith(color: Colors.white),
+                  style: primaryText.copyWith(
+                    color: Colors.white,
+                    fontSize: 14,
+                  ),
                 ),
               ),
               const SizedBox(height: 10),
-              Container(
+              SizedBox(
                 width: double.infinity,
                 child: ClipRRect(
                   borderRadius: const BorderRadius.only(
@@ -55,18 +60,27 @@ class BottomSheetContent extends StatelessWidget {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Desa Pemaron Waru',
-                  style: whiteText.copyWith(fontSize: 22),
+                  'Desa Pemaron',
+                  style: whiteText.copyWith(
+                      fontSize: 22, fontWeight: FontWeight.bold),
                 ),
               ),
               const SizedBox(height: 20),
               Text(
-                'Sebuah desa yang terletak di kecamatan Brebes kabupaten Brebes ini adalah sebuah desa yang memiliki cakupan daerah paling luas' +
-                    'diantara dusun lainnya di keluran Pemaron ini. Desa tersebut menurut sesepuh setempat sudah ada sejak jaman kolonial Belanda. ' +
-                    'Dibuktikan dengan ditemukannya rel kereta api tua di samping sawah desa setempat. Ditinggali oleh sekitar 200 warga yang terdiri' +
-                    'dari kurang lebih 40 kepala keluarga, yang mana beberapa warga ada yang bukan orang asli desa tersebut. Lokasi dari desa Pemaron' +
-                    'Waru sendiri memang cukup strategis mengingat lokasinya yang dilalui oleh jalan alternatif penghubung antara kota Brebes - Jatibarang.',
-                style: whiteText.copyWith(fontWeight: FontWeight.w700),
+                'Sebuah desa yang terletak di kecamatan Brebes kabupaten Brebes ini adalah sebuah desa yang memiliki 3 dusun' +
+                    'yaitu dusun Waru, dusun Pemaron, dan dusun Jetis. Memiliki penduduk kurang lebih 6.035 jiwa yang tersebar di' +
+                    'ketiga dusun tersebut. Desa pemaron dilintasi oleh jalur alternatif penghubung jalan pantura utara dengan jalan'
+                        'pantura selatan. Selain itu, desa ini dikelilingi oleh sawah serta. Asal usul dari desa ini masih menjadi misteri, ' +
+                    'salah satu sumber mengatakan kalau kata “Pemaron” itu memiliki arti irigasi karena zaman dulu semua sawah di desa ini' +
+                    'mendapat saluran irigasi dari kali Pemali yang ada di sebelah barat desa Pemaron dan oleh sebab itu desa ini dinamakan desa Pemaron.',
+                style: whiteText.copyWith(
+                    fontWeight: FontWeight.w500, fontSize: 16),
+                textAlign: TextAlign.justify,
+              ),
+              Text(
+                '\nSumber : \nhttps://sidesa.jatengprov.go.id\nhttps://triaalyasjayablog.wordpress.com',
+                style: whiteText.copyWith(
+                    fontWeight: FontWeight.w400, fontSize: 14),
                 textAlign: TextAlign.justify,
               ),
               const SizedBox(

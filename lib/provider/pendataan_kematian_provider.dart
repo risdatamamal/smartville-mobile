@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smartville/network/remote_data_source.dart';
-import 'package:smartville/model/pendataan_kematian_response.dart';
+
+import '../network/remote_data_source.dart';
+import '../model/pendataan_kematian_response.dart';
 
 class PendataanKematianProvider with ChangeNotifier {
   Future<PendataanKematian> submitPendataanKematian({

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:smartville/common/text_styles.dart';
+
+import '../common/text_styles.dart';
 
 class CustomScaffold extends StatelessWidget {
-  String textAppbar;
-  List<Widget> children;
-  CustomScaffold({
+  final String textAppbar;
+  final List<Widget> children;
+  const CustomScaffold({
     Key? key,
     required this.textAppbar,
     required this.children,
@@ -19,7 +20,7 @@ class CustomScaffold extends StatelessWidget {
         children: <Widget>[
           Container(
             padding: const EdgeInsets.only(
-              top: 40.0,
+              top: 20.0,
               left: 15.0,
               right: 30.0,
               bottom: 30.0,
@@ -42,7 +43,7 @@ class CustomScaffold extends StatelessWidget {
                 Text(
                   textAppbar,
                   style: whiteText.copyWith(
-                    fontSize: 20,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 )

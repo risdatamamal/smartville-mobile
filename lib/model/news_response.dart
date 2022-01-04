@@ -18,13 +18,21 @@ class News {
   factory News.fromJson(Map<String, dynamic> json) => News(
         error: json["error"],
         message: json["message"],
-        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+        data: List<Datum>.from(
+          json["data"].map(
+            (x) => Datum.fromJson(x),
+          ),
+        ),
       );
 
   Map<String, dynamic> toJson() => {
         "error": error,
         "message": message,
-        "data": List<dynamic>.from(data!.map((x) => x.toJson())),
+        "data": List<dynamic>.from(
+          data!.map(
+            (x) => x.toJson(),
+          ),
+        ),
       };
 }
 

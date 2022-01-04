@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:smartville/common/colors.dart';
-import 'package:smartville/pages/login_page.dart';
 
-import '../../provider/user_provider.dart';
+import '../common/colors.dart';
+import '../provider/user_provider.dart';
+
+import 'login_page.dart';
 import 'dashboard_page.dart';
 
 class WrapperPage extends StatefulWidget {

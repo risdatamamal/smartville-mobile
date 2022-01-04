@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smartville/common/colors.dart';
-import 'package:smartville/common/text_styles.dart';
+
+import '../common/colors.dart';
+import '../common/text_styles.dart';
 
 class CustomDialog extends StatelessWidget {
   final String text;

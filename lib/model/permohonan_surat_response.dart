@@ -1,8 +1,3 @@
-// To parse this JSON data, do
-//
-//     final permohonanSurat = permohonanSuratFromJson(jsonString);
-
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 PermohonanSurat permohonanSuratFromJson(String str) =>

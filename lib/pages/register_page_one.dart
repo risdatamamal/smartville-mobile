@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:smartville/common/constant.dart';
-import 'package:smartville/common/text_styles.dart';
-import 'package:smartville/model/register_data.dart';
-import 'package:smartville/model/register_response.dart';
-import 'package:smartville/model/user_response.dart';
-import 'package:smartville/pages/login_page.dart';
-import 'package:smartville/pages/register_page_2.dart';
-import 'package:smartville/widgets/custom_form_field.dart';
-import 'package:smartville/common/colors.dart';
 import 'package:intl/intl.dart';
+
+import '../common/constant.dart';
+import '../common/text_styles.dart';
+import '../common/colors.dart';
+import '../model/register_data.dart';
+import '../widgets/custom_form_field.dart';
+
+import 'register_page_two.dart';
 
 class RegisterPage1 extends StatefulWidget {
   static const routeName = 'register_page_1';
@@ -164,7 +163,7 @@ class _RegisterPage1State extends State<RegisterPage1> {
                         ],
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(

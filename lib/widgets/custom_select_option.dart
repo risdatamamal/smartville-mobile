@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smartville/common/colors.dart';
+
+import '../common/colors.dart';
 
 class CustomSelectOption extends StatefulWidget {
   final List<String> items;
@@ -20,6 +21,7 @@ class _CustomSelectOptionState extends State<CustomSelectOption> {
     String selectedItem = widget.items[0];
 
     return DropdownButtonFormField<String>(
+      isExpanded: true,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
@@ -38,7 +40,7 @@ class _CustomSelectOptionState extends State<CustomSelectOption> {
       items: widget.items.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
-          child: Text(value),
+          child: Text(value, overflow: TextOverflow.ellipsis),
         );
       }).toList(),
     );

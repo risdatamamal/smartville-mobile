@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smartville/model/pendataan_kelahiran_response.dart';
-import 'package:smartville/network/remote_data_source.dart';
+
+import '../network/remote_data_source.dart';
+import '../model/pendataan_kelahiran_response.dart';
 
 class PendataanKelahiranProvider with ChangeNotifier {
   Future<PendataanKelahiran> submitPendataanKelahiran({

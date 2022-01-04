@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smartville/model/permohonan_surat_response.dart';
-import 'package:smartville/network/remote_data_source.dart';
+
+import '../network/remote_data_source.dart';
+import '../model/permohonan_surat_response.dart';
 
 class PermohohonanSuratProvider with ChangeNotifier {
   Future<PermohonanSurat> submitSuratPermohonan({

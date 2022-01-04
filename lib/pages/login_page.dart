@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
-import 'package:smartville/common/colors.dart';
-import 'package:smartville/common/constant.dart';
-import 'package:smartville/common/text_styles.dart';
-import 'package:smartville/model/user_response.dart';
-import 'package:smartville/pages/dashboard_page.dart';
-import 'package:smartville/pages/forgot_password_page.dart';
-import 'package:smartville/provider/user_provider.dart';
-import 'package:smartville/widgets/custom_form_field.dart';
-import './register_page_1.dart';
+
+import '../common/colors.dart';
+import '../common/constant.dart';
+import '../common/text_styles.dart';
+import '../model/user_response.dart';
+import '../provider/user_provider.dart';
+import '../widgets/custom_form_field.dart';
+
+import 'register_page_one.dart';
+import 'dashboard_page.dart';
+import 'forgot_password_page.dart';
 
 class LoginPage extends StatefulWidget {
   static const routeName = 'login';
@@ -19,8 +21,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _onSend = false;
 
@@ -120,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                               ],
                             ),
                           ),
-                          Container(
+                          SizedBox(
                             width: double.infinity,
                             child: _onSend
                                 ? const LinearProgressIndicator()

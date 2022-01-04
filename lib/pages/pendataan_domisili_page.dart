@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/src/provider.dart';
-import 'package:smartville/common/colors.dart';
-import 'package:smartville/common/text_styles.dart';
-import 'package:smartville/model/notification_message.dart';
-import 'package:smartville/model/pendataan_domisili_response.dart';
-import 'package:smartville/provider/pendataan_domisili_provider.dart';
-import 'package:smartville/provider/user_provider.dart';
-import 'package:smartville/widgets/custom_dialog.dart';
-import 'package:smartville/widgets/custom_form_field.dart';
+import 'package:smartville/widgets/custom_scaffold.dart';
+
+import '../common/colors.dart';
+import '../common/text_styles.dart';
+import '../model/notification_message.dart';
+import '../model/pendataan_domisili_response.dart';
+import '../provider/pendataan_domisili_provider.dart';
+import '../provider/user_provider.dart';
+import '../widgets/custom_dialog.dart';
+import '../widgets/custom_form_field.dart';
 
 import 'notifikasi_berhasil_page.dart';
 
@@ -47,7 +49,6 @@ class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
         _selectedDate = pickedDate;
         controller.text = DateFormat('dd/MM/yyyy').format(_selectedDate);
         tanggalFormatted = DateFormat("yyyyMMdd").format(_selectedDate);
-        print(tanggalFormatted);
       });
     }
   }
@@ -57,24 +58,24 @@ class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
     setState(() => _onSend = true);
     UserProvider userProvider = context.read<UserProvider>();
     PendataanDomisiliProvider pendataanDomisiliProvider =
-    context.read<PendataanDomisiliProvider>();
+        context.read<PendataanDomisiliProvider>();
     String token = userProvider.token ?? "";
     PendataanDomisili pendataanDomisili =
-    await pendataanDomisiliProvider.submitPendataanDomisili(
-        token: token,
-        nikPemohon: nikPemohon,
-        namaPemohon: namaPemohon,
-        tglLahir: tglLahir,
-        asalDomisili: asalDomisili,
-        tujuanDomisili: tujuanDomisili,
-        registerToken: userProvider.tokenFCM!);
+        await pendataanDomisiliProvider.submitPendataanDomisili(
+            token: token,
+            nikPemohon: nikPemohon,
+            namaPemohon: namaPemohon,
+            tglLahir: tglLahir,
+            asalDomisili: asalDomisili,
+            tujuanDomisili: tujuanDomisili,
+            registerToken: userProvider.tokenFCM!);
 
     if (pendataanDomisili.error == false) {
       NotificationMessage notificationMessage = NotificationMessage(
         imageAssets: 'assets/celebration.png',
         title: "Permohonan Terkirim!",
         message:
-        "Permohonan telah dikirim. Silahkan tunggu notifikasi dari admin.",
+            "Permohonan telah dikirim. Silahkan tunggu notifikasi dari admin.",
         textButton: "Kembali ke halaman dashboard",
         navigateTo: "dashboard",
       );
@@ -99,18 +100,18 @@ class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
     setState(() => _onSend = false);
   }
 
-  Future isiDataSaya() async {
+  Future _autoFillForm() async {
     UserProvider userProvider = context.read<UserProvider>();
     nikPemohonController.text = userProvider.userNik!;
     namaPemohonController.text = userProvider.userName!;
     asalDomisiliController.text = userProvider.userAlamat!;
   }
+
   _resetForm() {
     _formKey.currentState?.reset();
     nikPemohonController.clear();
     namaPemohonController.clear();
     asalDomisiliController.clear();
-
   }
 
   Color getColor(Set<MaterialState> states) {
@@ -122,193 +123,188 @@ class _PendataanDomisiliPageState extends State<PendataanDomisiliPage> {
     if (states.any(interactiveStates.contains)) {
       return Colors.blue;
     }
-    return Color(0xFFF38263);
+    return const Color(0xFFF38263);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF70C7BA),
-      appBar: AppBar(
-        title: Text('Pendataan Domisili', style: whiteText),
-        backgroundColor: const Color(0xFF70C7BA),
-        elevation: 0.0,
-        leading: const BackButton(color: Colors.white),
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.popUntil(
-                    context, (Route<dynamic> route) => route.isFirst);
-              },
-              icon: Image.asset('assets/icons/home.png'))
-        ],
-      ),
-      body: Column(
+    return SafeArea(
+      child: CustomScaffold(
+        textAppbar: 'Pendataan Domisili',
         children: [
-          const SizedBox(height: 50),
-          Flexible(
-            child: Container(
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(40.0),
-                  topRight: Radius.circular(40.0),
+          const SizedBox(height: 20),
+          Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Theme(
+                //   data: ThemeData(
+                //     unselectedWidgetColor: redColor,
+                //   ),
+                //   child: CheckboxListTile(
+                //     controlAffinity: ListTileControlAffinity.leading,
+                //     contentPadding: const EdgeInsets.all(0),
+                //     title: Text(
+                //       "Klik untuk pakai data saya",
+                //       style: orangeText.copyWith(
+                //         fontSize: 14,
+                //         decoration: TextDecoration.underline,
+                //       ),
+                //     ),
+                //     value: isChecked,
+                //     activeColor: redColor,
+                //     selectedTileColor: redColor,
+                //     onChanged: (newValue) {
+                //       setState(() {
+                //         isChecked = newValue!;
+                //         if (isChecked) {
+                //           _autoFillForm();
+                //         } else {
+                //           _resetForm();
+                //         }
+                //       });
+                //     },
+                //   ),
+                // ),
+                Text(
+                  'NIK',
+                  style: greyText,
                 ),
-                color: Colors.white,
-              ),
-              height: double.infinity,
-              child: Center(
-                child: SingleChildScrollView(
-                  child: Form(
-                    key: _formKey,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 40.0,
-                        horizontal: 20,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'NIK',
-                            style: greyText,
-                          ),
-                          const SizedBox(
-                            height: 4,
-                          ),
-                          CustomFormField(
-                            textEditingController: nikPemohonController,
-                            textHint: 'Masukkan NIK',
-                            maxLength: 16,
-                            typeNumber: true,
-                          ),
-                          const SizedBox(height: 20),
-                          Row(
-                            children: [
-                              Checkbox(
-                                value: isChecked,
-                                fillColor: MaterialStateProperty.resolveWith(
-                                    getColor),
-                                onChanged: (val) {
-                                  setState(() {
-                                    isChecked = val!;
-                                  });
-                                  if (isChecked) {
-                                    isiDataSaya();
-                                  } else {
-                                    _resetForm();
-                                  }
-                                },
-                                activeColor: Colors.white,
-                              ),
-                              InkWell(
-                                child: Text(
-                                  'Centang untuk pakai data saya',
-                                  style: orangeText.copyWith(
-                                      fontSize: 12,
-                                      decoration: TextDecoration.underline),
-                                ),
-                                onTap: () {
-                                  setState(() {
-                                    !isChecked;
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 20),
-                          Text(
-                            'Nama',
-                            style: greyText,
-                          ),
-                          const SizedBox(
-                            height: 4,
-                          ),
-                          CustomFormField(
-                              textEditingController: namaPemohonController,
-                              textHint: 'Masukkan Nama'),
-                          const SizedBox(height: 20),
-                          Text(
-                            'Tanggal Lahir',
-                            style: greyText,
-                          ),
-                          const SizedBox(height: 4),
-                          CustomFormField(
-                            textEditingController: tglLahirController,
-                            textHint: 'Masukan Tanggal Lahir',
-                            readOnly: true,
-                            onTap: () {
-                              _selectDate(context, tglLahirController);
-                            },
-                          ),
-                          const SizedBox(height: 20),
-                          Text(
-                            'Asal Domisili',
-                            style: greyText,
-                          ),
-                          const SizedBox(
-                            height: 4,
-                          ),
-                          CustomFormField(
-                            textEditingController: asalDomisiliController,
-                            textHint: 'Masukkan Asal Domisili',
-                            typeMultiline: true,
-                          ),
-                          const SizedBox(height: 20),
-                          Text(
-                            'Tujuan Domisili',
-                            style: greyText,
-                          ),
-                          const SizedBox(
-                            height: 4,
-                          ),
-                          CustomFormField(
-                            textEditingController: tujuanDomisiliController,
-                            textHint: 'Masukkan Tujuan Domisili',
-                            typeMultiline: true,
-                          ),
-                          const SizedBox(height: 20),
-                          SizedBox(
-                            width: double.infinity,
-                            child: _onSend
-                                ? const LinearProgressIndicator()
-                                : ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                primary: primaryColor,
-                              ),
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) => CustomDialog(
-                                      text:
-                                      "Apakah Anda yakin data yang dimasukan sudah benar ?",
-                                      onClick: () {
-                                        _submitPendataanDomisili(
-                                            nikPemohonController.text,
-                                            namaPemohonController.text,
-                                            tanggalFormatted!,
-                                            asalDomisiliController.text,
-                                            tujuanDomisiliController
-                                                .text);
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                  );
-                                }
-                              },
-                              child: Text('Submit',
-                                  style:
-                                  blackText.copyWith(fontSize: 16)),
-                            ),
-                          ),
-                        ],
+                const SizedBox(
+                  height: 4,
+                ),
+                CustomFormField(
+                  textEditingController: nikPemohonController,
+                  textHint: 'Masukkan NIK',
+                  maxLength: 16,
+                  typeNumber: true,
+                ),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 30,
+                      height: 20,
+                      child: Checkbox(
+                        value: isChecked,
+                        fillColor: MaterialStateProperty.resolveWith(getColor),
+                        onChanged: (val) {
+                          setState(() {
+                            isChecked = val!;
+                          });
+                          if (isChecked) {
+                            _autoFillForm();
+                          } else {
+                            _resetForm();
+                          }
+                        },
+                        activeColor: Colors.white,
                       ),
                     ),
-                  ),
+                    InkWell(
+                      child: Text(
+                        'Centang untuk pakai data saya',
+                        style: orangeText.copyWith(
+                            fontSize: 12, decoration: TextDecoration.underline),
+                      ),
+                      onTap: () {
+                        setState(() {
+                          !isChecked;
+                        });
+                      },
+                    ),
+                  ],
                 ),
-              ),
+                const SizedBox(height: 20),
+                Text(
+                  'Nama',
+                  style: greyText,
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                CustomFormField(
+                    textEditingController: namaPemohonController,
+                    textHint: 'Masukkan Nama'),
+                const SizedBox(height: 20),
+                Text(
+                  'Tanggal Lahir',
+                  style: greyText,
+                ),
+                const SizedBox(height: 4),
+                CustomFormField(
+                  textEditingController: tglLahirController,
+                  textHint: 'Masukan Tanggal Lahir',
+                  readOnly: true,
+                  onTap: () {
+                    _selectDate(context, tglLahirController);
+                  },
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  'Asal Domisili',
+                  style: greyText,
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                CustomFormField(
+                  textEditingController: asalDomisiliController,
+                  textHint: 'Masukkan Asal Domisili',
+                  typeMultiline: true,
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  'Tujuan Domisili',
+                  style: greyText,
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                CustomFormField(
+                  textEditingController: tujuanDomisiliController,
+                  textHint: 'Masukkan Tujuan Domisili',
+                  typeMultiline: true,
+                ),
+                const SizedBox(height: 20),
+                SizedBox(
+                  width: double.infinity,
+                  child: _onSend
+                      ? const LinearProgressIndicator()
+                      : ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: primaryColor,
+                          ),
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              showDialog(
+                                context: context,
+                                builder: (context) => CustomDialog(
+                                  text:
+                                      "Apakah Anda yakin data yang dimasukan sudah benar ?",
+                                  onClick: () {
+                                    _submitPendataanDomisili(
+                                        nikPemohonController.text,
+                                        namaPemohonController.text,
+                                        tanggalFormatted!,
+                                        asalDomisiliController.text,
+                                        tujuanDomisiliController.text);
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              );
+                            }
+                          },
+                          child: Text(
+                            'Submit',
+                            style: blackText.copyWith(fontSize: 16),
+                          ),
+                        ),
+                ),
+              ],
             ),
           ),
+          const SizedBox(height: 20),
         ],
       ),
     );

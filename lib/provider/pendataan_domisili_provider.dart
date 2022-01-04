@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smartville/model/pendataan_domisili_response.dart';
-import 'package:smartville/network/remote_data_source.dart';
+
+import '../network/remote_data_source.dart';
+import '../model/pendataan_domisili_response.dart';
 
 class PendataanDomisiliProvider with ChangeNotifier {
   Future<PendataanDomisili> submitPendataanDomisili({

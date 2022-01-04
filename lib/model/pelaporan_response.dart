@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 Pelaporan pelaporanFromJson(String str) => Pelaporan.fromJson(json.decode(str));

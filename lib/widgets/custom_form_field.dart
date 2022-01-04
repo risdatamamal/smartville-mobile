@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:smartville/common/colors.dart';
+
+import '../common/colors.dart';
 
 class CustomFormField extends StatefulWidget {
   final TextEditingController textEditingController;
@@ -14,7 +15,7 @@ class CustomFormField extends StatefulWidget {
   final MaxLengthEnforcement? maxLengthEnforcement;
   final bool isStrictLength;
   final bool enable;
-  IconData? suffixIcon;
+  final IconData? suffixIcon;
   final bool typeMultiline;
   bool passwordVisible;
 

@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 PendataanKelahiran pendataanKelahiranFromJson(String str) =>
     PendataanKelahiran.fromJson(json.decode(str));
 

@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:smartville/model/pelaporan_response.dart';
 
-import 'package:smartville/network/remote_data_source.dart';
+import '../network/remote_data_source.dart';
+import '../model/pelaporan_response.dart';
 
 class PelaporanWargaProvider with ChangeNotifier {
   Future<Pelaporan> submitLaporan({
@@ -21,8 +21,8 @@ class PelaporanWargaProvider with ChangeNotifier {
         token,
         namaPelapor,
         keteranganKejadian,
-        jenisLaporan,
         tanggalLaporan,
+        jenisLaporan,
         noHp,
         alamatLaporan,
         dokumentasiKejadian,

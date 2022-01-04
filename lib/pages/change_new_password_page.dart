@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:provider/provider.dart';
-import 'package:smartville/common/colors.dart';
-import 'package:smartville/common/constant.dart';
-import 'package:smartville/common/text_styles.dart';
-import 'package:smartville/model/forgot_password_response.dart';
-import 'package:smartville/model/notification_message.dart';
-import 'package:smartville/pages/login_page.dart';
-import 'package:smartville/pages/notifikasi_berhasil_page.dart';
-import 'package:smartville/provider/forgot_password_provider.dart';
-import 'package:smartville/provider/user_provider.dart';
-import 'package:smartville/utils/password_string_validator.dart';
-import 'package:smartville/widgets/custom_form_field.dart';
+
+import '../common/colors.dart';
+import '../common/constant.dart';
+import '../common/text_styles.dart';
+import '../model/forgot_password_response.dart';
+import '../provider/forgot_password_provider.dart';
+import '../provider/user_provider.dart';
+import '../utils/password_string_validator.dart';
+import '../widgets/custom_form_field.dart';
 
 class ChangeNewPasswordPage extends StatefulWidget {
   const ChangeNewPasswordPage({Key? key}) : super(key: key);
-  static const routeName = "change_new_password";
+  static const routeName = "change-new-password";
   @override
   _ChangeNewPasswordState createState() => _ChangeNewPasswordState();
 }

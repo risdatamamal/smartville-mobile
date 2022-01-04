@@ -1,5 +1,3 @@
-import 'dart:io';
-
 class NotificationMessage {
   String? imageAssets;
   String? title;

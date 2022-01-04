@@ -1,9 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:smartville/common/colors.dart';
 
-enum TypeImage { ASSET, NETWORK, FILE }
+import '../common/colors.dart';
+
+enum TypeImage { asset, network, file }
 
 class ProfileWidget extends StatelessWidget {
   final TypeImage typeImage;
@@ -39,15 +40,15 @@ class ProfileWidget extends StatelessWidget {
   }
 
   Widget buildImage() {
-    var image;
+    ImageProvider image;
     switch (typeImage) {
-      case TypeImage.ASSET:
+      case TypeImage.asset:
         image = AssetImage(imageSrc!);
         break;
-      case TypeImage.NETWORK:
+      case TypeImage.network:
         image = NetworkImage(imageSrc!);
         break;
-      case TypeImage.FILE:
+      case TypeImage.file:
         image = FileImage(imageFile!);
         break;
     }

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smartville/common/constant.dart';
-import 'package:smartville/model/forgot_password_response.dart';
-import 'package:smartville/model/otp_response.dart';
-import 'package:smartville/network/remote_data_source.dart';
+
+import '../common/constant.dart';
+import '../network/remote_data_source.dart';
+import '../model/forgot_password_response.dart';
+import '../model/otp_response.dart';
 
 class ForgotPasswordProvider with ChangeNotifier {
   Future<OtpResponse> sendOtp({required String email}) async {

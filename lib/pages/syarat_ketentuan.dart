@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:smartville/common/colors.dart';
-
-import 'package:smartville/common/text_styles.dart';
 import 'package:bulleted_list/bulleted_list.dart';
+
+import '../common/text_styles.dart';
 
 class SyaratKetentuan extends StatefulWidget {
   const SyaratKetentuan({Key? key}) : super(key: key);

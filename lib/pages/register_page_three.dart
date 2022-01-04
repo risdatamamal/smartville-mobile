@@ -4,17 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:smartville/common/constant.dart';
-import 'package:smartville/common/text_styles.dart';
-import 'package:smartville/common/colors.dart';
-import 'package:smartville/model/register_data.dart';
-import 'package:smartville/pages/login_page.dart';
-import 'package:smartville/provider/user_provider.dart';
-import 'package:smartville/widgets/custom_dialog.dart';
-import 'package:smartville/widgets/profile_widget.dart';
-import 'package:smartville/model/register_response.dart';
-import 'package:smartville/pages/dashboard_page.dart';
 import 'package:provider/provider.dart';
+
+import '../common/constant.dart';
+import '../common/text_styles.dart';
+import '../common/colors.dart';
+import '../widgets/custom_dialog.dart';
+import '../widgets/profile_widget.dart';
+import '../model/register_data.dart';
+import '../model/register_response.dart';
+import '../provider/user_provider.dart';
+
+import 'login_page.dart';
 
 class RegisterPage3 extends StatefulWidget {
   static const routeName = 'register_page_3';
@@ -114,14 +115,14 @@ class _RegisterPage3State extends State<RegisterPage3> {
                 ),
                 image != null
                     ? ProfileWidget(
-                        typeImage: TypeImage.FILE,
+                        typeImage: TypeImage.file,
                         icon: Icons.delete_outline_rounded,
                         imageFile: image,
                         onClickedImage: () => pickImage(ImageSource.gallery),
                         onClickedIcon: () => setState(() => image = null),
                       )
                     : ProfileWidget(
-                        typeImage: TypeImage.ASSET,
+                        typeImage: TypeImage.asset,
                         imageSrc: 'assets/default_profile.png',
                         icon: Icons.edit,
                         onClickedImage: () => pickImage(ImageSource.gallery),

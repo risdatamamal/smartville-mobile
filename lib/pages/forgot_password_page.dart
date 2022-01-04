@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:smartville/common/colors.dart';
-import 'package:smartville/common/constant.dart';
-import 'package:smartville/common/text_styles.dart';
-import 'package:smartville/model/otp_response.dart';
-import 'package:smartville/pages/otp_page.dart';
-import 'package:smartville/provider/forgot_password_provider.dart';
-import 'package:smartville/widgets/custom_form_field.dart';
+
+import '../common/colors.dart';
+import '../common/constant.dart';
+import '../common/text_styles.dart';
+import '../model/otp_response.dart';
+import '../provider/forgot_password_provider.dart';
+import '../widgets/custom_form_field.dart';
+
+import 'otp_page.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({Key? key}) : super(key: key);
@@ -16,7 +18,7 @@ class ForgotPasswordPage extends StatefulWidget {
 }
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
-  TextEditingController _emailController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _onSend = false;
 

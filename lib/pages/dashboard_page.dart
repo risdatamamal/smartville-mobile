@@ -1,23 +1,27 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/src/provider.dart';
-import 'package:smartville/common/colors.dart';
-import 'package:smartville/common/text_styles.dart';
-import 'package:smartville/model/news_response.dart';
-import 'package:smartville/pages/profile_page.dart';
-import 'package:smartville/provider/news_provider.dart';
-import 'package:smartville/provider/user_provider.dart';
-import 'package:smartville/utils/firebase_messaging.dart';
-import 'package:smartville/widgets/list_pengumuman.dart';
-import 'package:smartville/widgets/menu_utama.dart';
-import 'package:smartville/widgets/bottom_sheet_content.dart';
-import 'package:url_launcher/link.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
+
+import '../common/constant.dart';
+import '../common/colors.dart';
+import '../common/text_styles.dart';
+import '../provider/news_provider.dart';
+import '../provider/user_provider.dart';
+import '../widgets/list_pengumuman.dart';
+import '../widgets/menu_utama.dart';
+import '../widgets/bottom_sheet_content.dart';
+import '../utils/firebase_messaging.dart';
+import '../model/news_response.dart';
+
+import 'profile_page.dart';
 
 class DashboardPage extends StatefulWidget {
-  static const routeName = 'dashboard_page';
+  static const routeName = 'dashboard';
   const DashboardPage({Key? key}) : super(key: key);
 
   @override
@@ -25,6 +29,16 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
+  late TutorialCoachMark tutorialCoachMark;
+  List<TargetFocus> targets = <TargetFocus>[];
+
+  GlobalKey profileKey = GlobalKey();
+  GlobalKey newsKey = GlobalKey();
+  GlobalKey menuKey = GlobalKey();
+  GlobalKey infoDesaKey = GlobalKey();
+  GlobalKey helpKey = GlobalKey();
+
+  final ScrollController _scrollController = ScrollController();
   List<Datum> newsList = [];
   bool isLoading = false;
   String _imageProfile = "";
@@ -47,6 +61,12 @@ class _DashboardPageState extends State<DashboardPage> {
     setState(() {
       _imageProfile = imageProfile;
       _userName = userName;
+      if (provider.getTutorial()) {
+        provider.disabledTutorial();
+        Future.delayed(const Duration(seconds: 1), () {
+          showTutorial();
+        });
+      }
     });
   }
 
@@ -57,8 +77,274 @@ class _DashboardPageState extends State<DashboardPage> {
       recipients: ['smartville.dev@gmail.com'],
       isHTML: false,
     );
-
     await FlutterEmailSender.send(email);
+  }
+
+  void showTutorial() {
+    _scrollController.animateTo(
+      _scrollController.position.minScrollExtent,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+    
+    initTargets();
+    tutorialCoachMark = TutorialCoachMark(
+      context,
+      targets: targets,
+      colorShadow: Colors.red,
+      textSkip: "SKIP",
+      paddingFocus: 10,
+      opacityShadow: 0.8,
+      onFinish: () {},
+      onClickTarget: (target) {
+        print('onClickTarget: $target');
+      },
+      onClickOverlay: (target) {
+        print('onClickOverlay: $target');
+      },
+      onSkip: () {},
+    )..show();
+  }
+
+  void initTargets() {
+    targets.clear();
+
+    targets.add(
+      TargetFocus(
+        identify: "Profil",
+        keyTarget: profileKey,
+        color: const Color(0xFF017262),
+        contents: [
+          TargetContent(
+            align: ContentAlign.bottom,
+            builder: (context, controller) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(top: 10.0),
+                    child: Text(
+                      "Tekan foto profil ini untuk menuju halaman profil.",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 15.0,
+                      ),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      controller.next();
+                    },
+                    child: const Icon(Icons.chevron_right),
+                  ),
+                ],
+              );
+            },
+          )
+        ],
+        shape: ShapeLightFocus.Circle,
+      ),
+    );
+
+    targets.add(
+      TargetFocus(
+        identify: "Berita",
+        keyTarget: newsKey,
+        color: const Color(0xFF017262),
+        contents: [
+          TargetContent(
+            align: ContentAlign.bottom,
+            builder: (context, controller) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  const Text(
+                    "Bagian ini akan menampilkan pengumuman terbaru langsung dari balai desa.",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 15.0,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          controller.previous();
+                        },
+                        child: const Icon(Icons.chevron_left),
+                      ),
+                      const SizedBox(width: 10),
+                      ElevatedButton(
+                        onPressed: () {
+                          _scrollController.animateTo(
+                            _scrollController.position.maxScrollExtent,
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.easeInOut,
+                          );
+                          controller.next();
+                        },
+                        child: const Icon(Icons.chevron_right),
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            },
+          )
+        ],
+        shape: ShapeLightFocus.RRect,
+        radius: 5,
+      ),
+    );
+
+    targets.add(
+      TargetFocus(
+        identify: "Menu",
+        keyTarget: menuKey,
+        color: const Color(0xFF017262),
+        contents: [
+          TargetContent(
+            align: ContentAlign.custom,
+            customPosition: CustomTargetContentPosition(left: 0, bottom: -10),
+            builder: (context, controller) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  const Text(
+                    "Berbagai menu pendataan dan pelaporan tersedia pada bagian ini.",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 15.0,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Row(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          _scrollController.animateTo(
+                            _scrollController.position.minScrollExtent,
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.easeInOut,
+                          );
+                          controller.previous();
+                        },
+                        child: const Icon(Icons.chevron_left),
+                      ),
+                      const SizedBox(width: 10),
+                      ElevatedButton(
+                        onPressed: () {
+                          controller.next();
+                        },
+                        child: const Icon(Icons.chevron_right),
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            },
+          )
+        ],
+        shape: ShapeLightFocus.RRect,
+        radius: 5,
+      ),
+    );
+
+    targets.add(
+      TargetFocus(
+        identify: "Info Desa",
+        keyTarget: infoDesaKey,
+        color: const Color(0xFF017262),
+        contents: [
+          TargetContent(
+            align: ContentAlign.custom,
+            customPosition: CustomTargetContentPosition(left: 0, bottom: 50),
+            builder: (context, controller) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          controller.previous();
+                        },
+                        child: const Icon(Icons.chevron_left),
+                      ),
+                      const SizedBox(width: 10),
+                      ElevatedButton(
+                        onPressed: () {
+                          controller.next();
+                        },
+                        child: const Icon(Icons.chevron_right),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 5),
+                  const Text(
+                    "Klik tombol di bawah ini untuk melihat profil desa.",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 15.0,
+                    ),
+                  ),
+                ],
+              );
+            },
+          )
+        ],
+        shape: ShapeLightFocus.RRect,
+        radius: 5,
+      ),
+    );
+
+    targets.add(
+      TargetFocus(
+        identify: "Bantuan",
+        keyTarget: helpKey,
+        color: const Color(0xFF017262),
+        contents: [
+          TargetContent(
+            align: ContentAlign.custom,
+            customPosition: CustomTargetContentPosition(left: 0, bottom: 150),
+            builder: (context, controller) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          controller.previous();
+                        },
+                        child: const Icon(Icons.chevron_left),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 5),
+                  const Text(
+                    "Ada pertanyaan? hubungi kami disini.",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 15.0,
+                    ),
+                  ),
+                ],
+              );
+            },
+          )
+        ],
+        shape: ShapeLightFocus.RRect,
+        radius: 5,
+      ),
+    );
   }
 
   @override
@@ -92,7 +378,6 @@ class _DashboardPageState extends State<DashboardPage> {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
-
       if (notification != null && android != null) {
         showDialog(
           context: context,
@@ -121,127 +406,200 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            padding: const EdgeInsets.only(top: 30, left: 30, right: 30),
-            child: SingleChildScrollView(
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(
+          children: [
+            SingleChildScrollView(
+              controller: _scrollController,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  //Profile
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Halo,',
-                              style: greyText,
-                              textAlign: TextAlign.start,
-                            ),
-                            Text(
-                              _userName.split(" ")[0],
-                              style: primaryText.copyWith(fontSize: 18),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context, ProfilePage.routeName)
-                              .then((value) => _userData());
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.only(right: 17, top: 24),
-                          padding: const EdgeInsets.all(1.2),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: _imageProfile == ""
-                                    ? const AssetImage(
-                                            'assets/default_profile.png')
-                                        as ImageProvider
-                                    : NetworkImage(_imageProfile),
-                                fit: BoxFit.cover,
-                              ),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(50.0)),
-                              border: Border.all(
-                                color: Colors.white,
-                                width: 2,
-                              ),
-                            ),
-                          ),
-                          height: 64,
-                          width: 64,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: secondaryColor,
-                          ),
-                        ),
-                      ),
-                    ],
+                  const SizedBox(
+                    height: 25,
                   ),
+                  //Profile
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: defaultMargin),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Halo,',
+                                style: greyText.copyWith(
+                                    fontSize: 16, fontWeight: FontWeight.w500),
+                                textAlign: TextAlign.start,
+                              ),
+                              Text(
+                                _userName.split(" ")[0],
+                                style: primaryText.copyWith(
+                                    fontSize: 22, fontWeight: FontWeight.w600),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ),
+                        InkResponse(
+                          key: profileKey,
+                          focusColor: primaryColor,
+                          hoverColor: primaryColor,
+                          highlightColor: primaryColor,
+                          onTap: () {
+                            Navigator.pushNamed(context, ProfilePage.routeName)
+                                .then(
+                              (value) => _userData(),
+                            );
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: secondaryColor,
+                                width: 1.5,
+                              ),
+                            ),
+                            child: CachedNetworkImage(
+                              imageUrl: _imageProfile,
+                              imageBuilder: (context, imageProvider) =>
+                                  Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(50.0),
+                                  ),
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 2,
+                                  ),
+                                ),
+                              ),
+                              height: 64,
+                              width: 64,
+                              placeholder: (context, url) => const Padding(
+                                padding: EdgeInsets.all(1.0),
+                                child: CircularProgressIndicator(
+                                  color: Colors.green,
+                                ),
+                              ),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
                   //Ada apa hari ini?
                   const SizedBox(
                     height: 18,
                   ),
-                  Text(
-                    'Ada apa hari ini?',
-                    style: blackText,
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  isLoading
-                      ? const CircularProgressIndicator()
-                      : SizedBox(
-                          height: 120,
-                          child: ListPengumuman(pengumumanList: newsList),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    key: newsKey,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: defaultMargin,
                         ),
-                  const SizedBox(height: 20),
-                  Text(
-                    'Ada keperluan apa hari ini?',
-                    style: blackText,
-                  ),
-                  const SizedBox(height: 8),
-                  const MenuUtama(),
-                  const SizedBox(height: 8),
-                  Align(
-                    child: TextButton(
-                      child: Text(
-                        'Butuh bantuan? Klik disini',
-                        style: primaryText.copyWith(
-                            decoration: TextDecoration.underline),
+                        child: Text(
+                          'Ada apa hari ini?',
+                          style: blackText,
+                        ),
                       ),
-                      onPressed: () => {_launchEmailSubmission()},
-                    ),
-                    alignment: Alignment.centerRight,
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      isLoading
+                          ? AspectRatio(
+                            aspectRatio: 2.0,
+                            child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    CircularProgressIndicator(
+                                        color: primaryColor),
+                                    SizedBox(width: 18),
+                                    Text("Loading data...")
+                                  ],
+                                ),
+                              ),
+                          )
+                          : newsList.isNotEmpty
+                              ? ListPengumuman(pengumumanList: newsList)
+                              : Text(
+                                  "Tidak ada pengumuman terbaru",
+                                  style: blackText,
+                                ),
+                    ],
                   ),
-
-                  const SizedBox(height: 90),
+                  const SizedBox(height: 20),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    key: menuKey,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: defaultMargin),
+                        child: Text(
+                          'Ada keperluan apa hari ini?',
+                          style: blackText,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      const Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: defaultMargin),
+                        child: MenuUtama(),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: defaultMargin,
+                    ),
+                    child: Align(
+                      key: helpKey,
+                      child: TextButton(
+                        child: Text(
+                          'Butuh bantuan? Klik disini',
+                          style: primaryText.copyWith(
+                              decoration: TextDecoration.underline),
+                        ),
+                        onPressed: () => {_launchEmailSubmission()},
+                      ),
+                      alignment: Alignment.centerRight,
+                    ),
+                  ),
+                  const SizedBox(height: 60),
                 ],
               ),
             ),
-          ),
-          Positioned(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: InkWell(
+            Positioned(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: InkWell(
                   child: Container(
+                    key: infoDesaKey,
                     width: double.infinity,
                     height: 50,
                     child: Center(
                       child: Text(
                         'Klik untuk lihat profile desa.',
-                        style: whiteText,
+                        style: whiteText.copyWith(fontSize: 14),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -256,14 +614,16 @@ class _DashboardPageState extends State<DashboardPage> {
                   onTap: () {
                     showModalBottomSheet(
                       context: context,
-                      builder: (context) => BottomSheetContent(),
+                      builder: (context) => const BottomSheetContent(),
                       isScrollControlled: true,
                       backgroundColor: Colors.transparent,
                     );
-                  }),
-            ),
-          )
-        ],
+                  },
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

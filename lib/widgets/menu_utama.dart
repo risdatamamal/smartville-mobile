@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:smartville/common/text_styles.dart';
-import 'package:smartville/pages/citizen_data_menu.dart';
-import 'package:smartville/pages/pelaporan_warga_page.dart';
-import 'package:smartville/pages/pendataan_kelahiran_page.dart';
-import 'package:smartville/pages/permohonan_surat_pengantar_page.dart';
-import 'package:smartville/pages/request_support_page.dart';
+
+import '../common/text_styles.dart';
+import '../pages/citizen_data_menu_page.dart';
+import '../pages/pelaporan_warga_page.dart';
+import '../pages/permohonan_surat_pengantar_page.dart';
+import '../pages/request_support_page.dart';
 
 class MenuUtama extends StatelessWidget {
-  const MenuUtama({Key? key}) : super(key: key);
+  const MenuUtama({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,7 @@ class MenuUtama extends StatelessWidget {
                 Text(
                   'Permohonan Surat Pengantar',
                   style: primaryText.copyWith(
+                    fontWeight: FontWeight.w700,
                     fontSize: 14,
                     color: Colors.white,
                   ),
@@ -69,6 +72,7 @@ class MenuUtama extends StatelessWidget {
                 Text(
                   'Pendataan Warga Desa',
                   style: primaryText.copyWith(
+                    fontWeight: FontWeight.w700,
                     fontSize: 14,
                     color: Colors.white,
                   ),
@@ -104,6 +108,7 @@ class MenuUtama extends StatelessWidget {
                 Text(
                   'Permohonan Bantuan Desa',
                   style: primaryText.copyWith(
+                    fontWeight: FontWeight.w700,
                     fontSize: 14,
                     color: Colors.white,
                   ),
@@ -134,11 +139,14 @@ class MenuUtama extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Image.asset('assets/icons/pelaporan.png'),
+                Image.asset(
+                  'assets/icons/pelaporan.png',
+                ),
                 const SizedBox(width: 8),
                 Text(
                   'Pengaduan',
                   style: primaryText.copyWith(
+                    fontWeight: FontWeight.w700,
                     fontSize: 14,
                     color: Colors.white,
                   ),

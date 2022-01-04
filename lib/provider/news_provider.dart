@@ -1,9 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:smartville/model/news_response.dart';
 
 import '../network/remote_data_source.dart';
+import '../model/news_response.dart';
 
 class NewsProvider extends ChangeNotifier {
   Future<List<Datum>> listNews() async {

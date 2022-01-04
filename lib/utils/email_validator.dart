@@ -1,11 +1,11 @@
 import 'dart:core';
 
-enum type { None, Alphabetic, Numeric, AlphaNumeric }
+enum type { none, alphabetic, numeric, alphaNumeric }
 
 class EmailValidator {
   static int _index = 0;
   static const String _atomCharacters = "!#\$%&'*+-/=?^_`{|}~";
-  static type _domainType = type.None;
+  static type _domainType = type.none;
 
   static bool _isDigit(String c) {
     return c.codeUnitAt(0) >= 48 && c.codeUnitAt(0) <= 57;
@@ -29,12 +29,12 @@ class EmailValidator {
   static bool _isDomain(String c, bool allowInternational) {
     if (c.codeUnitAt(0) < 128) {
       if (_isLetter(c) || c == '-') {
-        _domainType = type.Alphabetic;
+        _domainType = type.alphabetic;
         return true;
       }
 
       if (_isDigit(c)) {
-        _domainType = type.Numeric;
+        _domainType = type.numeric;
         return true;
       }
 
@@ -42,7 +42,7 @@ class EmailValidator {
     }
 
     if (allowInternational) {
-      _domainType = type.Alphabetic;
+      _domainType = type.alphabetic;
       return true;
     }
 
@@ -52,26 +52,26 @@ class EmailValidator {
   static bool _isDomainStart(String c, bool allowInternational) {
     if (c.codeUnitAt(0) < 128) {
       if (_isLetter(c)) {
-        _domainType = type.Alphabetic;
+        _domainType = type.alphabetic;
         return true;
       }
 
       if (_isDigit(c)) {
-        _domainType = type.Numeric;
+        _domainType = type.numeric;
         return true;
       }
 
-      _domainType = type.None;
+      _domainType = type.none;
 
       return false;
     }
 
     if (allowInternational) {
-      _domainType = type.Alphabetic;
+      _domainType = type.alphabetic;
       return true;
     }
 
-    _domainType = type.None;
+    _domainType = type.none;
 
     return false;
   }
@@ -127,7 +127,7 @@ class EmailValidator {
 
     // Note: by allowing AlphaNumeric,
     // we get away with not having to support punycode.
-    if (_domainType == type.Numeric) {
+    if (_domainType == type.numeric) {
       return false;
     }
 

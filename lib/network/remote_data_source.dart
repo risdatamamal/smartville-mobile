@@ -1,17 +1,18 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:smartville/model/forgot_password_response.dart';
-import 'package:smartville/model/history_response.dart';
-import 'package:smartville/model/otp_response.dart';
-import 'package:smartville/model/pelaporan_response.dart';
-import 'package:smartville/model/pendataan_domisili_response.dart';
-import 'package:smartville/model/pendataan_kelahiran_response.dart';
-import 'package:smartville/model/pendataan_kematian_response.dart';
-import 'package:smartville/model/permohonan_surat_response.dart';
-import 'package:smartville/model/request_support_response.dart';
 
 import '../common/constant.dart';
+
+import '../model/forgot_password_response.dart';
+import '../model/history_response.dart';
+import '../model/otp_response.dart';
+import '../model/pelaporan_response.dart';
+import '../model/pendataan_domisili_response.dart';
+import '../model/pendataan_kelahiran_response.dart';
+import '../model/pendataan_kematian_response.dart';
+import '../model/permohonan_surat_response.dart';
+import '../model/request_support_response.dart';
 import '../model/user_response.dart';
 import '../model/news_response.dart';
 import '../model/register_response.dart';
@@ -40,10 +41,7 @@ class RemoteDataSource {
       '/login',
       data: formData,
     );
-    print(response);
-    print("login");
-    print(email);
-    print(password);
+    print(response.data);
     return userFromJson(response.data ?? "");
   }
 
@@ -109,7 +107,6 @@ class RemoteDataSource {
       '/user/edit',
       data: formData,
     );
-    print(response);
     return registerFromJson(response.data ?? "");
   }
 
@@ -138,7 +135,6 @@ class RemoteDataSource {
     });
     Response<String> response =
         await _dio.post('/introductionmail', data: formData);
-    print(response.data ?? "");
     return permohonanSuratFromJson(response.data ?? "");
   }
 
@@ -298,22 +294,22 @@ class RemoteDataSource {
 
   static Future<RequestSupport> requestSupport(
     String token,
-    String nama_bantuan,
-    String jenis_bantuan,
-    int jumlah_dana,
-    int alokasi_dana,
-    int dana_terealisasi,
-    int sisa_dana_bantuan,
+    String namaBantuan,
+    String jenisBantuan,
+    int jumlahDana,
+    int alokasiDana,
+    int danaTerealisasi,
+    int sisaDanaBantuan,
     String registrationToken,
   ) async {
     _dio.options.headers["authorization"] = "Bearer $token";
     var formData = FormData.fromMap({
-      'nama_bantuan': nama_bantuan,
-      'jenis_bantuan': jenis_bantuan,
-      'jumlah_dana': jumlah_dana,
-      'alokasi_dana': alokasi_dana,
-      'dana_terealisasi': dana_terealisasi,
-      'sisa_dana_bantuan': sisa_dana_bantuan,
+      'nama_bantuan': namaBantuan,
+      'jenis_bantuan': jenisBantuan,
+      'jumlah_dana': jumlahDana,
+      'alokasi_dana': alokasiDana,
+      'dana_terealisasi': danaTerealisasi,
+      'sisa_dana_bantuan': sisaDanaBantuan,
       'registration_token': registrationToken
     });
 
@@ -321,8 +317,6 @@ class RemoteDataSource {
       '/financialhelp',
       data: formData,
     );
-
-    print(response.data ?? "");
 
     return requestSupportFromJson(response.data ?? "");
   }

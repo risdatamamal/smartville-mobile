@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
-import 'package:smartville/common/colors.dart';
-import 'package:smartville/common/text_styles.dart';
-import 'package:smartville/pages/change_password_forgot_page.dart';
-import 'package:smartville/provider/forgot_password_provider.dart';
+
+import '../common/colors.dart';
+import '../common/text_styles.dart';
+import '../provider/forgot_password_provider.dart';
+
+import 'change_forgot_password_page.dart';
 
 class OtpPage extends StatefulWidget {
   static const routeName = "otp";

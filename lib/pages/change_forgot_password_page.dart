@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:provider/provider.dart';
-import 'package:smartville/common/colors.dart';
-import 'package:smartville/common/constant.dart';
-import 'package:smartville/common/text_styles.dart';
-import 'package:smartville/model/forgot_password_response.dart';
-import 'package:smartville/pages/login_page.dart';
-import 'package:smartville/provider/forgot_password_provider.dart';
-import 'package:smartville/utils/password_string_validator.dart';
-import 'package:smartville/widgets/custom_form_field.dart';
+
+import '../common/colors.dart';
+import '../common/constant.dart';
+import '../common/text_styles.dart';
+import '../model/forgot_password_response.dart';
+import '../provider/forgot_password_provider.dart';
+import '../utils/password_string_validator.dart';
+import '../widgets/custom_form_field.dart';
+
+import 'login_page.dart';
 
 class ChangePasswordForgotPage extends StatefulWidget {
-  static const routeName = "change-password-forgot";
+  static const routeName = "change-forgot-password";
 
   final String email;
   const ChangePasswordForgotPage({Key? key, required this.email})
@@ -39,7 +41,7 @@ class _ChangePasswordForgotPageState extends State<ChangePasswordForgotPage> {
         body: Center(
           child: SingleChildScrollView(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+              padding: const EdgeInsets.symmetric(horizontal: defaultMargin),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -52,7 +54,7 @@ class _ChangePasswordForgotPageState extends State<ChangePasswordForgotPage> {
                     'Atur Ulang Password',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Form(
@@ -154,7 +156,6 @@ class _ChangePasswordForgotPageState extends State<ChangePasswordForgotPage> {
                                   }
                                 }
                               }
-
                               setState(() {
                                 _onSend = false;
                               });

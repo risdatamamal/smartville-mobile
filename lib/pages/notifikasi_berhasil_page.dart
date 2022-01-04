@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:smartville/common/colors.dart';
-import 'package:smartville/common/text_styles.dart';
-import 'package:smartville/model/notification_message.dart';
-import 'package:smartville/pages/dashboard_page.dart';
-import 'package:smartville/pages/login_page.dart';
+
+import '../common/colors.dart';
+import '../common/text_styles.dart';
+import '../model/notification_message.dart';
+
+import 'dashboard_page.dart';
+import 'login_page.dart';
 
 class NotifikasiBerhasilPage extends StatefulWidget {
   const NotifikasiBerhasilPage({
@@ -78,7 +80,7 @@ class _NotifikasiBerhasilPageState extends State<NotifikasiBerhasilPage> {
                     Text(widget.notificationMessage?.message ?? "",
                         textAlign: TextAlign.center, style: greyText),
                     const SizedBox(height: 40),
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
